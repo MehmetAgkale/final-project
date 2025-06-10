@@ -24,8 +24,27 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['rez_id']) && isset($_
     $yeni_durum = $_POST['yeni_durum'];
     $not = $_POST['not'] ?? '';
 
-    $update = $db->prepare("UPDATE rezervasyonlar SET durum = ?, ogretmen_notu = ? WHERE id = ? AND ogretmen_id = ?");
+    // If rejected, set katildi_mi to NULL
+    if ($yeni_durum === 'Reddedildi') {
+        $update = $db->prepare("UPDATE rezervasyonlar SET durum = ?, ogretmen_notu = ?, katildi_mi = NULL WHERE id = ? AND ogretmen_id = ?");
+    } else {
+        $update = $db->prepare("UPDATE rezervasyonlar SET durum = ?, ogretmen_notu = ? WHERE id = ? AND ogretmen_id = ?");
+    }
     $update->execute([$yeni_durum, $not, $rez_id, $ogretmen_id]);
+}
+
+// Handle katildi_mi toggle
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['toggle_katildi'])) {
+    $rez_id = $_POST['rez_id'];
+    $current_status = $_POST['current_status'];
+    $new_status = $current_status ? 0 : 1;
+    
+    $update = $db->prepare("UPDATE rezervasyonlar SET katildi_mi = ? WHERE id = ? AND ogretmen_id = ?");
+    $update->execute([$new_status, $rez_id, $ogretmen_id]);
+    
+    // Redirect to prevent form resubmission
+    header("Location: " . $_SERVER['PHP_SELF']);
+    exit;
 }
 
 // Get all reservations for this teacher
@@ -135,8 +154,21 @@ $rezervasyonlar_listesi = $rezervasyonlar->fetchAll(PDO::FETCH_ASSOC);
                                 <button name="yeni_durum" value="Reddedildi" class="btn btn-danger">Reddet</button>
                             </div>
                         </form>
-                     <?php elseif (!empty($rez['ogretmen_notu'])): ?>
-                        <p class="mt-3"><strong>Öğretmen Notu:</strong> <?= nl2br(htmlspecialchars($rez['ogretmen_notu'])) ?></p>
+                     <?php elseif (!empty($rez['ogretmen_notu']) && $rez['durum'] === 'Onaylandı'): ?>
+                        <div class="mt-3">
+                            <p><strong>Öğretmen Notu:</strong> <?= nl2br(htmlspecialchars($rez['ogretmen_notu'])) ?></p>
+                            <form method="POST" class="d-inline">
+                                <input type="hidden" name="rez_id" value="<?= $rez['id'] ?>">
+                                <input type="hidden" name="current_status" value="<?= $rez['katildi_mi'] ?>">
+                                <button type="submit" name="toggle_katildi" class="btn btn-sm <?= $rez['katildi_mi'] ? 'btn-success' : 'btn-outline-success' ?>">
+                                    <?= $rez['katildi_mi'] ? '✅ Katıldı' : '❌ Katılmadı' ?>
+                                </button>
+                            </form>
+                        </div>
+                    <?php elseif (!empty($rez['ogretmen_notu'])): ?>
+                        <div class="mt-3">
+                            <p><strong>Öğretmen Notu:</strong> <?= nl2br(htmlspecialchars($rez['ogretmen_notu'])) ?></p>
+                        </div>
                     <?php endif; ?>
                 </div>
             </div>

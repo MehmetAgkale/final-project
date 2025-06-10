@@ -82,11 +82,23 @@ $new_messages = $messages_query->fetchColumn();
     <div class="content animate__animated animate__fadeIn">
         <h2 class="mb-4">Kontrol Paneli</h2>
         <div class="row">
-            <div class="col-md-4 mb-3">
+            <div class="col-md-4 mb-4">
                 <a href="ogretmen_rezervasyon_onay.php" class="text-decoration-none">
-                    <div class="card shadow p-3">
-                        <h5><i class="fas fa-book text-primary"></i> Beklenen Görüşmelerim</h5>
-                        <p><?php echo $pending_meetings; ?> beklenen görüşme</p>
+                    <div class="card h-100">
+                        <div class="card-body text-center">
+                            <h3 class="card-title">📋 Rezervasyon Talepleri</h3>
+                            <p class="card-text">Öğrencilerinizin görüşme taleplerini yönetin</p>
+                        </div>
+                    </div>
+                </a>
+            </div>
+            <div class="col-md-4 mb-4">
+                <a href="ogrenci_istatistikleri.php" class="text-decoration-none">
+                    <div class="card h-100">
+                        <div class="card-body text-center">
+                            <h3 class="card-title">📊 Öğrenci İstatistikleri</h3>
+                            <p class="card-text">Danışmanlık yaptığınız öğrencilerin katılım istatistiklerini görüntüleyin</p>
+                        </div>
                     </div>
                 </a>
             </div>
@@ -94,7 +106,7 @@ $new_messages = $messages_query->fetchColumn();
                 <a href="ogretmen_mesajlar.php" class="text-decoration-none">
                     <div class="card shadow p-3">
                         <h5><i class="fas fa-envelope text-warning"></i> Mesajlar</h5>
-                        <p><?php echo $new_messages; ?> yeni mesaj</p>
+                        <p>Öğrencilerinizle olan mesajlarınızı yönetin</p>
                     </div>
                 </a>
             </div>

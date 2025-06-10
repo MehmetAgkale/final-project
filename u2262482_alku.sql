@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Anamakine: 127.0.0.1
--- Üretim Zamanı: 10 Haz 2025, 20:45:31
+-- Üretim Zamanı: 10 Haz 2025, 21:23:41
 -- Sunucu sürümü: 10.4.32-MariaDB
 -- PHP Sürümü: 8.2.12
 
@@ -71,7 +71,8 @@ INSERT INTO `kullanicilar` (`id`, `email`, `sifre`, `ad`, `danisman_id`) VALUES
 (2, 'test@ogr.alanya.edu.tr', '$2y$10$XLjX4kfzqxW7kTio4xyhge2Fy0GrhR9X1ERMwgObA.PQ5Y4vQiRS6', 'test test', 3),
 (3, 'ali.demir@alanya.edu.tr', '$2y$10$PGl2BLlTuxZKMgxses.UPOYVbQ0tPxl4qDhLAo.EIbccaOvDVwU7i', 'Ali Demir', 1),
 (4, 'ayse.kaya@alanya.edu.tr', '$2y$10$0ixyUlB6breC1PBZ.cMgR.KuncR6KZlidYePbgWT8coc.KtsjenC2', 'Ayşe Kaya', 3),
-(5, 'test2@ogr.alanya.edu.tr', '$2y$10$yV0sYK2NoHTzZKz2FS/AlucjzhpjY4ZiKvVDgQR6YTx13TttQCv6y', 'Test 2', 1);
+(5, 'test2@ogr.alanya.edu.tr', '$2y$10$yV0sYK2NoHTzZKz2FS/AlucjzhpjY4ZiKvVDgQR6YTx13TttQCv6y', 'Test 2', 1),
+(6, 'test3@ogr.alanya.edu.tr', '$2y$10$p8x0pYtODiKGmybt6w34IeRLx9pW5zp54xfxeL8s8Lt9l196TIBx.', 'test 3', 3);
 
 -- --------------------------------------------------------
 
@@ -99,7 +100,10 @@ INSERT INTO `mesajlar` (`id`, `ogretmen_id`, `ogrenci_id`, `baslik`, `mesaj`, `t
 (29, 1, 3, 'Danışıyorum 1', 'asd', '2025-06-10', 'akademisyen', '2025-06-10 20:48:31'),
 (30, 1, 1, 'Danışılmam lazım 1', '1', '2025-06-10', 'ogrenci', '2025-06-10 20:49:35'),
 (31, 1, 1, 'Danışıyorum 2', 'dasd', '2025-06-10', 'akademisyen', '2025-06-10 20:52:48'),
-(32, 1, 3, 'Danışıyorum 2', 'dasd', '2025-06-10', 'akademisyen', '2025-06-10 20:52:48');
+(32, 1, 3, 'Danışıyorum 2', 'dasd', '2025-06-10', 'akademisyen', '2025-06-10 20:52:48'),
+(33, 3, 2, 'Ben geldim', 'merhaba', '2025-06-10', 'akademisyen', '2025-06-10 22:22:01'),
+(34, 3, 4, 'Ben geldim', 'merhaba', '2025-06-10', 'akademisyen', '2025-06-10 22:22:01'),
+(35, 3, 6, 'Ben geldim', 'merhaba', '2025-06-10', 'akademisyen', '2025-06-10 22:22:01');
 
 -- --------------------------------------------------------
 
@@ -140,23 +144,21 @@ CREATE TABLE `rezervasyonlar` (
   `mesaj` varchar(255) NOT NULL,
   `durum` varchar(255) NOT NULL,
   `ogretmen_notu` text DEFAULT NULL,
-  `created_at` datetime NOT NULL
+  `created_at` datetime NOT NULL,
+  `katildi_mi` tinyint(1) DEFAULT 1
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Tablo döküm verisi `rezervasyonlar`
 --
 
-INSERT INTO `rezervasyonlar` (`id`, `ogrenci_id`, `ogretmen_id`, `tarih`, `saat`, `baslik`, `mesaj`, `durum`, `ogretmen_notu`, `created_at`) VALUES
-(1, 0, 0, '2025-12-21', '15:00:00', 'asd', 'asd', 'Beklemede', NULL, '0000-00-00 00:00:00'),
-(2, 2, 1, '2025-02-15', '13:30:00', 'asd', 'asd', 'Onaylandı', 'Onaylandı', '0000-00-00 00:00:00'),
-(3, 1, 3, '2025-05-05', '09:00:00', 'asd', 'asd', 'Beklemede', NULL, '0000-00-00 00:00:00'),
-(4, 1, 1, '2025-06-12', '13:00:00', 'Test', 'Test mesajı', 'Onaylandı', 'asd', '0000-00-00 00:00:00'),
-(5, 1, 1, '2025-06-26', '14:00:00', 'Reddedilecek', 'Reddedilecek', 'Reddedildi', 'Reddettim', '0000-00-00 00:00:00'),
-(6, 1, 1, '2025-02-21', '13:00:00', '13 uygun mu', 'asfasfa', 'Reddedildi', 'Uygun değil, başka zamana talep oluştur.', '0000-00-00 00:00:00'),
-(7, 1, 1, '2025-06-11', '11:30:00', 'bütünleme', 'test', 'Beklemede', NULL, '0000-00-00 00:00:00'),
-(8, 1, 1, '2025-06-11', '13:30:00', 'büt 2', 'asda', 'Beklemede', NULL, '2025-06-10 20:59:34'),
-(9, 1, 1, '2025-06-11', '12:00:00', 'büt 3', 'asdasd', 'Reddedildi', 'Reddedildi', '2025-06-10 21:00:09');
+INSERT INTO `rezervasyonlar` (`id`, `ogrenci_id`, `ogretmen_id`, `tarih`, `saat`, `baslik`, `mesaj`, `durum`, `ogretmen_notu`, `created_at`, `katildi_mi`) VALUES
+(10, 1, 1, '2025-06-11', '11:30:00', 'Test 1', 'test', 'Onaylandı', 'kabul edildi. proje', '2025-06-10 22:06:59', 0),
+(11, 1, 1, '2025-06-11', '12:00:00', 'test 2', 'test', 'Reddedildi', 'red', '2025-06-10 22:08:27', NULL),
+(12, 1, 1, '2025-12-15', '14:00:00', 'test 3', 'test', 'Reddedildi', 'saati beğenmedim', '2025-06-10 22:13:01', NULL),
+(13, 1, 1, '2025-02-14', '15:30:00', 'test 4', 'test', 'Onaylandı', 'saat fena değil', '2025-06-10 22:13:14', 1),
+(14, 1, 1, '2025-05-04', '11:00:00', 'test 5 ', 'test', 'Onaylandı', 'test', '2025-06-10 22:13:28', 1),
+(15, 1, 1, '2025-02-14', '12:30:00', 'test 6', 'test', 'Onaylandı', 'test', '2025-06-10 22:13:46', 0);
 
 --
 -- Dökümü yapılmış tablolar için indeksler
@@ -207,13 +209,13 @@ ALTER TABLE `duyurular`
 -- Tablo için AUTO_INCREMENT değeri `kullanicilar`
 --
 ALTER TABLE `kullanicilar`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- Tablo için AUTO_INCREMENT değeri `mesajlar`
 --
 ALTER TABLE `mesajlar`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=33;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=36;
 
 --
 -- Tablo için AUTO_INCREMENT değeri `ogretmenler`
@@ -225,7 +227,7 @@ ALTER TABLE `ogretmenler`
 -- Tablo için AUTO_INCREMENT değeri `rezervasyonlar`
 --
 ALTER TABLE `rezervasyonlar`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
 -- Dökümü yapılmış tablolar için kısıtlamalar

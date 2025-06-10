@@ -19,14 +19,14 @@ try {
 
     // Insert sample students
     $students = [
-        ['ad' => 'Ali Demir', 'email' => 'ali.demir@alanya.edu.tr', 'sifre' => password_hash('123456', PASSWORD_DEFAULT)],
-        ['ad' => 'Ayşe Kaya', 'email' => 'ayse.kaya@alanya.edu.tr', 'sifre' => password_hash('123456', PASSWORD_DEFAULT)]
+        ['ad' => 'Ali Demir', 'email' => 'ali.demir@alanya.edu.tr', 'sifre' => password_hash('123456', PASSWORD_DEFAULT), 'danisman_id' => 1],
+        ['ad' => 'Ayşe Kaya', 'email' => 'ayse.kaya@alanya.edu.tr', 'sifre' => password_hash('123456', PASSWORD_DEFAULT), 'danisman_id' => 1]
     ];
 
     echo "<h3>Inserting Students:</h3>";
-    $stmt = $db->prepare("INSERT INTO kullanicilar (ad, email, sifre) VALUES (?, ?, ?)");
+    $stmt = $db->prepare("INSERT INTO kullanicilar (ad, email, sifre, danisman_id) VALUES (?, ?, ?, ?)");
     foreach ($students as $student) {
-        $stmt->execute([$student['ad'], $student['email'], $student['sifre']]);
+        $stmt->execute([$student['ad'], $student['email'], $student['sifre'], $student['danisman_id']]);
         echo "Inserted student: {$student['ad']}<br>";
     }
 

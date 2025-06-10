@@ -1,4 +1,10 @@
 <?php
+// $host = "localhost";
+// $dbname = "u2262482_alku";
+// $username = "u2262482_test";
+// $password = "fS6F1sdgadg151";
+
+
 $host = "localhost";
 $dbname = "u2262482_alku";
 $username = "root";

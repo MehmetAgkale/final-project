@@ -1,0 +1,147 @@
+* {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  box-sizing: border-box;
+
+}
+
+body {
+  font-family: var(--body-font);
+  color: hsl(var(--heading-color));
+  word-break: break-word;
+  background-color: hsl(var(--body-color));
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  padding: 0 !important;
+}
+
+p {
+  font-family: var(--body-font);
+  font-size: 16px;
+  margin: 0;
+  font-weight: 400;
+  word-break: break-word;
+  color: hsl(var(--black)/0.7);
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  margin: 0 0 15px 0;
+  font-family: var(--heading-font);
+  color: hsl(var(--heading-color));
+  line-height: 1.1;
+  word-break: break-word;
+
+  @include sm-screen {
+    margin: 0 0 10px 0;
+  }
+}
+
+h1 {
+  font-size: var(--heading-one);
+  font-weight: 700;
+}
+
+h2 {
+  font-size: var(--heading-two);
+  font-weight: 600;
+  margin: 0px;
+}
+
+h3 {
+  font-size: var(--heading-three);
+  font-weight: 600;
+}
+
+h4 {
+  font-size: var(--heading-four);
+  font-weight: 500;
+}
+
+h5 {
+
+  font-size: var(--heading-five);
+  font-weight: 500;
+}
+
+h6 {
+  font-size: 20px;
+  font-weight: 500;
+  @media (max-width: 768px) {
+    font-size: 14px !important;
+  }
+}
+
+h1>a,
+h2>a,
+h3>a,
+h4>a,
+h5>a,
+h6>a {
+  font-weight: 400;
+  transition: .2s linear;
+  line-height: 1.4;
+  word-break: break-word;
+  color: hsl(var(--heading-color));
+
+}
+
+a {
+  display: inline-block;
+  transition: .2s linear;
+  text-decoration: none;
+  font-family: var(--body-font);
+  color: hsl(var(--heading-color));
+}
+
+a:hover {
+  color: hsl(var(--base));
+}
+
+ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+  vertical-align: middle;
+}
+
+select {
+  cursor: pointer;
+}
+
+ul,
+ol {
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+
+*:focus {
+  outline: none;
+}
+
+button {
+  cursor: pointer;
+  border: none;
+  background-color: transparent;
+
+  &:focus {
+    outline: none;
+  }
+}
+
+.form-select:focus {
+  outline: 0;
+  box-shadow: none;
+}

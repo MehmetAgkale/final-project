@@ -1,0 +1,196 @@
+<?php
+include "db.php";
+$ogretmenler = $db->query("SELECT id, unvan, ad_soyad FROM ogretmenler ORDER BY unvan, ad_soyad")->fetchAll(PDO::FETCH_ASSOC);
+?>
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Title -->
+    <title>ALKU REZERVASYON</title>
+    <!-- Favicon -->
+    <link rel="shortcut icon" href="assets/images/logo/fav.png">
+    <!-- Apple touch icon -->
+    <link rel="apple-touch-icon" href="assets/images/logo/fav.png">
+    <!-- line awesome -->
+    <link rel="stylesheet" href="assets/css/line-awesome.min.css">
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="assets/css/bootstrap.min.css">
+    <!-- Font awesome -->
+    <link rel="stylesheet" href="assets/css/fontawesome-all.min.css">
+    <!-- Slick -->
+    <link rel="stylesheet" href="assets/css/slick.css">
+    <!-- Animate css -->
+    <link rel="stylesheet" href="assets/css/animate.min.css">
+    <!-- Odometer -->
+    <link rel="stylesheet" href="assets/css/odometer.css">
+    <!-- splitting -->
+    <link rel="stylesheet" href="assets/css/splitting.css">
+    <!-- magnific-popup -->
+    <link rel="stylesheet" href="assets/css/magnific-popup.css">
+    <!-- Main css -->
+    <link rel="stylesheet" href="assets/css/main.css">
+</head>
+
+<body>
+    <!--==================== Preloader Start ====================-->
+    <div id="loading">
+        <div id="loading-center">
+            <div id="loading-center-absolute">
+                <span class="loader"></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="sidebar-overlay"></div>
+    <!--==================== Preloader End ====================-->
+
+    <!-- login section -->
+    <section class="login-section">
+        <div class="container">
+            <div class="row">
+                <div class="col-xl-6 col-lg-6 px-0 d-none d-lg-block">
+                    <div class="login-left-section flex-column">
+                        <div class="logo-wrap mb-5">
+                            <a href="/">
+                                <img src="assets/images/logo/logo.png" width="200px" alt="Logo">
+                            </a>
+                        </div>
+                        <div class="thumb--wrap">
+                            <img src="assets/images/common/about-bg3.png" alt="...">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-xl-6 col-lg-6 px-0">
+                    <div class="signin-box d-flex flex-column justify-content-center bg--white">
+                        <form id="registerForm" method="POST" action="register.php">
+                            <div class="home--btn bg--base radius--50 d-lg-none d-flex justify-content-center align-items-center flex-shrink-0">
+                                <i class="fa-solid fa-house"></i>
+                            </div>
+
+                            <div class="content--wrap">
+                                <h4 class="title text-start fs--48 fw--600">Kayıt Ol</h4>
+                            </div>
+
+                            <div class="social-option mb-5">
+                                <ul class="flex-wrap justify-content-center">
+                                    <li>
+                                        <a href="#" class="btn btn-outline--dark">Google
+                                            <img class="ms-2" src="assets/images/icon/icon8.png" alt="...">
+                                        </a>
+                                    </li>
+                                </ul>
+
+                                <div class="text">
+                                    <h6>YA DA</h6>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-lg-6">
+                                    <div class="mb-4 form-group">
+                                        <input class="form--control" name="firstname" placeholder="" required>
+                                        <label class="form--label">Adınız </label>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="mb-4 form-group">
+                                        <input class="form--control" name="lastname" placeholder="" required>
+                                        <label class="form--label">Soyadınız </label>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="mb-4 form-group">
+                                <input class="form--control" type="email" name="email" placeholder="" required>
+                                <label class="form--label">Eposta </label>
+                            </div>
+
+                            <div class="mb-4 form-group">
+                                <select class="form--control" name="danisman_id" required>
+                                    <option value="">Danışman Akademisyen Seçiniz</option>
+                                    <?php foreach ($ogretmenler as $ogretmen): ?>
+                                        <option value="<?= $ogretmen['id'] ?>">
+                                            <?= htmlspecialchars($ogretmen['unvan'] . ' ' . $ogretmen['ad_soyad']) ?>
+                                        </option>
+                                    <?php endforeach; ?>
+                                </select>
+                                <label class="form--label">Danışman Akademisyen</label>
+                            </div>
+
+                            <div class="mb-4 form-group">
+                                <div class="input--group position-relative">
+                                    <input class="form--control" id="password" name="password" placeholder="" type="password" required>
+                                    <div class="password-show-hide fas toggle-password-change fa-eye" data-target="password"></div>
+                                    <label class="form--label">Şifre</label>
+                                </div>
+                            </div>
+
+                            <div id="message"></div>
+
+                            <button type="submit" class="btn btn--base-two btn--lg w-100">Kayıt Ol</button>
+
+                            <div class="mt-5 text-center">
+                                <p>Hesabın Var mı ? <a href="login.php" class="text--base">Giriş Yap</a></p>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Jquery js -->
+    <script src="assets/js/jquery-3.7.1.min.js"></script>
+    <!-- Bootstrap Js -->
+    <script src="assets/js/bootstrap.bundle.min.js"></script>
+    <!-- Slick js -->
+    <script src="assets/js/slick.min.js"></script>
+    <!-- Odometer js -->
+    <script src="assets/js/odometer.min.js"></script>
+    <!-- Appear -->
+    <script src="assets/js/jquery.appear.min.js"></script>
+    <!-- wow js -->
+    <script src="assets/js/wow.min.js"></script>
+    <!-- splitting js -->
+    <script src="assets/js/splitting.min.js"></script>
+    <!-- magnific-popup -->
+    <script src="assets/js/jquery.magnific-popup.min.js"></script>
+    <!-- main js -->
+    <script src="assets/js/main.js"></script>
+
+    <script>
+    document.getElementById('registerForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+        
+        const formData = new FormData(this);
+        
+        fetch('register.php', {
+            method: 'POST',
+            body: formData
+        })
+        .then(response => response.json())
+        .then(data => {
+            const messageDiv = document.getElementById('message');
+            messageDiv.innerHTML = data.message;
+            messageDiv.className = data.status === 'success' ? 'alert alert-success' : 'alert alert-danger';
+            
+            if (data.status === 'success') {
+                setTimeout(() => {
+                    window.location.href = 'login.php';
+                }, 2000);
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            document.getElementById('message').innerHTML = 'Bir hata oluştu!';
+            document.getElementById('message').className = 'alert alert-danger';
+        });
+    });
+    </script>
+</body>
+</html> 

@@ -1,0 +1,136 @@
+.hero {
+    padding: 180px 0px 160px 0px;
+    z-index: 1;
+    position: relative;
+    overflow: hidden;
+    z-index: 1;
+
+    &::after{
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: hsl(var(--black)/0.5);
+        z-index: -1;
+    }
+
+    .hero-content--wrap{
+        .hero--title{
+            color: hsl(var(--white));
+            font-size: 70px;
+            font-family: var(--banner-heading);
+            line-height: 1.42;
+        }
+
+        .hero--subtitle{
+            color: hsl(var(--white)/0.7);
+            width: 80%;
+
+        }
+    }
+}
+
+
+.hero--two {
+    padding: 195px 0px 195px 0px;
+    z-index: 1;
+    overflow: hidden;
+
+
+    .hero-content--wrap{
+        .hero--title{
+            color: hsl(var(--white));
+            font-size: 70px;
+            font-family: var(--banner-heading);
+            line-height: 1.42;
+        }
+
+        .hero--subtitle{
+            color: hsl(var(--white)/0.7);
+            width: 80%;
+
+        }
+    }
+
+
+    .elements1{
+        top: 22%;
+        right: 10%;
+    }
+    .elements2{
+        bottom: 10%;
+        left: 10%;
+    }
+    .elements3{
+        top: 0;
+        left: 40%;
+    }
+}
+
+
+
+.hero--three {
+    padding: 195px 0px 195px 0px;
+    z-index: 1;
+    overflow: hidden;
+
+
+    .hero-content--wrap{
+        .hero--title{
+            color: hsl(var(--black));
+            font-size: 70px;
+            font-family: var(--banner-heading);
+            line-height: 1.42;
+        }
+
+        .hero--subtitle{
+            color: hsl(var(--black)/0.7);
+            width: 80%;
+
+        }
+    }
+
+
+    .elements1{
+        top: 22%;
+        right: 10%;
+    }
+    .elements2{
+        bottom: 10%;
+        left: 10%;
+    }
+    .elements3{
+        top: 0;
+        left: 40%;
+    }
+}
+
+
+
+// svg stroke animation
+.svg-stroke--animation {
+    stroke: hsl(var(--black)) !important;
+    stroke-width: 0.5px !important;
+    -webkit-animation: draw 7s ease infinite;
+    animation: draw 7s ease infinite;
+}
+
+
+@keyframes draw {
+    0% {
+        stroke-dasharray: 2000;
+        stroke-dashoffset: 2000;
+    }
+
+    100% {
+        stroke-dasharray: 2000;
+        stroke-dashoffset: 0;
+    }
+}
+
+
+.svg-fill--base {
+    fill: hsl(var(--base));
+}

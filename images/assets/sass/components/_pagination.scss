@@ -1,0 +1,35 @@
+
+.pagination {
+    flex-wrap: wrap;
+    justify-content: center;
+    .page-item {
+        .page-link{
+            border: 1px solid hsl(var(--base));
+            margin: 0 5px;
+            border-radius: 50%;
+            height: 40px;
+            width: 40px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: transparent;
+            font-weight: 500;
+            padding: 0;
+            color: hsl(var(--black)); 
+            &.active , &:hover {
+                color: hsl(var(--base)); 
+            }
+            &:focus {
+                box-shadow: none;
+            }
+        }
+        &.active .page-link {
+            color: hsl(var(--base)); 
+        }
+    }
+}
+
+
+
+
+

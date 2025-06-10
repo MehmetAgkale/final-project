@@ -1,0 +1,87 @@
+// bottom app bar
+.bottom-app-bar{
+  position: absolute;
+  display: none;
+  .botton-bar{
+    position: fixed !important;
+    height: 50px;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    z-index: 999;
+    background: hsl(var(--base));
+    box-shadow: 0 -4px 4px rgba(0,0,0,.2), 0 -1px 0 rgba(255,255,255,.2);
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    flex-wrap: wrap;
+    padding: 0px  12px 0px 12px ;
+    .bottom-item{
+      a{
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        gap: 4px;
+        color: white;
+        p{
+          color: white;
+        }
+      }
+      
+    }
+
+    // tap to home btn
+    .tapTo-hom{
+      position: absolute;
+      background-color:  hsl(var( --base));
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 40px;
+      width: 40px;
+      top: -32px;
+      border-radius: 50%;
+      box-shadow: 1px 5px 14px 1px rgba(0,0,0,0.24);
+      cursor: pointer;
+      .tap-box{
+        height: 100%;
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        
+        a{
+          i{
+            font-size: 18px;
+            color: white;
+          }
+        }
+      }
+    }
+   
+  }
+  .bottom-item{
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+  }
+}
+
+@media (max-width: 430px) {
+  .bottom-app-bar {
+    display: block !important;
+  }
+
+}
+
+
+@media (max-width: 425px) {
+  .bottom-app-bar {
+    font-size: 18px !important;
+    
+  }
+
+}

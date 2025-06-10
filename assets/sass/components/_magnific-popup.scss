@@ -1,0 +1,22 @@
+/* Magnific Popup button style */
+button.mfp-close {
+    top: -15px;
+    font-size: 21px;
+    font-weight: 800;
+    height: 35px;
+    background: hsl(var(--base));
+    line-height: 32px;
+    padding: 0;
+    opacity: 1;
+    border-radius: 5px;
+  }
+  
+  .mfp-image-holder .mfp-close,
+  .mfp-iframe-holder .mfp-close {
+    color: hsl(var(--white));
+    right: 0px;
+    text-align: right;
+    padding-right: 13px;
+    width: 42px;
+  }
+  

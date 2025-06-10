@@ -1,0 +1,99 @@
+/* drag and drop box */
+.photo_upload .drag_area {
+    height: 400px;
+    border-radius: 8px;
+    border: 1px dashed hsl(var(--black)/0.2);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    user-select: none;
+    --webkit-user-select: none;
+  }
+  
+  .photo_upload .drag_area .visible {
+    font-size: 18px;
+  }
+  
+  .photo_upload .select {
+    cursor: pointer;
+    transition: 0.4s;
+  }
+  
+  .photo_upload .select:hover {
+    opacity: 0.6;
+  }
+  
+  .photo_upload .container_area {
+    width: 100%;
+    height: auto;
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
+    flex-wrap: wrap;
+    max-height: 200px;
+    overflow-y: auto;
+    margin-top: 30px;
+  }
+  
+  .photo_upload .container_area .image {
+    height: 75px;
+    margin-left: 5px;
+    width: 75px;
+    position: relative;
+    margin-bottom: 8px;
+  }
+  
+  .photo_upload .container_area .image img {
+    width: 100%;
+    height: 100%;
+    border-radius: 8px;
+  }
+  
+  .photo_upload .container_area .image .delete {
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 24px;
+    width: 24px;
+    border-radius: 50%;
+    background: hsl(var(--black)/0.6);
+    top: 0px;
+    right: 0px;
+    font-size: 12px;
+    cursor: pointer;
+    color: hsl(var(--base));
+    z-index: 9;
+  }
+  
+  .photo_upload input,
+  .photo_upload .drag_area .on-drop,
+  .photo_upload .drag_area.dragover .visible {
+    display: none;
+  }
+  
+  
+  
+  .drag_drop_content {
+    display: flex;
+    gap: 12px;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .drag_drop_content .icon_wrap {
+    width: 90px;
+    height: 90px;
+    border-radius: 50%;
+    background: hsl(var(--black)/0.06);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .drag_drop_content .icon_wrap i {
+    font-size: 30px;
+  }

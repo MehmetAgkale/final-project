@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Öğretmen Paneli - Duyuru Yap</title>
+    <link href="assets/css/bootstrap.min.css" rel="stylesheet">
+    <link href="assets/css/fontawesome-all.min.css" rel="stylesheet">
+    <link href="assets/css/animate.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            background: linear-gradient(rgba(245, 247, 250, 0.9), rgba(245, 247, 250, 0.9)), url('https://www.transparenttextures.com/patterns/clean-gray-paper.png');
+            background-size: cover;
+            background-attachment: fixed;
+            font-family: 'Inter', sans-serif;
+            color: #2d3748;
+            overflow-x: hidden;
+        }
+        .sidebar {
+            height: 100vh;
+            background: linear-gradient(180deg, #2c3e50 0%, #1a252f 100%);
+            padding-top: 30px;
+            position: fixed;
+            width: 260px;
+            transition: all 0.3s ease;
+            box-shadow: 2px 0 10px rgba(0, 0, 0, 0.05);
+        }
+        .sidebar a {
+            color: #e2e8f0;
+            padding: 15px 25px;
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+        .sidebar a i {
+            margin-right: 10px;
+        }
+        .sidebar a:hover {
+            background-color: #34495e;
+            color: #fff;
+            padding-left: 35px;
+        }
+        .sidebar a.active {
+            background-color: #3498db;
+            color: #fff;
+            box-shadow: inset 4px 0 0 #fff;
+        }
+        .content {
+            margin-left: 260px;
+            padding: 40px;
+            transition: all 0.3s ease;
+        }
+        .navbar {
+            margin-left: 260px;
+            background: linear-gradient(90deg, #ffffff 0%, #f8fafc 100%);
+            padding: 15px 40px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .navbar .h5 {
+            font-weight: 600;
+            color: #2d3748;
+        }
+        .navbar .user-info {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        .navbar .user-info img {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid #3498db;
+        }
+        .announcement-section {
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            padding: 30px;
+        }
+        .announcement-section h5 {
+            font-weight: 600;
+            color: #2d3748;
+            margin-bottom: 20px;
+        }
+        .announcement-section .form-label {
+            font-weight: 500;
+            color: #2d3748;
+        }
+        .announcement-section .form-control {
+            border-radius: 5px;
+            border: 1px solid #e2e8f0;
+            transition: all 0.3s ease;
+        }
+        .announcement-section .form-control:focus {
+            border-color: #3498db;
+            box-shadow: 0 0 5px rgba(52, 152, 219, 0.3);
+        }
+        .announcement-section .btn {
+            background-color: #28a745;
+            border: none;
+            border-radius: 5px;
+            padding: 10px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+        .announcement-section .btn:hover {
+            background-color: #218838;
+            transform: translateY(-2px);
+        }
+        .character-counter {
+            font-size: 12px;
+            color: #718096;
+            margin-top: 5px;
+            text-align: right;
+        }
+        .alert {
+            margin-top: 20px;
+            display: none;
+            border-radius: 5px;
+        }
+        .modal-content {
+            border-radius: 10px;
+            overflow: hidden;
+        }
+        .modal-header {
+            background: linear-gradient(90deg, #28a745 0%, #218838 100%);
+            color: white;
+            border-top-left-radius: 10px;
+            border-top-right-radius: 10px;
+        }
+        .modal-footer .btn-primary {
+            background-color: #3498db;
+            border: none;
+            transition: all 0.3s ease;
+        }
+        .modal-footer .btn-primary:hover {
+            background-color: #2980b9;
+            transform: translateY(-2px);
+        }
+        .modal-footer .btn-secondary {
+            background-color: #6c757d;
+            border: none;
+            transition: all 0.3s ease;
+        }
+        .modal-footer .btn-secondary:hover {
+            background-color: #5a6268;
+            transform: translateY(-2px);
+        }
+        @media (max-width: 768px) {
+            .sidebar {
+                width: 200px;
+                transform: translateX(-200px);
+            }
+            .sidebar.active {
+                transform: translateX(0);
+            }
+            .content, .navbar {
+                margin-left: 0;
+            }
+            .navbar .hamburger {
+                display: block;
+                font-size: 24px;
+                cursor: pointer;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="sidebar animate__animated animate__fadeInLeft">
+        <a href="#"><i class="fas fa-home"></i> Ana Sayfa</a>
+        <a href="#"><i class="fas fa-book"></i> Görüşme saatlerim</a>
+        <a href="announcement.html" class="active"><i class="fas fa-upload"></i> Duyuru Yap</a>
+        <a href="messages.html"><i class="fas fa-envelope"></i> Gelen Mesajlar</a>
+        <a href="#"><i class="fas fa-sign-out-alt"></i> Çıkış</a>
+    </div>
+
+    <nav class="navbar">
+        <div class="d-flex align-items-center gap-3">
+            <i class="fas fa-bars hamburger d-none" onclick="toggleSidebar()"></i>
+            <span class="h5">👩‍🏫 Hoş geldiniz, <strong>Dr. Öğr. Üyesi Kübra Uyar</strong></span>
+        </div>
+        <div class="user-info">
+            <img src="assets/images/teacher.jpg" alt="Profile">
+            <span>Kübra Uyar</span>
+        </div>
+    </nav>
+
+    <div class="content animate__animated animate__fadeIn">
+        <h2 class="mb-4">Duyuru Yap</h2>
+
+        <div class="row">
+            <div class="col-12">
+                <div class="announcement-section">
+                    <h5>DANIŞMAN ÖĞRENCİLERİNE DUYURU GÖNDER</h5>
+                    <div class="mb-3">
+                        <label class="form-label">Başlık</label>
+                        <input type="text" class="form-control" id="announcementTitle" placeholder="Duyuru başlığı giriniz">
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Mesaj</label>
+                        <textarea class="form-control" id="announcementMessage" rows="6" placeholder="Mesajınızı buraya yazınız" maxlength="1000" oninput="updateCharacterCount()"></textarea>
+                        <div class="character-counter" id="charCount">0/1000</div>
+                    </div>
+                    <button type="button" class="btn btn-success w-100" onclick="sendAnnouncement()">Duyuruyu Gönder</button>
+
+                    <div id="successAlert" class="alert alert-success alert-dismissible fade show" role="alert">
+                        Duyuru başarıyla gönderildi!
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Duyuru Özet Modalı -->
+    <div class="modal fade" id="summaryModal" tabindex="-1" aria-labelledby="summaryModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="summaryModalLabel">Duyuru Özeti</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p><strong>Başlık:</strong> <span id="summaryTitle"></span></p>
+                    <p><strong>Mesaj:</strong> <span id="summaryMessage"></span></p>
+                    <p><strong>Gönderim Tarihi:</strong> <span id="summaryDate"></span></p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Kapat</button>
+                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Tamam</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function toggleSidebar() {
+            document.querySelector('.sidebar').classList.toggle('active');
+        }
+
+        function updateCharacterCount() {
+            const message = document.getElementById('announcementMessage').value;
+            document.getElementById('charCount').textContent = `${message.length}/1000`;
+        }
+
+        function sendAnnouncement() {
+            const title = document.getElementById('announcementTitle').value;
+            const message = document.getElementById('announcementMessage').value;
+            
+            if (title && message) {
+                document.getElementById('successAlert').style.display = 'block';
+                
+                // Özet modalini doldur
+                document.getElementById('summaryTitle').textContent = title;
+                document.getElementById('summaryMessage').textContent = message;
+                document.getElementById('summaryDate').textContent = new Date().toLocaleString('tr-TR', { day: '2-digit', month: 'long', year: 'numeric', hour: '2-digit', minute: '2-digit' });
+                
+                // Modalı aç
+                const summaryModal = new bootstrap.Modal(document.getElementById('summaryModal'));
+                summaryModal.show();
+
+                // Formu sıfırla
+                document.getElementById('announcementTitle').value = '';
+                document.getElementById('announcementMessage').value = '';
+                document.getElementById('charCount').textContent = '0/1000';
+            } else {
+                alert('Lütfen başlık ve mesaj alanlarını doldurun.');
+            }
+        }
+    </script>
+</body>
+</html>

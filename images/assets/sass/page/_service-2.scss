@@ -1,0 +1,265 @@
+.service-2-banner {
+	width: 100%;
+	height: 550px;
+
+	@include lg-screen {
+		height: 450px;
+	}
+
+	@include md-screen {
+		height: 400px;
+	}
+
+	@include msm-screen {
+		height: 350px;
+	}
+
+	img {
+		width: 100%;
+		height: 100%;
+		object-fit: cover;
+	}
+}
+
+// service2-counter
+.service2--counter {
+	background: hsl(var(--dark));
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	padding: 40px 10px;
+
+	.counter-text {
+		font-size: 18px;
+		font-weight: 400;
+		line-height: 29px;
+		text-align: left;
+		color: hsl(var(--white) / 0.7);
+	}
+
+	.service-counter-wrap {
+		.counting {
+			font-size: 32px !important;
+			font-weight: 700;
+			line-height: 38px;
+			text-align: left;
+			color: hsl(var(--base));
+		}
+		.counting-text {
+			font-family: Open Sans;
+			font-size: 16px;
+			font-weight: 400;
+			line-height: 38px;
+			color: hsl(var(--white) / 0.7);
+			text-align: left;
+		}
+	}
+}
+
+.service2-list {
+	.list {
+		list-style: disc;
+		&-item {
+			font-size: 18px;
+			font-weight: 400;
+			line-height: 30px;
+
+			.bolded {
+				font-size: 18px;
+				font-weight: 700 !important;
+				line-height: 30px;
+			}
+		}
+	}
+}
+
+.birthday-package-wrap {
+	.heading {
+		font-size: 24px;
+		font-weight: 600;
+		line-height: 30px;
+		text-align: center;
+		color: hsl(var(--dark));
+	}
+	.sub-heading {
+		font-size: 18px;
+		text-align: center;
+		font-weight: 400;
+		line-height: 26px;
+		color: hsl(var(--black) / 0.7);
+	}
+}
+
+.birthday-pricing {
+
+	background-color: hsl(var(--base) / 0.1) !important;
+
+	.bg--elements{
+		bottom: 0;
+		right: 0;
+		z-index: -1;
+	}
+	.birthday-table {
+		.main-text-2 {
+			font-size: 18px;
+			font-weight: 700;
+			line-height: 20px;
+			text-align: left;
+		}
+
+		.table-head-box {
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+
+			.icon {
+				width: 72px;
+				height: 72px;
+				background-color: hsl(var(--base) / 0.5);
+				border-radius: 12px;
+				img{
+					
+					width: 44px;
+					height: 44px;
+					object-fit: cover;
+				}
+			}
+			.sub-text {
+				//styleName: Text Single/200/Medium;
+				font-size: 18px;
+				font-weight: 500;
+				line-height: 20px;
+				text-align: left;
+				margin-top: 32px;
+			}
+			.main-text {
+				font-size: 22px;
+				font-weight: 600;
+				line-height: 24px;
+				text-align: left;
+				margin-top: 12px;
+			}
+		}
+
+		thead {
+			tr {
+				th {
+					border-bottom-width: 0;
+					min-width: 230px;
+					padding-bottom: 80px;
+				}
+			}
+		}
+		tbody {
+			tr {
+				&:not(:last-child) {
+					td {
+						border-bottom: 1px dashed hsl(var(--grey) / 0.5);
+					}
+				}
+				td {
+					span,
+					i {
+						color: inherit;
+					}
+					.list-name {
+						font-size: 18px;
+						font-weight: 400;
+						line-height: 20px;
+						text-align: left;
+					}
+					&:not(:first-child) {
+						text-align: center;
+					}
+
+					.check {
+						width: 26px;
+						height: 26px;
+						background: hsl(var(--black) / 0.3);
+						border-radius: 50%;
+						display: inline-flex;
+						justify-content: center;
+						align-items: center;
+						.fa-check {
+							color: hsl(var(--white));
+							font-size: 16px;
+						}
+
+						&.active {
+							background: hsl(var(--base) / 1);
+						}
+					}
+				}
+			}
+		}
+	}
+}
+
+.overly-bg-side {
+	&::before {
+		content: '';
+		width: 100%;
+		height: 100%;
+		position: absolute;
+		background-color: hsl(var(--dark) / 0.8);
+		z-index: -1;
+		top: 0;
+		left: 0;
+	}
+}
+
+.package-wrapper {
+	.package-radio[type='radio']:checked ~ label {
+		border: 1px solid hsl(var(--base) / 1);
+	}
+
+	.package-radio ~ label {
+		border: 1px solid hsl(var(--dark) / 0.5);
+		padding: 10px;
+	}
+	.from-group-checkbox {
+		display: flex;
+		align-items: center;
+		gap: 10px;
+		.icon {
+			width: 44px;
+			height: 44px;
+			background-color: hsl(var(--base) / 0.5);
+			border-radius: 12px;
+			flex-shrink: 0;
+
+			img{
+				width: 26px;
+				height: 26px;
+				object-fit: cover;
+			}
+		}
+
+		.checkbox-description {
+			font-size: 14px;
+			font-weight: 600;
+			line-height: 15.35px;
+			text-align: left;
+			margin-bottom: 0;
+		}
+		.checkbox-title {
+			font-size: 12px;
+			font-weight: 500;
+			line-height: 12.79px;
+			text-align: left;
+			margin-bottom: 4px;
+		}
+	}
+}
+
+.live-music-slider {
+	.slick-arrow {
+		top: 85%;
+		&.slick-prev {
+			right: 60px !important;
+		}
+		&.slick-next {
+			right: 0 !important;
+		}
+	}
+}

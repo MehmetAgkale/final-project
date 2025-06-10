@@ -1,0 +1,131 @@
+<?php
+session_start();
+if (!isset($_SESSION['user_id'])) {
+    header("Location: login.php");
+    exit;
+}
+include "db.php";
+?>
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Görüşme Randevu Al</title>
+  <link rel="stylesheet" href="assets/css/bootstrap.min.css">
+  <link rel="stylesheet" href="assets/css/fontawesome-all.min.css">
+  <link rel="stylesheet" href="assets/css/line-awesome.min.css">
+  <link rel="stylesheet" href="assets/css/main.css">
+  <style>
+    body {
+      background-color: #f7f9fc;
+      font-family: 'Poppins', sans-serif;
+    }
+    .form-section {
+      background: #ffffff;
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+      margin-top: 40px;
+    }
+    h3, h4 {
+      color: #2c3e50;
+      font-weight: 600;
+    }
+    label {
+      font-weight: 500;
+      color: #34495e;
+    }
+    .btn-primary {
+      background-color: #3498db;
+      border: none;
+    }
+    .btn-primary:hover {
+      background-color: #2980b9;
+    }
+    .table th {
+      background-color: #3498db;
+      color: white;
+      text-transform: uppercase;
+    }
+  </style>
+</head>
+<body>
+<?php include "navbar.php"; ?>
+<div class="container">
+  <div class="form-section">
+    <h3 class="mb-4">Randevu Al</h3>
+    <?php if (!empty($_SESSION['rezervasyon_basarili'])): ?>
+      <div class="alert alert-success"><?php echo $_SESSION['rezervasyon_basarili']; unset($_SESSION['rezervasyon_basarili']); ?></div>
+    <?php endif; ?>
+    <?php if (!empty($_SESSION['rezervasyon_hata'])): ?>
+      <div class="alert alert-danger"><?php echo $_SESSION['rezervasyon_hata']; unset($_SESSION['rezervasyon_hata']); ?></div>
+    <?php endif; ?>
+    <form method="POST" action="rezervasyon_kaydet.php">
+      <div class="mb-3">
+        <label for="ogretmen">Öğretmen Seçin:</label>
+        <select name="ogretmen_id" id="ogretmen" class="form-select" required>
+          <option value="">-- Öğretmen Seçin --</option>
+          <?php
+          $stmt = $db->query("SELECT id, unvan, ad_soyad FROM ogretmenler");
+          foreach ($stmt as $row) {
+              echo '<option value="' . $row['id'] . '">' . $row['unvan'] . ' ' . $row['ad_soyad'] . '</option>';
+          }
+          ?>
+        </select>
+      </div>
+      <div class="mb-3">
+        <label for="tarih">Tarih:</label>
+        <input type="date" name="tarih" id="tarih" class="form-control" required>
+      </div>
+      <div class="mb-3">
+        <label for="saat">Saat Seçin:</label>
+        <select name="saat" class="form-select" required>
+          <?php
+          $saatler = ["10:00", "10:30", "11:00", "11:30", "12:00", "12:30", "13:00", "13:30", "14:00", "14:30", "15:00", "15:30", "16:00", "16:30"];
+          foreach ($saatler as $saat) {
+              echo "<option value='$saat'>$saat</option>";
+          }
+          ?>
+        </select>
+      </div>
+      <div class="mb-3">
+        <label for="mesaj">Not (İsteğe Bağlı):</label>
+        <textarea name="mesaj" id="mesaj" rows="4" class="form-control"></textarea>
+      </div>
+      <button type="submit" class="btn btn-primary">Rezervasyon Oluştur</button>
+    </form>
+  </div>
+
+  <div class="form-section mt-5">
+    <h4>Bekleyen Görüşmelerim</h4>
+    <table class="table table-bordered mt-3">
+      <thead>
+        <tr>
+          <th>Öğretmen</th>
+          <th>Tarih</th>
+          <th>Saat</th>
+          <th>Durum</th>
+        </tr>
+      </thead>
+      <tbody>
+        <?php
+        $ogrenci_id = $_SESSION['user_id'];
+        $query = $db->prepare("SELECT r.*, o.ad_soyad FROM rezervasyonlar r JOIN ogretmenler o ON r.ogretmen_id = o.id WHERE r.ogrenci_id = ? ORDER BY r.tarih DESC");
+        $query->execute([$ogrenci_id]);
+        foreach ($query as $row) {
+            echo "<tr>
+                <td>" . htmlspecialchars($row['ad_soyad']) . "</td>
+                <td>" . htmlspecialchars($row['tarih']) . "</td>
+                <td>" . htmlspecialchars($row['saat']) . "</td>
+                <td>" . htmlspecialchars($row['durum']) . "</td>
+            </tr>";
+        }
+        ?>
+      </tbody>
+    </table>
+  </div>
+</div>
+<script src="assets/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

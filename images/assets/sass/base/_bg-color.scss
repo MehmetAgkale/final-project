@@ -1,0 +1,163 @@
+// solid background color
+.bg--white {
+    background-color: hsl(var(--white)) !important;
+}
+.bg--black {
+    background-color: hsl(var(--black)) !important;
+}
+.bg--base {
+    background-color: hsl(var(--base)) !important;
+}
+.bg--base-5 {
+    background-color: hsl(var(--base)/0.5) !important;
+}
+.bg--base-4 {
+    background-color: hsl(var(--base)/0.4) !important;
+}
+.bg--base-3 {
+    background-color: hsl(var(--base)/0.3) !important;
+}
+.bg--base-2 {
+    background-color: hsl(var(--base)/0.2) !important;
+}
+.bg--base-1 {
+    background-color: hsl(var(--base)/0.1) !important;
+}
+.bg--primary {
+    background-color: hsl(var(--primary)) !important;
+}
+.bg--secondary {
+    background-color: hsl(var(--secondary)) !important;
+}
+.bg--success {
+    background-color: hsl(var(--success)) !important;
+}
+.bg--danger {
+    background-color: hsl(var(--danger)) !important;
+}
+.bg--warning {
+    background-color: hsl(var(--warning)) !important;
+}
+.bg--info {
+    background-color: hsl(var(--info)) !important;
+}
+.bg--violet {
+    background-color: hsl(var(--violet)) !important;
+}
+.bg--yellow {
+    background-color: hsl(var(--yellow)) !important;
+}
+.bg--orange {
+    background-color: hsl(var(--orange)) !important;
+}
+.bg--grey {
+    background-color: hsl(var(--grey)) !important;
+}
+.bg--purple {
+    background-color: hsl(var(--purple)) !important;
+}
+.bg--blue {
+    background-color: hsl(var(--blue)) !important;
+}
+.bg--pink {
+    background-color: hsl(var(--pink)) !important;
+}
+
+
+
+
+// section light bg color based on base color
+.section--bg {
+    background-color: hsl(var(--base)/0.3) !important;
+}
+
+
+
+// bg hover
+.hover-bg--white {
+    &:hover{
+        background-color: hsl(var(--white)) !important;
+    }
+}
+.hover-bg--black {
+    &:hover{
+        background-color: hsl(var(--black)) !important;
+    }
+}
+.hover-bg--base {
+    &:hover{
+        background-color: hsl(var(--base)) !important;
+    }
+}
+.hover-bg--primary {
+    &:hover{
+        background-color: hsl(var(--primary)) !important;
+    }
+}
+.hover-bg--secondary {
+    &:hover{
+        background-color: hsl(var(--secondary)) !important;
+    }
+}
+.hover-bg--success {
+    &:hover{
+        background-color: hsl(var(--success)) !important;
+    }
+}
+.hover-bg--danger {
+    &:hover{
+        background-color: hsl(var(--danger)) !important;
+    }
+}
+.hover-bg--warning {
+    &:hover{
+        background-color: hsl(var(--warning)) !important;
+    }
+}
+.hover-bg--info {
+    &:hover{
+        background-color: hsl(var(--info)) !important;
+    }
+}
+.hover-bg--violet {
+    &:hover{
+        background-color: hsl(var(--violet)) !important;
+    }
+}
+.hover-bg--yellow {
+    &:hover{
+        background-color: hsl(var(--yellow)) !important;
+    }
+}
+.hover-bg--teal {
+    &:hover{
+        background-color: hsl(var(--teal)) !important;
+    }
+}
+
+.hover-bg--orange {
+    &:hover{
+        background-color: hsl(var(--orange)) !important;
+    }
+}
+.hover-bg--grey {
+    &:hover{
+        background-color: hsl(var(--grey)) !important;
+    }
+}
+
+.hover-bg--purple {
+    &:hover{
+        background-color: hsl(var(--purple)) !important;
+    }
+}
+.hover-bg--blue {
+    &:hover{
+        background-color: hsl(var(--blue)) !important;
+    }
+}
+.hover-bg--pink {
+    &:hover{
+        background-color: hsl(var(--pink)) !important;
+    }
+}

@@ -1,0 +1,197 @@
+
+
+.custom--accordion {
+
+    .accordion-item {
+        background-color: transparent !important;
+        border: none;
+        border-radius: 0;
+        &.active {
+            position: relative;
+            &::after {
+                content: "";
+                position: absolute;
+                top: 6px;
+                left: 0px;
+                height: 86%;
+                width: 3px;
+                background: hsl(var(--base));
+
+            }
+        }
+
+        &:not(:last-child) {
+            margin-bottom: 20px;
+        }
+
+        .accordion-header {
+            display: flex;
+            align-items: center;
+            position: relative;
+
+            .bar{
+                position: absolute;
+                top: 6px;
+                left: 0px;
+                width: 3px;
+                height: 22px;
+                background-color: hsl(var(--base)/.1);
+            }
+
+        }
+
+    }
+
+    .accordion-body {
+        color: hsl(var(--black)/0.7);
+
+        .text {
+            max-width: 60%;
+            @include msm-screen {
+                max-width: 100%;
+            }
+        }
+    }
+
+    &:first-of-type .accordion-button.collapsed {
+        border-radius: 0px;
+        font-weight: 600;
+    }
+
+    &:last-of-type .accordion-button.collapsed {
+        border-radius: 0px;
+        color: hsl(var(--body-color));
+        background: hsl(var(--white)/0.02);
+    }
+
+    .accordion-button {
+        color: hsl(var(--black)) !important;
+        font-size: 20px;
+        padding: 0px 20px;
+        font-weight: 600;
+
+        @include msm-screen {
+            font-size: 18px;
+            padding-right: 30px;
+        }
+
+        &::after {
+            background-image: none;
+        }
+
+        &:focus {
+            box-shadow: none;
+        }
+
+        &:not(.collapsed) {
+            color: hsl(var(--white));
+            background-color: hsl(var(--white)/0.02) !important;
+            box-shadow: none;
+
+            &::after {
+                transform: rotate(0deg);
+                background-image: none;
+                color: hsl(var(--black));
+            }
+        }
+
+    }
+
+}
+
+
+
+
+// custom--accordion
+.custom--accordion1 {
+    .accordion-item {
+        background-color: hsl(var(--white)) !important;
+        overflow: hidden;
+        border-radius: 8px;
+        border: none;
+    }
+    .accordion-body {
+        padding: 0px 28px 28px 28px !important;
+        background-color: hsl(var(--white));
+        color: hsl(var(--black)/0.8); 
+        .text {
+            max-width: 60%;
+            @include msm-screen {
+                max-width: 100%;
+            }
+        }
+        &:not(.collapsed) {
+            color: hsl(var(--heading-color)); 
+            background-color:hsl(var(--base)/0.5) !important;
+            box-shadow: none;
+        }
+    }
+    &:first-of-type .accordion-button.collapsed { 
+        font-weight: 500; 
+    }
+    &:last-of-type .accordion-button.collapsed {
+        color: hsl(var(--body-color));  
+    }
+    .accordion-button{
+        background-color: hsl(var(--white));
+        color:  hsl(var(--black)) !important;
+        border-bottom: 1px solid hsl(var(--black)/0.1);
+        font-size: 20px;
+        padding: 18px 28px;
+        font-weight: 700;
+        font-family: var(--heading-font);
+
+        @include msm-screen {
+            font-size: 18px;
+            padding: 13px;
+            padding-right: 30px;
+        }
+        &::after {
+            background-image: none;
+        }
+        &:focus {
+            box-shadow: none;
+        }
+        &:not(.collapsed) {
+            color: hsl(var(--heading-color)); 
+            background-color:hsl(var(--base)/0.5) !important;
+            box-shadow: none;
+            font-weight: 700;
+            border: none;
+            &::after {
+                transform: rotate(0deg);
+                background-image: none;
+                color: hsl(var(--black));
+            
+            }
+        }
+        &[aria-expanded="true"], &[aria-expanded="false"] {
+            &::after {
+                font-family: "Font Awesome 6 Free";
+                font-weight: 600;
+                content: "\f078";
+                display: inline-block;
+                position: relative;
+                margin-left: auto;
+                width: 0 !important;
+                right: 16px;
+                color: hsl(var(--black)) !important;
+                font-size: 20px;
+                @include msm-screen {
+                    right: -13px;
+                    font-size: 14px;
+                }
+            }
+        }
+        &[aria-expanded="false"] {
+            &::after {
+                font-family: "Font Awesome 6 Free";
+                content:  "\f077";
+                color: hsl(var(--body-color));
+            }
+        }
+    }
+    
+}
+
+

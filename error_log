@@ -1,0 +1,250 @@
+[14-May-2025 06:53:49 Europe/Istanbul] PHP Warning:  Undefined array key "email" in /home/u2262482/public_html/login.php on line 8
+[14-May-2025 06:53:53 Europe/Istanbul] PHP Warning:  Undefined array key "email" in /home/u2262482/public_html/login.php on line 8
+[14-May-2025 06:54:00 Europe/Istanbul] PHP Warning:  Undefined array key "email" in /home/u2262482/public_html/login.php on line 8
+[14-May-2025 06:54:03 Europe/Istanbul] PHP Warning:  Undefined array key "email" in /home/u2262482/public_html/login.php on line 8
+[14-May-2025 06:54:13 Europe/Istanbul] PHP Warning:  Undefined array key "email" in /home/u2262482/public_html/login.php on line 8
+[14-May-2025 06:56:34 Europe/Istanbul] PHP Warning:  Undefined array key "ogrenci_no" in /home/u2262482/public_html/login.php on line 8
+[14-May-2025 06:56:34 Europe/Istanbul] PHP Fatal error:  Uncaught PDOException: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'ogrenci_no' in 'WHERE' in /home/u2262482/public_html/login.php:12
+Stack trace:
+#0 /home/u2262482/public_html/login.php(12): PDOStatement->execute()
+#1 {main}
+  thrown in /home/u2262482/public_html/login.php on line 12
+[14-May-2025 06:56:37 Europe/Istanbul] PHP Warning:  Undefined array key "ogrenci_no" in /home/u2262482/public_html/login.php on line 8
+[14-May-2025 06:56:37 Europe/Istanbul] PHP Fatal error:  Uncaught PDOException: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'ogrenci_no' in 'WHERE' in /home/u2262482/public_html/login.php:12
+Stack trace:
+#0 /home/u2262482/public_html/login.php(12): PDOStatement->execute()
+#1 {main}
+  thrown in /home/u2262482/public_html/login.php on line 12
+[14-May-2025 06:56:46 Europe/Istanbul] PHP Fatal error:  Uncaught PDOException: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'ogrenci_no' in 'WHERE' in /home/u2262482/public_html/login.php:12
+Stack trace:
+#0 /home/u2262482/public_html/login.php(12): PDOStatement->execute()
+#1 {main}
+  thrown in /home/u2262482/public_html/login.php on line 12
+[14-May-2025 10:03:41 Europe/Istanbul] PHP Warning:  include(navbar.php): Failed to open stream: No such file or directory in /home/u2262482/public_html/gorusme_ayarla.php on line 21
+[14-May-2025 10:03:41 Europe/Istanbul] PHP Warning:  include(): Failed opening 'navbar.php' for inclusion (include_path='.:/opt/alt/php81/usr/share/pear:/opt/alt/php81/usr/share/php:/usr/share/pear:/usr/share/php') in /home/u2262482/public_html/gorusme_ayarla.php on line 21
+[14-May-2025 10:09:28 Europe/Istanbul] PHP Warning:  include(navbar.php): Failed to open stream: No such file or directory in /home/u2262482/public_html/gorusme_ayarla.php on line 21
+[14-May-2025 10:09:28 Europe/Istanbul] PHP Warning:  include(): Failed opening 'navbar.php' for inclusion (include_path='.:/opt/alt/php81/usr/share/pear:/opt/alt/php81/usr/share/php:/usr/share/pear:/usr/share/php') in /home/u2262482/public_html/gorusme_ayarla.php on line 21
+[15-May-2025 01:52:28 Europe/Istanbul] PHP Warning:  include(navbar.php): Failed to open stream: No such file or directory in /home/u2262482/public_html/gorusme_ayarla.php on line 21
+[15-May-2025 01:52:28 Europe/Istanbul] PHP Warning:  include(): Failed opening 'navbar.php' for inclusion (include_path='.:/opt/alt/php81/usr/share/pear:/opt/alt/php81/usr/share/php:/usr/share/pear:/usr/share/php') in /home/u2262482/public_html/gorusme_ayarla.php on line 21
+[15-May-2025 02:37:43 Europe/Istanbul] PHP Fatal error:  Uncaught PDOException: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'u2262482_alku.ogrenciler' doesn't exist in /home/u2262482/public_html/gelen_mesajlar.php:11
+Stack trace:
+#0 /home/u2262482/public_html/gelen_mesajlar.php(11): PDO->query()
+#1 {main}
+  thrown in /home/u2262482/public_html/gelen_mesajlar.php on line 11
+[15-May-2025 02:38:00 Europe/Istanbul] PHP Fatal error:  Uncaught PDOException: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'u2262482_alku.ogrenciler' doesn't exist in /home/u2262482/public_html/gelen_mesajlar.php:11
+Stack trace:
+#0 /home/u2262482/public_html/gelen_mesajlar.php(11): PDO->query()
+#1 {main}
+  thrown in /home/u2262482/public_html/gelen_mesajlar.php on line 11
+[15-May-2025 02:38:02 Europe/Istanbul] PHP Fatal error:  Uncaught PDOException: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'u2262482_alku.ogrenciler' doesn't exist in /home/u2262482/public_html/gelen_mesajlar.php:11
+Stack trace:
+#0 /home/u2262482/public_html/gelen_mesajlar.php(11): PDO->query()
+#1 {main}
+  thrown in /home/u2262482/public_html/gelen_mesajlar.php on line 11
+[15-May-2025 02:38:03 Europe/Istanbul] PHP Fatal error:  Uncaught PDOException: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'u2262482_alku.ogrenciler' doesn't exist in /home/u2262482/public_html/gelen_mesajlar.php:11
+Stack trace:
+#0 /home/u2262482/public_html/gelen_mesajlar.php(11): PDO->query()
+#1 {main}
+  thrown in /home/u2262482/public_html/gelen_mesajlar.php on line 11
+[15-May-2025 02:38:51 Europe/Istanbul] PHP Fatal error:  Uncaught PDOException: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'u2262482_alku.ogrenciler' doesn't exist in /home/u2262482/public_html/gelen_mesajlar.php:11
+Stack trace:
+#0 /home/u2262482/public_html/gelen_mesajlar.php(11): PDO->query()
+#1 {main}
+  thrown in /home/u2262482/public_html/gelen_mesajlar.php on line 11
+[15-May-2025 02:41:37 Europe/Istanbul] PHP Fatal error:  Uncaught PDOException: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'u2262482_alku.ogrenciler' doesn't exist in /home/u2262482/public_html/gelen_mesajlar.php:11
+Stack trace:
+#0 /home/u2262482/public_html/gelen_mesajlar.php(11): PDO->query()
+#1 {main}
+  thrown in /home/u2262482/public_html/gelen_mesajlar.php on line 11
+[15-May-2025 02:44:57 Europe/Istanbul] PHP Fatal error:  Uncaught PDOException: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'u2262482_alku.ogrenciler' doesn't exist in /home/u2262482/public_html/messages.php:11
+Stack trace:
+#0 /home/u2262482/public_html/messages.php(11): PDO->query()
+#1 {main}
+  thrown in /home/u2262482/public_html/messages.php on line 11
+[15-May-2025 02:45:18 Europe/Istanbul] PHP Fatal error:  Uncaught PDOException: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'u2262482_alku.ogrenciler' doesn't exist in /home/u2262482/public_html/messages.php:11
+Stack trace:
+#0 /home/u2262482/public_html/messages.php(11): PDO->query()
+#1 {main}
+  thrown in /home/u2262482/public_html/messages.php on line 11
+[15-May-2025 02:45:19 Europe/Istanbul] PHP Fatal error:  Uncaught PDOException: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'u2262482_alku.ogrenciler' doesn't exist in /home/u2262482/public_html/messages.php:11
+Stack trace:
+#0 /home/u2262482/public_html/messages.php(11): PDO->query()
+#1 {main}
+  thrown in /home/u2262482/public_html/messages.php on line 11
+[15-May-2025 02:45:19 Europe/Istanbul] PHP Fatal error:  Uncaught PDOException: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'u2262482_alku.ogrenciler' doesn't exist in /home/u2262482/public_html/messages.php:11
+Stack trace:
+#0 /home/u2262482/public_html/messages.php(11): PDO->query()
+#1 {main}
+  thrown in /home/u2262482/public_html/messages.php on line 11
+[15-May-2025 02:45:19 Europe/Istanbul] PHP Fatal error:  Uncaught PDOException: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'u2262482_alku.ogrenciler' doesn't exist in /home/u2262482/public_html/messages.php:11
+Stack trace:
+#0 /home/u2262482/public_html/messages.php(11): PDO->query()
+#1 {main}
+  thrown in /home/u2262482/public_html/messages.php on line 11
+[15-May-2025 02:45:32 Europe/Istanbul] PHP Fatal error:  Uncaught PDOException: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'u2262482_alku.ogrenciler' doesn't exist in /home/u2262482/public_html/messages.php:11
+Stack trace:
+#0 /home/u2262482/public_html/messages.php(11): PDO->query()
+#1 {main}
+  thrown in /home/u2262482/public_html/messages.php on line 11
+[15-May-2025 02:49:06 Europe/Istanbul] PHP Fatal error:  Uncaught PDOException: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'u2262482_alku.ogrenciler' doesn't exist in /home/u2262482/public_html/messages.php:11
+Stack trace:
+#0 /home/u2262482/public_html/messages.php(11): PDO->query()
+#1 {main}
+  thrown in /home/u2262482/public_html/messages.php on line 11
+[15-May-2025 02:49:08 Europe/Istanbul] PHP Fatal error:  Uncaught PDOException: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'u2262482_alku.ogrenciler' doesn't exist in /home/u2262482/public_html/messages.php:11
+Stack trace:
+#0 /home/u2262482/public_html/messages.php(11): PDO->query()
+#1 {main}
+  thrown in /home/u2262482/public_html/messages.php on line 11
+[15-May-2025 02:49:31 Europe/Istanbul] PHP Fatal error:  Uncaught PDOException: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'u2262482_alku.ogrenciler' doesn't exist in /home/u2262482/public_html/messages.php:11
+Stack trace:
+#0 /home/u2262482/public_html/messages.php(11): PDO->query()
+#1 {main}
+  thrown in /home/u2262482/public_html/messages.php on line 11
+[15-May-2025 02:51:06 Europe/Istanbul] PHP Fatal error:  Uncaught PDOException: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'u2262482_alku.ogrenciler' doesn't exist in /home/u2262482/public_html/messages.php:13
+Stack trace:
+#0 /home/u2262482/public_html/messages.php(13): PDO->query()
+#1 {main}
+  thrown in /home/u2262482/public_html/messages.php on line 13
+[15-May-2025 02:53:19 Europe/Istanbul] PHP Fatal error:  Uncaught PDOException: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'ad_soyad' in 'SELECT' in /home/u2262482/public_html/messages.php:11
+Stack trace:
+#0 /home/u2262482/public_html/messages.php(11): PDO->query()
+#1 {main}
+  thrown in /home/u2262482/public_html/messages.php on line 11
+[15-May-2025 02:53:20 Europe/Istanbul] PHP Fatal error:  Uncaught PDOException: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'ad_soyad' in 'SELECT' in /home/u2262482/public_html/messages.php:11
+Stack trace:
+#0 /home/u2262482/public_html/messages.php(11): PDO->query()
+#1 {main}
+  thrown in /home/u2262482/public_html/messages.php on line 11
+[15-May-2025 02:53:34 Europe/Istanbul] PHP Fatal error:  Uncaught PDOException: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'ad_soyad' in 'SELECT' in /home/u2262482/public_html/messages.php:11
+Stack trace:
+#0 /home/u2262482/public_html/messages.php(11): PDO->query()
+#1 {main}
+  thrown in /home/u2262482/public_html/messages.php on line 11
+[15-May-2025 02:53:34 Europe/Istanbul] PHP Fatal error:  Uncaught PDOException: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'ad_soyad' in 'SELECT' in /home/u2262482/public_html/messages.php:11
+Stack trace:
+#0 /home/u2262482/public_html/messages.php(11): PDO->query()
+#1 {main}
+  thrown in /home/u2262482/public_html/messages.php on line 11
+[15-May-2025 02:53:35 Europe/Istanbul] PHP Fatal error:  Uncaught PDOException: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'ad_soyad' in 'SELECT' in /home/u2262482/public_html/messages.php:11
+Stack trace:
+#0 /home/u2262482/public_html/messages.php(11): PDO->query()
+#1 {main}
+  thrown in /home/u2262482/public_html/messages.php on line 11
+[15-May-2025 02:53:35 Europe/Istanbul] PHP Fatal error:  Uncaught PDOException: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'ad_soyad' in 'SELECT' in /home/u2262482/public_html/messages.php:11
+Stack trace:
+#0 /home/u2262482/public_html/messages.php(11): PDO->query()
+#1 {main}
+  thrown in /home/u2262482/public_html/messages.php on line 11
+[15-May-2025 02:53:35 Europe/Istanbul] PHP Fatal error:  Uncaught PDOException: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'ad_soyad' in 'SELECT' in /home/u2262482/public_html/messages.php:11
+Stack trace:
+#0 /home/u2262482/public_html/messages.php(11): PDO->query()
+#1 {main}
+  thrown in /home/u2262482/public_html/messages.php on line 11
+[15-May-2025 02:53:35 Europe/Istanbul] PHP Fatal error:  Uncaught PDOException: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'ad_soyad' in 'SELECT' in /home/u2262482/public_html/messages.php:11
+Stack trace:
+#0 /home/u2262482/public_html/messages.php(11): PDO->query()
+#1 {main}
+  thrown in /home/u2262482/public_html/messages.php on line 11
+[15-May-2025 02:53:36 Europe/Istanbul] PHP Fatal error:  Uncaught PDOException: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'ad_soyad' in 'SELECT' in /home/u2262482/public_html/messages.php:11
+Stack trace:
+#0 /home/u2262482/public_html/messages.php(11): PDO->query()
+#1 {main}
+  thrown in /home/u2262482/public_html/messages.php on line 11
+[15-May-2025 02:53:36 Europe/Istanbul] PHP Fatal error:  Uncaught PDOException: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'ad_soyad' in 'SELECT' in /home/u2262482/public_html/messages.php:11
+Stack trace:
+#0 /home/u2262482/public_html/messages.php(11): PDO->query()
+#1 {main}
+  thrown in /home/u2262482/public_html/messages.php on line 11
+[15-May-2025 02:53:36 Europe/Istanbul] PHP Fatal error:  Uncaught PDOException: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'ad_soyad' in 'SELECT' in /home/u2262482/public_html/messages.php:11
+Stack trace:
+#0 /home/u2262482/public_html/messages.php(11): PDO->query()
+#1 {main}
+  thrown in /home/u2262482/public_html/messages.php on line 11
+[15-May-2025 02:53:36 Europe/Istanbul] PHP Fatal error:  Uncaught PDOException: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'ad_soyad' in 'SELECT' in /home/u2262482/public_html/messages.php:11
+Stack trace:
+#0 /home/u2262482/public_html/messages.php(11): PDO->query()
+#1 {main}
+  thrown in /home/u2262482/public_html/messages.php on line 11
+[15-May-2025 02:53:38 Europe/Istanbul] PHP Fatal error:  Uncaught PDOException: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'ad_soyad' in 'SELECT' in /home/u2262482/public_html/messages.php:11
+Stack trace:
+#0 /home/u2262482/public_html/messages.php(11): PDO->query()
+#1 {main}
+  thrown in /home/u2262482/public_html/messages.php on line 11
+[15-May-2025 02:53:40 Europe/Istanbul] PHP Fatal error:  Uncaught PDOException: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'ad_soyad' in 'SELECT' in /home/u2262482/public_html/messages.php:11
+Stack trace:
+#0 /home/u2262482/public_html/messages.php(11): PDO->query()
+#1 {main}
+  thrown in /home/u2262482/public_html/messages.php on line 11
+[15-May-2025 02:54:09 Europe/Istanbul] PHP Fatal error:  Uncaught PDOException: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'ad_soyad' in 'SELECT' in /home/u2262482/public_html/messages.php:14
+Stack trace:
+#0 /home/u2262482/public_html/messages.php(14): PDO->query()
+#1 {main}
+  thrown in /home/u2262482/public_html/messages.php on line 14
+[15-May-2025 02:59:25 Europe/Istanbul] PHP Fatal error:  Uncaught PDOException: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'ogretmen_id' in 'INSERT INTO' in /home/u2262482/public_html/messages.php:26
+Stack trace:
+#0 /home/u2262482/public_html/messages.php(26): PDOStatement->execute()
+#1 {main}
+  thrown in /home/u2262482/public_html/messages.php on line 26
+[15-May-2025 06:20:50 Europe/Istanbul] PHP Fatal error:  Uncaught PDOException: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'ogrenci_id' in 'WHERE' in /home/u2262482/public_html/ogrenci_mesajlar.php:14
+Stack trace:
+#0 /home/u2262482/public_html/ogrenci_mesajlar.php(14): PDOStatement->execute()
+#1 {main}
+  thrown in /home/u2262482/public_html/ogrenci_mesajlar.php on line 14
+[15-May-2025 08:05:13 Europe/Istanbul] PHP Fatal error:  Uncaught PDOException: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'ogretmen' in 'WHERE' in /home/u2262482/public_html/gorusme_ayarla.php:24
+Stack trace:
+#0 /home/u2262482/public_html/gorusme_ayarla.php(24): PDOStatement->execute()
+#1 {main}
+  thrown in /home/u2262482/public_html/gorusme_ayarla.php on line 24
+[15-May-2025 09:12:53 Europe/Istanbul] PHP Warning:  Undefined array key "email" in /home/u2262482/public_html/login.php on line 8
+[15-May-2025 09:12:53 Europe/Istanbul] PHP Warning:  Undefined array key "password" in /home/u2262482/public_html/login.php on line 9
+[15-May-2025 11:08:25 Europe/Istanbul] PHP Fatal error:  Uncaught PDOException: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'ogretmen' in 'WHERE' in /home/u2262482/public_html/gorusme_ayarla.php:24
+Stack trace:
+#0 /home/u2262482/public_html/gorusme_ayarla.php(24): PDOStatement->execute()
+#1 {main}
+  thrown in /home/u2262482/public_html/gorusme_ayarla.php on line 24
+[15-May-2025 11:16:32 Europe/Istanbul] PHP Fatal error:  Uncaught PDOException: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'ogretmen' in 'WHERE' in /home/u2262482/public_html/gorusme_ayarla.php:24
+Stack trace:
+#0 /home/u2262482/public_html/gorusme_ayarla.php(24): PDOStatement->execute()
+#1 {main}
+  thrown in /home/u2262482/public_html/gorusme_ayarla.php on line 24
+[15-May-2025 11:28:30 Europe/Istanbul] PHP Parse error:  syntax error, unexpected token "\" in /home/u2262482/public_html/gorusme_ayarla.php on line 64
+[15-May-2025 11:28:31 Europe/Istanbul] PHP Parse error:  syntax error, unexpected token "\" in /home/u2262482/public_html/gorusme_ayarla.php on line 64
+[15-May-2025 11:28:32 Europe/Istanbul] PHP Parse error:  syntax error, unexpected token "\" in /home/u2262482/public_html/gorusme_ayarla.php on line 64
+[15-May-2025 11:28:33 Europe/Istanbul] PHP Parse error:  syntax error, unexpected token "\" in /home/u2262482/public_html/gorusme_ayarla.php on line 64
+[15-May-2025 11:28:33 Europe/Istanbul] PHP Parse error:  syntax error, unexpected token "\" in /home/u2262482/public_html/gorusme_ayarla.php on line 64
+[15-May-2025 11:28:34 Europe/Istanbul] PHP Parse error:  syntax error, unexpected token "\" in /home/u2262482/public_html/gorusme_ayarla.php on line 64
+[15-May-2025 11:32:10 Europe/Istanbul] PHP Fatal error:  Uncaught PDOException: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'ogretmen' in 'WHERE' in /home/u2262482/public_html/gorusme_ayarla.php:23
+Stack trace:
+#0 /home/u2262482/public_html/gorusme_ayarla.php(23): PDOStatement->execute()
+#1 {main}
+  thrown in /home/u2262482/public_html/gorusme_ayarla.php on line 23
+[15-May-2025 11:35:03 Europe/Istanbul] PHP Fatal error:  Uncaught PDOException: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'ogretmen' in 'WHERE' in /home/u2262482/public_html/gorusme_ayarla.php:26
+Stack trace:
+#0 /home/u2262482/public_html/gorusme_ayarla.php(26): PDOStatement->execute()
+#1 {main}
+  thrown in /home/u2262482/public_html/gorusme_ayarla.php on line 26
+[15-May-2025 11:38:22 Europe/Istanbul] PHP Fatal error:  Uncaught PDOException: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'r.ogretmen_id' in 'ON' in /home/u2262482/public_html/gorusme_ayarla.php:38
+Stack trace:
+#0 /home/u2262482/public_html/gorusme_ayarla.php(38): PDOStatement->execute()
+#1 {main}
+  thrown in /home/u2262482/public_html/gorusme_ayarla.php on line 38
+[15-May-2025 11:38:28 Europe/Istanbul] PHP Fatal error:  Uncaught PDOException: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'r.ogretmen_id' in 'ON' in /home/u2262482/public_html/gorusme_ayarla.php:38
+Stack trace:
+#0 /home/u2262482/public_html/gorusme_ayarla.php(38): PDOStatement->execute()
+#1 {main}
+  thrown in /home/u2262482/public_html/gorusme_ayarla.php on line 38
+[15-May-2025 11:40:12 Europe/Istanbul] PHP Fatal error:  Uncaught PDOException: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'r.ogretmen_id' in 'ON' in /home/u2262482/public_html/gorusme_ayarla.php:41
+Stack trace:
+#0 /home/u2262482/public_html/gorusme_ayarla.php(41): PDOStatement->execute()
+#1 {main}
+  thrown in /home/u2262482/public_html/gorusme_ayarla.php on line 41
+[15-May-2025 14:01:58 Europe/Istanbul] PHP Fatal error:  Uncaught PDOException: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'ogretmen_id' in 'INSERT INTO' in /home/u2262482/public_html/messages.php:28
+Stack trace:
+#0 /home/u2262482/public_html/messages.php(28): PDOStatement->execute()
+#1 {main}
+  thrown in /home/u2262482/public_html/messages.php on line 28
+[10-Jun-2025 12:24:33 Europe/Istanbul] PHP Warning:  Undefined array key "email" in /home/u2262482/public_html/admin_panel_login.php on line 8
+[10-Jun-2025 12:24:33 Europe/Istanbul] PHP Warning:  Undefined array key "password" in /home/u2262482/public_html/admin_panel_login.php on line 9
+[10-Jun-2025 12:24:41 Europe/Istanbul] PHP Warning:  Undefined array key "email" in /home/u2262482/public_html/admin_panel_login.php on line 8
+[10-Jun-2025 12:24:41 Europe/Istanbul] PHP Warning:  Undefined array key "password" in /home/u2262482/public_html/admin_panel_login.php on line 9

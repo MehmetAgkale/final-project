@@ -1,0 +1,106 @@
+.category-section{
+    padding: 0px 40px;
+    background: hsl(var(--white));
+}
+
+
+@media screen and (max-width:1022px){
+    .menu-btm {
+        display: none;
+    }
+}
+.menu-btm {
+    padding: 0px 60px;
+}
+.sub-menu-list{
+    .category-item{
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        color: hsl(var(--black)/0.4);
+        .category-name{
+            color: hsl(var(--black)/0.4);
+        }
+        position: relative;
+        &:hover{
+            color: hsl(var(--black));
+            &::after{
+                content: "";
+                position: absolute;
+                bottom: -16px;
+                left: 0;
+                width: 100%;
+                height: 2px;
+                background: hsl(var(--base));
+
+            }
+            // border-bottom: 1px solid hsl(var(--base));
+            .category-name{
+                color: hsl(var(--black));
+            }
+        }
+    }
+}
+.menu-btm .sub-menu {
+    display: inline-flex;
+    gap: 50px;
+    padding: 0px 116px 0px 116px;
+}
+.menu-btm .sub-menu .sub-menu-list {
+    padding: 18px 0px;
+    position: relative;
+    font-size: 16px;
+    margin-right: 26px;
+}
+.menu-btm .sub-menu .sub-menu-list a{
+    font-weight: 100;
+}
+.menu-btm .sub-menu .sub-menu-list button {
+    position: relative;
+    color: hsl(var(--body-color));
+}
+.menu-btm .sub-menu .sub-menu-list:hover .sub-content-item {
+    visibility: visible;
+    opacity: 1;
+}
+.menu-btm .sub-content-item {
+    padding: 20px;
+    visibility: hidden;
+    opacity: 0;
+    position: absolute;
+    border: 1px solid hsl(var(--base));
+    display: flex;
+    flex-direction: column;
+    top: 50px;
+    gap: 16px;
+    background-color: hsl(var(--white));
+    z-index: 5 !important;
+}
+.menu-btm .sub-content-item .nav-item-category--wraper {
+    width: 166px;
+}
+.menu-btm .sub-content-item .nav-item-category--wraper p {
+    padding: 0px 6px;
+    font-weight: 400;
+}
+.menu-btm .sub-content-item .nav-item-category--wraper ul li {
+    padding: 5px 6px;
+}
+.menu-btm .sub-content-item .nav-item-category--wraper ul li a {
+    background-color: transparent !important;
+    color: hsl(var(--black)/0.6) !important;
+}
+.menu-btm .sub-content-item .nav-item-category--wraper ul :hover {
+    background: hsl(var(--base));
+    color: hsl(var(--white)) !important;
+    transition: 0.4s all !important;
+}
+.menu-btm .sub-content-item .nav-item-category {
+    display: flex;
+    flex-direction: row;
+}
+
+
+
+

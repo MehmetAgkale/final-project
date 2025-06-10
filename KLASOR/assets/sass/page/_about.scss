@@ -1,0 +1,261 @@
+.about {
+
+    overflow: hidden;
+    z-index: 1;
+
+    &::after{
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 462px;
+        height: 487px;
+        background-color: hsl(var(--cards-bg));
+        z-index: -1;
+    }
+
+
+    .elemrnt-1 {
+        top: 18%;
+        left: 0px;
+    }
+
+    .elemrnt-2 {
+        bottom: 0%;
+        left: 0px;
+    }
+
+
+    .elemrnt-3 {
+        bottom: 0%;
+        right: 0px;
+        z-index: -1;
+    }
+
+    .booking--content {
+        .title {
+            font-size: 48px;
+        }
+    }
+
+
+    .table-book--form {
+        background-color: hsl(var(--cards-bg));
+        padding: 68px 26px;
+
+        label {
+            background-color: hsl(var(--cards-bg)) !important;
+        }
+    }
+
+
+}
+
+
+
+.about-2 {
+    position: relative;
+    overflow: hidden;
+    z-index: 1;
+
+    .elemrnt-1 {
+        bottom: 18%;
+        right: 0px;
+    }
+
+    .elemrnt-2 {
+        bottom: 0%;
+        left: 0px;
+    }
+
+    .about-left-content {
+
+        .border-one {
+            top: -20px;
+            left: -9px;
+            border: 1px solid hsl(var(--danger));
+            width: 389px;
+            height: 389px;
+            border-radius: 50%;
+            z-index: -1;
+            animation: icon_dot_one 20s linear infinite;
+
+            &::after {
+                position: absolute;
+                top: 37%;
+                left: -1%;
+                content: "";
+                width: 16px;
+                height: 16px;
+                border-radius: 50%;
+                background-color: hsl(var(--primary));
+            }
+
+            &::before {
+                position: absolute;
+                top: 8%;
+                right: 75px;
+                content: "";
+                width: 10px;
+                height: 10px;
+                border-radius: 50%;
+                background-color: hsl(var(--success));
+
+            }
+
+        }
+
+        .border-two {
+            top: -51px;
+            left: -25px;
+            border: 1px solid hsl(var(--danger));
+            width: 420px;
+            height: 420px;
+            border-radius: 50%;
+            z-index: -1;
+            animation: icon_dot_one 20s linear infinite;
+
+            &::after {
+                position: absolute;
+                top: 8%;
+                left: 20%;
+                content: "";
+                width: 10px;
+                height: 10px;
+                border-radius: 50%;
+                background-color: hsl(var(--pink));
+            }
+
+            &::before {
+                position: absolute;
+                top: 50%;
+                right: -4px;
+                content: "";
+                width: 6px;
+                height: 6px;
+                border-radius: 50%;
+                background-color: hsl(var(--blue));
+
+            }
+        }
+    }
+
+
+
+
+    .booking--content {
+        .title {
+            font-size: 48px;
+        }
+    }
+
+
+    .table-book--form {
+        background-color: hsl(var(--cards-bg));
+        padding: 68px 26px;
+
+        label {
+            background-color: hsl(var(--cards-bg)) !important;
+        }
+    }
+
+
+
+}
+
+
+
+
+
+// opening-section
+.opening-section {
+    z-index: 1;
+
+    .elemrnt-3 {
+        bottom: 0%;
+        right: 0px;
+        z-index: -1;
+    }
+
+    .elemrnt-1 {
+        bottom: 0%;
+        left: 0px;
+        z-index: -1;
+    }
+
+    .booking--content {
+        .title {
+            font-size: 48px;
+        }
+    }
+
+
+    .table-book--form {
+        background-color: hsl(var(--cards-bg));
+        padding: 68px 26px;
+
+        label {
+            background-color: hsl(var(--cards-bg)) !important;
+        }
+    }
+}
+
+
+.opening-section--three {
+    z-index: 1;
+
+    .elemrnt-3 {
+        bottom: 0%;
+       left: 0px;
+        z-index: -1;
+    }
+
+    .elemrnt-1 {
+        bottom: 0%;
+        left: 0px;
+        z-index: -1;
+    }
+
+    .booking--content {
+        .title {
+            font-size: 48px;
+        }
+    }
+
+
+    .table-book--form {
+        background-color: hsl(var(--cards-bg));
+        padding: 68px 26px;
+
+        label {
+            background-color: hsl(var(--cards-bg)) !important;
+        }
+    }
+}
+
+
+
+
+@-webkit-keyframes icon_dot_one {
+    0% {
+        -webkit-transform: rotate(0) translate(0);
+        transform: rotate(0) translate(0);
+    }
+
+    100% {
+        -webkit-transform: rotate(-360deg) translate(0);
+        transform: rotate(-360deg) translate(0);
+    }
+}
+
+@keyframes icon_dot_one {
+    0% {
+        -webkit-transform: rotate(0) translate(0);
+        transform: rotate(0) translate(0);
+    }
+
+    100% {
+        -webkit-transform: rotate(-360deg) translate(0);
+        transform: rotate(-360deg) translate(0);
+    }
+}

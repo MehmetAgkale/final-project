@@ -1,0 +1,106 @@
+.cookie-section {
+    overflow: hidden;
+
+    .coockie-wrap {
+        h6 {
+            font-weight: 600;
+        }
+
+        p {
+            span {
+                color: hsl(var(--black));
+                font-weight: 600;
+                padding-right: 6px;
+            }
+        }
+
+        .ul-wrap {
+            display: flex;
+            padding: 20px;
+            gap: 40px;
+
+            ul {
+                li {
+                    color: hsl(var(--black)/0.8);
+                    list-style: disc;
+                    margin-bottom: 20px;
+                }
+            }
+        }
+    }
+
+}
+
+
+.cookie-box {
+    padding: 32px;
+    border-radius: 4px;
+    border: 1px solid hsl(var(--base));
+    
+    .title--wrap {
+        position: relative;
+        margin-bottom: 26px;
+
+        &::after {
+            content: "";
+            top: 0px;
+            left: -16px;
+            position: absolute;
+            width: 3px;
+            height: 24px;
+            background-color: hsl(var(--base));
+        }
+
+        .title {
+            color: hsl(var(--base));
+            font-size: 16px;
+            font-weight: 900;
+        }
+    }
+
+
+    .item--wrap {
+        display: flex;
+        justify-content: flex-start;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 20px;
+        padding-left: 12px;
+
+        position: relative;
+
+        &::after {
+            content: "";
+            position: absolute;
+            top: 0px;
+            left: -16px;
+            width: 2px;
+            height: 100%;
+            background: hsl(var(--black)/0.1);
+        }
+
+        li {
+            position: relative;
+
+            &::after {
+                content: "";
+                position: absolute;
+                top: 9px;
+                left: -14px;
+                width: 7px;
+                height: 7px;
+                border-radius: 50%;
+                background: hsl(var(--black)/0.4);
+            }
+
+        }
+        .active{
+            &::after {
+                
+                background: hsl(var(--base));
+            }
+        }
+
+    }
+
+}

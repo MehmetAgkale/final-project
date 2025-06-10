@@ -1,0 +1,618 @@
+<!-- template top-->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Title -->
+    <title>ALKÜ REZERVASYON</title>
+    <!-- Favicon -->
+    <link rel="shortcut icon" href="assets/images/logo/fav.png">
+    <!-- Apple touch icon -->
+    <link rel="apple-touch-icon" href="assets/images/logo/fav.png">
+    <!-- line awesome -->
+    <link rel="stylesheet" href="assets/css/line-awesome.min.css">
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="assets/css/bootstrap.min.css">
+    <!-- Font awesome -->
+    <link rel="stylesheet" href="assets/css/fontawesome-all.min.css">
+    <!-- Slick -->
+    <link rel="stylesheet" href="assets/css/slick.css">
+    <!-- Animate css -->
+    <link rel="stylesheet" href="assets/css/animate.min.css">
+    <!-- Odometer -->
+    <link rel="stylesheet" href="assets/css/odometer.css">
+    <!-- splitting -->
+    <link rel="stylesheet" href="assets/css/splitting.css">
+    <!-- magnific-popup -->
+    <link rel="stylesheet" href="assets/css/magnific-popup.css">
+    <!-- Main css -->
+    <link rel="stylesheet" href="assets/css/main.css">
+
+</head>
+
+<body>
+
+    <!--==================== Preloader Start ====================-->
+    <div id="loading">
+        <div id="loading-center">
+            <div id="loading-center-absolute">
+                <span class="loader"></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="sidebar-overlay"></div>
+
+    <!--==================== Preloader End ====================-->
+
+<!-- header -->
+
+<!-- Header Start -->
+
+<div class="header-main-area--three">
+  <div class="header--two" id="header">
+    <div class="container">
+      <div class="header-wrapper d-flex justify-content-between align-items-center flex-row">
+        <!-- ham menu -->
+        <i class="fa-sharp fa-solid fa-bars-staggered ham__menu" data-bs-toggle="offcanvas"
+          data-bs-target="#offcanvasExample" aria-controls="offcanvasExample"></i>
+
+        <!-- logo -->
+        <div class="header-menu-wrapper align-items-center d-flex">
+          <div class="logo-wrapper">
+            <a href="index.html" class="normal-logo" id="normal-logo"> <img src="assets/images/logo/logo.png" alt="...">
+            </a>
+          </div>
+        </div>
+        <!-- / logo -->
+
+
+        <div class="menu-list-wrapper">
+          <ul class="main-menu">
+            <li class="links--wrap">
+              <a class='link text--black active' href="index3.html">Anasayfa</a>
+            </li>
+
+
+            <li class="links--wrap">
+              <a class="link text--black" href="#">REZERVASYON</a>
+            </li>
+
+            <li class="links--wrap">
+              <a class="link text--black" href="#">AKADEMİK PERSONELLER </a>
+            </li>
+            <!-- <li><a class="link text--black" href="contact.html">İLETİŞİM<Main></Main></a></li> -->
+            <li><a class="link text--black" href="#">BURAYA SOR</a></li>
+          </ul>
+        </div>
+
+
+        <ul class="login-lng d-flex align-items-center gap-3">
+          <li>
+            <a class="btn btn-outline--dark text--black border--black" href="login.html">Giriş Yap</a>
+          </li>
+
+          <li>
+            <a class="btn btn-outline--dark text--black border--black" href="signin.html">Kayıt Ol</a>
+          </li>
+        </ul>
+
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Header section End -->
+
+<!-- Sidebar mobile menu wrap Start-->
+<div class="offcanvas offcanvas-start text-bg-light" tabindex="-1" id="offcanvasExample">
+  <div class="offcanvas-header">
+    <div class="logo">
+      <div class="align-items-center d-flex">
+        <div class="logo-wrapper">
+          <a href="index.html" class="normal-logo" id="offcanvas-logo-normal">
+            <img src="assets/images/logo/logo.png" alt="">
+          </a>
+        </div>
+      </div>
+    </div>
+    <button type="button" class="btn-close btn-close-black" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+  </div>
+  <div class="offcanvas-body">
+    <div class="user-info">
+      <div class="user-thumb">
+        <a href="userDashboard.html">
+          <img src="assets/images/user/user3.png" alt="user-thumb">
+        </a>
+      </div>
+      <a href="userDashboard.html">
+        <h4>Anonymous Alex</h4>
+      </a>
+    </div>
+
+
+    <!-- < dashboard side bar -->
+    <div class="sidebar-menu position-relative">
+      <ul class="sidebar-menu-list">
+
+
+        <li class="sidebar-menu-list__item">
+          <a href="index.html" class="sidebar-menu-list__link active">
+            <span class="icon"><i class="fa-solid fa-house"></i></span>
+            <span class="text">Home</span>
+          </a>
+        </li>
+
+        <li class="sidebar-menu-list__item">
+          <a href="about.html" class="sidebar-menu-list__link">
+            <span class="icon"><i class="fa-regular fa-circle-question"></i></span>
+            <span class="text">About</span>
+          </a>
+        </li>
+
+        <li class="sidebar-menu-list__item has-dropdown">
+          <a href="javascript:void(0)" class="sidebar-menu-list__link">
+            <span class="icon"><i class="fa-regular fa-compass"></i></span>
+            <span class="text">Menu</span>
+          </a>
+          <div class="sidebar-submenu">
+            <ul class="sidebar-submenu-list">
+              <li class="sidebar-submenu-list__item">
+                <a href="restaurant-menu.html" class="sidebar-submenu-list__link">Restaurant Menu</a>
+              </li>
+              <li class="sidebar-submenu-list__item">
+                <a href="bar-menu.html" class="sidebar-submenu-list__link">Bar Menu</a>
+              </li>
+              <li class="sidebar-submenu-list__item">
+                <a href="wine-menu.html" class="sidebar-submenu-list__link">Wine Menu</a>
+              </li>
+            </ul>
+          </div>
+        </li>
+
+        <li class="sidebar-menu-list__item has-dropdown">
+          <a href="javascript:void(0)" class="sidebar-menu-list__link">
+            <span class="icon"><i class="fa-brands fa-hubspot"></i></span>
+            <span class="text">Pages</span>
+          </a>
+          <div class="sidebar-submenu">
+            <ul class="sidebar-submenu-list">
+              <li class="sidebar-submenu-list__item">
+                <a href="service-details.html" class="sidebar-submenu-list__link">Service Details</a>
+              </li>
+              <li class="sidebar-submenu-list__item">
+                <a href="table-reservation.html" class="sidebar-submenu-list__link">Table Reservation</a>
+              </li>
+
+              <li class="sidebar-submenu-list__item">
+                <a href="table-reservation2.html" class="sidebar-submenu-list__link">Package Reservation</a>
+              </li>
+
+              <li class="sidebar-submenu-list__item">
+                <a href="music-amenities.html" class="sidebar-submenu-list__link">Music Amenities</a>
+              </li>
+
+              <li class="sidebar-submenu-list__item">
+                <a href="gift-voucher.html" class="sidebar-submenu-list__link">Gift Voucher</a>
+              </li>
+
+              <li class="sidebar-submenu-list__item">
+                <a href="coupon.html" class="sidebar-submenu-list__link">Coupon</a>
+              </li>
+
+              <li class="sidebar-submenu-list__item">
+                <a href="checkout.html" class="sidebar-submenu-list__link">Checkout</a>
+              </li>
+
+              <li class="sidebar-submenu-list__item">
+                <a href="payment.html" class="sidebar-submenu-list__link">Payment</a>
+              </li>
+              <li class="sidebar-submenu-list__item"></li>
+                <a href="404.html" class="sidebar-submenu-list__link">404</a>
+              </li>
+            </ul>
+          </div>
+        </li>
+
+        <li class="sidebar-menu-list__item">
+          <a href="service.html" class="sidebar-menu-list__link">
+            <span class="icon"><i class="fa-solid fa-arrow-right-arrow-left"></i></span>
+            <span class="text">Service</span>
+          </a>
+        </li>
+        <li class="sidebar-menu-list__item">
+          <a href="blog.html" class="sidebar-menu-list__link ">
+            <span class="icon"><i class="fa-solid fa-blog"></i></span>
+            <span class="text">Blog</span>
+          </a>
+        </li>
+
+        <li class="sidebar-menu-list__item">
+          <a href="contact.html" class="sidebar-menu-list__link">
+            <span class="icon"><i class="fa-solid fa-headset"></i></span>
+            <span class="text">Contact</span>
+          </a>
+        </li>
+
+        <li class="sidebar-menu-list__item">
+          <a href="cart.html" class="sidebar-menu-list__link">
+            <span class="icon"><i class="fa-brands fa-opencart"></i></span>
+            <span class="text">Cart</span>
+          </a>
+        </li>
+
+        <li class="sidebar-menu-list__item">
+          <a href="favorit.html" class="sidebar-menu-list__link">
+            <span class="icon"><i class="fa-regular fa-heart"></i></span>
+            <span class="text">Favorite</span>
+          </a>
+        </li>
+
+        <li class="sidebar-menu-list__item">
+          <a href="login.html" class="sidebar-menu-list__link">
+            <span class="icon"><i class="fa-solid fa-arrow-right-to-bracket"></i></span>
+            <span class="text">Login</span>
+          </a>
+        </li>
+
+        <li class="sidebar-menu-list__item">
+          <a href="signin.html" class="sidebar-menu-list__link">
+            <span class="icon"><i class="fa-solid fa-arrow-right-from-bracket"></i></span>
+            <span class="text">Signup</span>
+          </a>
+        </li>
+
+      </ul>
+    </div>
+    <!-- dashboard side bar /> -->
+
+  </div>
+</div>
+
+
+
+
+
+
+
+<!-- Sidebar mobile menu wrap End --> <!-- Breadcrumb Start Here -->
+<div class="breadcrumb bg--img" style="background-image: url();">
+
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Breadcrumb End Here -->
+
+
+<section class="about py-100 position-relative">
+
+    <div class="elemrnt-1 position-absolute">
+        <img src="" alt="....">
+    </div>
+
+    <div class="elemrnt-2 position-absolute">
+        <img src="" alt="....">
+    </div>
+
+    <div class="elemrnt-3 position-absolute">
+        <img src="" alt="....">
+    </div>
+
+    <div class="container">
+        <div class="row gy-4 gx-5 mb-120">
+            <div class="col-lg-6 d-flex align-items-center">
+                <div class="about-left-content">
+                    
+                </div>
+            </div>
+            <div class="col-lg-6 d-flex flex-column justify-content-center">
+                <div class="row">
+                    
+                </div>
+                <div class="row">
+                    <div class="col-lg-12">
+                        
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+
+
+        <div class="row gy-4 justify-content-between">
+           <div class="col-lg-4">
+                <div class="voucher--card d-flex flex-column gap--20">
+                    <div class="thumb--wrap">
+                        <img width="220px"  class="" src="assets/images/common/alper.jpg" alt="">
+                    </div>
+                    <div class="content--wrap position-relative">
+                        
+                        <h6 class="fw--700 fs--22">Doç. Dr. Alper Kürşat UYSAL</h6>
+                        <p class="mb-2">Mühendislik Fakültesi
+<br>
+                          Bilgisayar Mühendisliği Bölümü
+                          <br>      
+                          Çalışma Alanları : Örüntü Tanıma, Metin Sınıflandırma</p>
+                        <a href="#">Rezervasyon Yap<i class="fa-solid fa-arrow-right-long"></i></a>
+                    </div>
+                </div>
+           </div>
+           
+           <div class="col-lg-4">
+            <div class="voucher--card d-flex flex-column gap--20">
+                <div class="thumb--wrap">
+                    <img width="220px"  class="" src="assets/images/common/özge.jpg" alt="">
+                </div>
+                <div class="content--wrap position-relative">
+                    
+                    <h6 class="fw--700 fs--22">Dr. Öğr. Üyesi Özge ÖZTİMUR KARADAĞ</h6>
+                    <p class="mb-2">Mühendislik Fakültesi
+<br>
+                      Bilgisayar Mühendisliği Bölümü Bölüm Başkanı
+    <br>                  
+                      Çalışma Alanları : Görüntü İşleme, Örüntü Tanıma, Bilgisayarlı Görü</p>
+                    <a href="#">Rezervasyon Yap <i class="fa-solid fa-arrow-right-long"></i></a>
+                </div>
+            </div>
+           </div>
+           <div class="col-lg-4">
+            <div class="voucher--card d-flex flex-column gap--20">
+                <div class="thumb--wrap">
+                    <img width="220px"  class="" src="assets/images/common/yılmaz.jpg" alt="">
+                </div>
+                <div class="content--wrap position-relative">
+                    
+                    <h6 class="fw--700 fs--22">Dr. Öğr. Üyesi Yılmaz Kemal YÜCE</h6>
+                    <p class="mb-2">Mühendislik Fakültesi
+<br>
+                      Bilgisayar Mühendisliği Bölümü
+                      <br>
+                      Çalışma Alanları : Tıp Bilişimi, Elektronik Sağlık, Mobil Sağlık, Kullanılabilirlik</p>
+                    <a href="#">Rezervasyon Yap <i class="fa-solid fa-arrow-right-long"></i></a>
+                </div>
+                <br><br> <br> <br>
+            </div>
+           </div>
+        </div>
+        <div class="row gy-4 justify-content-between">
+          <div class="col-lg-4">
+               <div class="voucher--card d-flex flex-column gap--20">
+                   <div class="thumb--wrap">
+                       <img width="220px"  class="" src="assets/images/common/ibrahim.jpg" alt="">
+                   </div>
+                   <div class="content--wrap position-relative">
+                       
+                       <h6 class="fw--700 fs--22">Dr. Öğr. Üyesi İbrahim Rıza HALLAÇ</h6>
+                       <p class="mb-2">Mühendislik Fakültesi
+<br>
+                        Bilgisayar Mühendisliği Bölümü
+                        <br>
+                        Çalışma Alanları : Makine Öğrenmesi, Doğal Dil İşleme ve Büyük Veri</p>
+                       <a href="#">Rezervasyon Yap<i class="fa-solid fa-arrow-right-long"></i></a>
+                   </div>
+               </div>
+          </div>
+          
+          <div class="col-lg-4">
+           <div class="voucher--card d-flex flex-column gap--20">
+               <div class="thumb--wrap">
+                   <img width="220px"  class="" src="assets/images/common/kübra.jpeg" alt="">
+               </div>
+               <div class="content--wrap position-relative">
+                   
+                   <h6 class="fw--700 fs--22">Dr. Öğr. Üyesi Kübra UYAR</h6>
+                   <p class="mb-2">Mühendislik Fakültesi
+<br>
+                    Bilgisayar Mühendisliği Bölümü Başkan Yardımcısı
+                    <br>
+                    Çalışma Alanları : Derin Öğrenme, Görüntü İşleme, Yapay Zekâ</p>
+                   <a href="#">Rezervasyon Yap <i class="fa-solid fa-arrow-right-long"></i></a>
+               </div>
+           </div>
+          </div>
+          <div class="col-lg-4">
+           <div class="voucher--card d-flex flex-column gap--20">
+               <div class="thumb--wrap">
+                   <img width="220px"  class="" src="assets/images/common/enis.jpg" alt="">
+               </div>
+               <div class="content--wrap position-relative">
+                   
+                   <h6 class="fw--700 fs--22">Dr. Öğr. Üyesi Enis ARSLAN</h6>
+                   <p class="mb-2">Mühendislik Fakültesi
+<br>
+                    Bilgisayar Mühendisliği Bölümü
+                    <br>
+                    Çalışma Alanları : Dil İşleme, Görüntü İşleme, Makine Öğrenmesi</p>
+                   <a href="#">Rezervasyon Yap<i class="fa-solid fa-arrow-right-long"></i></a>
+               </div>
+           </div>
+          </div>
+       </div>
+    </div>
+</section>
+
+
+
+
+<!-- FAQ section -->
+<!-- < faq-section -->
+<section class="faq-section py-100">
+
+  <div class="container">
+    <div class="row gy-5 mb-5">
+
+      
+
+
+
+
+
+
+    </div>
+
+
+  </div>
+</section>
+<!--  faq-section /> -->
+
+
+<!-- blog section -->
+<!-- footer -->
+<!-- Footer Start Here -->
+<footer class="footer-area bg--black overflow--hidden bg--img" style="background-image: url();">
+
+  <div class="footer-top">
+
+      <div class="container">
+          <div class="pt-100">
+
+
+              <div class="row gy-4 justify-content-center">
+                  <div class="col-xl-4 col-sm-6">
+                      <div class="footer-item">
+                          <div class="footer-item--logo"
+                              data-wow-delay="0.2s">
+                              <a href="index.html" class="footer-logo-normal" id="footer-logo-normal">
+                                  <img src="assets/images/logo/logo.png" alt="">
+                              </a>
+                          </div>
+                          <p class="footer-item--desc">
+                              © 2025 Alanya Alaaddin Keykubat Üniversitesi | Tüm Hakları Saklıdır.
+Eğitimde kalite, bilimde yenilik, gelecekte başarı!</p>
+
+                          <ul class="social-list z--9 position-relative"
+                              data-wow-delay="1s">
+                              <li class="social-list--item"><a href="https://www.facebook.com"
+                                      class="social-list__link icon-wrapper">
+                                      <div class="icon"><i class="fab fa-facebook-f"></i></div>
+                                  </a> </li>
+                              <li class="social-list--item"><a href="https://www.twitter.com"
+                                      class="social-list__link icon-wrapper active">
+                                      <div class="icon"><i class="fa-brands fa-x-twitter"></i></div>
+                                  </a></li>
+                              <li class="social-list--item"><a href="https://www.linkedin.com"
+                                      class="social-list__link icon-wrapper">
+                                      <div class="icon"><i class="fab fa-linkedin-in"></i></div>
+                                  </a></li>
+                              <li class="social-list--item"><a href="https://www.pinterest.com"
+                                      class="social-list__link icon-wrapper">
+                                      <div class="icon"><i class="fab fa-instagram"></i></div>
+                                  </a></li>
+                          </ul>
+                      </div>
+                  </div>
+
+                  <div class="col-xl-2 col-sm-6">
+                      
+                  </div>
+
+
+                  <div class="col-xl-4 col-sm-6">
+                      <div class="footer-item">
+                          <h5 class="footer-item--title">İletişim</h5>
+                          
+                          <div class="footer-contact-info mb-3 d-flex justify-content-start align-items-baseline gap-3">
+                              <div class="d-flex justify-content-start align-items-center">
+                                  <i class="text--base fa-regular fa-envelope"></i>
+                              </div>
+                              <div class="d-flex align-items-center flex-wrap gap-2">
+                                  <p class="fw--400">Eposta Adresi</p>
+
+                                  <p><a href="mailto:alku@alanya.edu.tr">alku@alanya.edu.tr</a></p>
+                              </div>
+                          </div>
+
+                          <div class="footer-contact-info mb-3 d-flex justify-content-start align-items-baseline gap-3">
+                              <div class="d-flex justify-content-start align-items-center">
+                                  <i class="fa-solid fa-location-dot"></i> 
+                              </div>
+                              <div class="d-flex align-items-center flex-wrap gap-2">
+                                  <p class="fw--400">Konum</p>
+                                  <p>Kestel , Alanya/Antalya</p>
+                              </div>
+                          </div>
+
+
+
+                          <div class="footer-subscribe-box mb-3">
+
+
+
+                          </div>
+
+                      </div>
+                  </div>
+
+              </div>
+
+
+
+
+
+
+
+
+          </div>
+      </div>
+  </div>
+  <!-- Footer Top End-->
+
+  <!-- bottom Footer -->
+  <div class="bottom-footer pt-4 pb-5">
+      <div class="container">
+          <div class="row text-center gy-2">
+              <div class="col-lg-12">
+                  <div class="bottom-footer-text"> &copy; © 2025 Alanya Alaaddin Keykubat Üniversitesi </div>
+              </div>
+          </div>
+      </div>
+  </div>
+
+</footer>
+<!-- ==================== Footer End Here ==================== -->
+
+
+
+
+<div class="scroll-top show">
+  <svg class="progress-circle svg-content" width="100%" height="100%" viewBox="-1 -1 102 102">
+      <path d="M50,1 a49,49 0 0,1 0,98 a49,49 0 0,1 0,-98"
+          style="transition: stroke-dashoffset 10ms linear 0s; stroke-dasharray: 307.919, 307.919; stroke-dashoffset: 197.514;">
+      </path>
+  </svg>
+</div>
+
+<!-- footer -->
+
+<!-- footer -->
+<!-- Jquery js -->
+<script src="assets/js/jquery-3.7.1.min.js"></script>
+<!-- Bootstrap Js -->
+<script src="assets/js/bootstrap.bundle.min.js"></script>
+<!-- Slick js -->
+<script src="assets/js/slick.min.js"></script>
+<!-- Odometer js -->
+<script src="assets/js/odometer.min.js"></script>
+<!-- Appear -->
+<script src="assets/js/jquery.appear.min.js"></script>
+<!-- wow js -->
+<script src="assets/js/wow.min.js"></script>
+<!-- splitting js -->
+<script src="assets/js/splitting.min.js"></script>
+<!-- magnific-popup -->
+<script src="assets/js/jquery.magnific-popup.min.js"></script>
+<!-- main js -->
+<script src="assets/js/main.js"></script>
+
+</body>
+
+</html>

@@ -1,0 +1,52 @@
+.faq-thumb--wrap {
+
+    .thumb--wrap {
+        position: relative;
+
+        &::after {
+            content: "Q";
+            position: absolute;
+            bottom: 0px;
+            right: 0px;
+            font-size: 422px;
+            font-weight: 700;
+            color: hsl(var(--white)/0.4);
+            line-height: 1.1;
+
+        }
+    }
+
+    .thumb--wrap3 {
+        position: relative;
+
+        &::after {
+            content: "?";
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            -ms-transform: translate(-50%, -50%);
+            transform: translate(-50%, -50%);
+            font-size: 520px;
+            font-weight: 700;
+            color: hsl(var(--white)/0.4);
+            line-height: 1.1;
+
+        }
+    }
+
+    .thumb--wrap1 {
+        top: 0px;
+        right: 0px;
+        width: 261.952px;
+        height: 263.153px;
+        border: 15px solid hsl(var(--body-color));
+    }
+
+    .thumb--wrap2 {
+        bottom: 0px;
+        left: 0px;
+        width: 246px;
+        height: 246px;
+        border: 15px solid hsl(var(--body-color));
+    }
+}

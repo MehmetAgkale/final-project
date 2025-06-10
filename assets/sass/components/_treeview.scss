@@ -1,0 +1,66 @@
+
+.tree-view{
+  list-style:none;
+//   border-left: 1px dashed hsl(var(--black)/0.6);
+  margin-top: 20px;
+  li{
+    margin-left: 30px;
+    padding: 12px 0px;
+  }
+  .ref-name{
+    position: relative;
+    color: hsl(var(--black));
+    &::after{
+        content: "";
+        top: 19px;
+        left: -14px;
+        position: absolute;
+        height: 8px;
+        width: 8px;
+        border-radius: 50%;
+        background: hsl(var(--base));
+    }
+  }
+}
+
+.tree-view:first-child{
+    border-left: none;
+}
+
+#ul{
+  margin:0;
+  padding:0;
+}
+
+.caret{
+  cursor:pointer;
+  user-select:none;
+  position: relative;
+  color: hsl(var(--base));
+  &::after{
+    content: none !important;
+    }
+}
+
+.caret::before {
+    position: absolute;
+    content: "\25B6";
+    top: 0;
+    left: -20px;
+    color: hsl(var(--base));
+    display: inline-block;
+}
+
+.caret-down::before {
+  transform: rotate(90deg);  
+}
+
+.nested{
+  display: none;
+  border-left: 2px dashed hsl(var(--black)/0.1);
+}
+
+.active{
+  display: block;
+}
+

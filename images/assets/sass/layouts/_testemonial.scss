@@ -1,0 +1,95 @@
+.testimonial-section {
+    position: relative;
+
+    .bg--thumb1 {
+        position: absolute;
+        top: 10%;
+        left: 3%;
+        width: 186px;
+        height: 186px;
+
+        img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+    }
+
+    .bg--thumb2 {
+        position: absolute;
+        width: 116.102px;
+        height: 119.136px;
+        top: 10%;
+        right: 20%;
+
+        img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+    }
+
+    .bg--thumb3 {
+        position: absolute;
+        width: 180.288px;
+        height: 180.157px;
+        bottom: 10%;
+        right: 5%;
+
+        img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+    }
+
+    .bg--thumb4 {
+        position: absolute;
+        top: 0px;
+        right: 0px;
+    }
+
+    .bg--thumb5 {
+        position: absolute;
+        top: 45%;
+        left: 20%;
+    }
+
+    .bg--thumb6 {
+        position: absolute;
+        bottom: 30%;
+        right: 20%;
+    }
+
+    .bg--thumb7 {
+        position: absolute;
+        bottom: 10%;
+        left: 20%;
+        width: 116.102px;
+        height: 119.136px;
+
+        img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+    }
+}
+
+.testimonial-section--two{
+
+    .element1{
+        bottom: 0;
+        left: 0;
+    }
+
+    .element2{
+        bottom: 45%;
+        left: 20%;
+    }
+
+    .element3{
+        top: 20%;
+        right: 20%;
+    }
+}

@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Öğretmen Paneli</title>
+    <link href="assets/css/bootstrap.min.css" rel="stylesheet">
+    <link href="assets/css/fontawesome-all.min.css" rel="stylesheet">
+    <link href="assets/css/animate.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #f4f6f9;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        .sidebar {
+            height: 100vh;
+            background-color: #343a40;
+            padding-top: 20px;
+            position: fixed;
+            width: 250px;
+        }
+        .sidebar a {
+            color: white;
+            padding: 15px;
+            display: block;
+            text-decoration: none;
+            transition: 0.3s;
+        }
+        .sidebar a:hover {
+            background-color: #495057;
+            padding-left: 25px;
+        }
+        .content {
+            margin-left: 260px;
+            padding: 30px;
+        }
+        .card:hover {
+            transform: scale(1.03);
+            transition: 0.3s;
+        }
+        .navbar {
+            margin-left: 250px;
+            background-color: #fff;
+            padding: 10px 30px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        .schedule-table th, .schedule-table td {
+            text-align: center;
+            padding: 10px;
+            border: 1px solid #dee2e6;
+        }
+        .schedule-table th {
+            background-color: #3498db;
+            color: white;
+            text-transform: uppercase;
+        }
+        .schedule-table td button {
+            width: 100%;
+            padding: 8px;
+            background-color: #e9ecef;
+            border: none;
+            border-radius: 5px;
+            font-size: 14px;
+            color: #495057;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .schedule-table td button:hover {
+            background-color: #28a745;
+            color: white;
+        }
+        .schedule-table td button.active {
+            background-color: #28a745;
+            color: white;
+        }
+        .availability-section, .notes-section {
+            border: 2px solid #28a745;
+            padding: 15px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+        }
+        .availability-section h5, .notes-section h5 {
+            font-weight: bold;
+            color: #28a745;
+            margin-bottom: 15px;
+        }
+        .availability-section .form-control,
+        .notes-section .form-control {
+            border-radius: 5px;
+        }
+        .message-section {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        .message-section h5 {
+            font-weight: bold;
+            color: #343a40;
+            margin-bottom: 15px;
+        }
+        .message-section .form-control {
+            border-radius: 5px;
+        }
+        .message-section .btn {
+            background-color: #343a40;
+            border: none;
+            border-radius: 5px;
+            padding: 10px;
+            font-weight: 500;
+        }
+        .message-section .btn:hover {
+            background-color: #495057;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="sidebar animate__animated animate__fadeInLeft">
+        <a href="#"><i class="fas fa-home"></i> Ana Sayfa</a>
+        <a href="#"><i class="fas fa-book"></i> Görüşme saatlerim </a>
+        <a href="#"><i class="fas fa-upload"></i> Duyuru Yap</a>
+        <a href="#"><i class="fas fa-envelope"></i> Gelen Mesajlar</a>
+        <a href="#"><i class="fas fa-sign-out-alt"></i> Çıkış</a>
+    </div>
+
+    <nav class="navbar">
+        <span class="h5">👩‍🏫 Hoş geldiniz, <strong>Dr. Öğr. Üyesi Kübra Uyar</strong></span>
+    </nav>
+
+    <div class="content animate__animated animate__fadeIn">
+        <h2 class="mb-4">Öğretmen Yönetim Paneli</h2>
+
+        <div class="row">
+            <div class="col-12">
+                <table class="schedule-table table table-bordered mb-4">
+                    <thead>
+                        <tr>
+                            <th>PAZARTESİ</th>
+                            <th>SALI</th>
+                            <th>ÇARŞAMBA</th>
+                            <th>PERŞEMBE</th>
+                            <th>CUMA</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><button>10:00</button></td>
+                            <td><button>10:00</button></td>
+                            <td><button>10:00</button></td>
+                            <td><button>10:00</button></td>
+                            <td><button>10:00</button></td>
+                        </tr>
+                        <tr>
+                            <td><button>10:30</button></td>
+                            <td><button>10:30</button></td>
+                            <td><button>10:30</button></td>
+                            <td><button>10:30</button></td>
+                            <td><button>10:30</button></td>
+                        </tr>
+                        <tr>
+                            <td><button>11:00</button></td>
+                            <td><button>11:00</button></td>
+                            <td><button>11:00</button></td>
+                            <td><button>11:00</button></td>
+                            <td><button>11:00</button></td>
+                        </tr>
+                        <tr>
+                            <td><button>11:30</button></td>
+                            <td><button>11:30</button></td>
+                            <td><button>11:30</button></td>
+                            <td><button>11:30</button></td>
+                            <td><button>11:30</button></td>
+                        </tr>
+                        <tr>
+                            <td><button>12:00</button></td>
+                            <td><button>12:00</button></td>
+                            <td><button>12:00</button></td>
+                            <td><button>12:00</button></td>
+                            <td><button>12:00</button></td>
+                        </tr>
+                        <tr>
+                            <td><button>12:30</button></td>
+                            <td><button>12:30</button></td>
+                            <td><button>12:30</button></td>
+                            <td><button>12:30</button></td>
+                            <td><button>12:30</button></td>
+                        </tr>
+                        <tr>
+                            <td><button>13:00</button></td>
+                            <td><button>13:00</button></td>
+                            <td><button>13:00</button></td>
+                            <td><button>13:00</button></td>
+                            <td><button>13:00</button></td>
+                        </tr>
+                        <tr>
+                            <td><button>13:30</button></td>
+                            <td><button>13:30</button></td>
+                            <td><button>13:30</button></td>
+                            <td><button>13:30</button></td>
+                            <td><button>13:30</button></td>
+                        </tr>
+                        <tr>
+                            <td><button>14:00</button></td>
+                            <td><button>14:00</button></td>
+                            <td><button>14:00</button></td>
+                            <td><button>14:00</button></td>
+                            <td><button>14:00</button></td>
+                        </tr>
+                        <tr>
+                            <td><button>14:30</button></td>
+                            <td><button>14:30</button></td>
+                            <td><button>14:30</button></td>
+                            <td><button>14:30</button></td>
+                            <td><button>14:30</button></td>
+                        </tr>
+                        <tr>
+                            <td><button>15:00</button></td>
+                            <td><button>15:00</button></td>
+                            <td><button>15:00</button></td>
+                            <td><button>15:00</button></td>
+                            <td><button>15:00</button></td>
+                        </tr>
+                        <tr>
+                            <td><button>15:30</button></td>
+                            <td><button>15:30</button></td>
+                            <td><button>15:30</button></td>
+                            <td><button>15:30</button></td>
+                            <td><button>15:30</button></td>
+                        </tr>
+                        <tr>
+                            <td><button>16:00</button></td>
+                            <td><button>16:00</button></td>
+                            <td><button>16:00</button></td>
+                            <td><button>16:00</button></td>
+                            <td><button>16:00</button></td>
+                        </tr>
+                        <tr>
+                            <td><button>16:30</button></td>
+                            <td><button>16:30</button></td>
+                            <td><button>16:30</button></td>
+                            <td><button>16:30</button></td>
+                            <td><button>16:30</button></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-6">
+                <div class="availability-section">
+                    <h5>GÖRÜŞMELERİM</h5>
+                    <div class="mb-3">
+                        <label class="form-label">Ozan Kaynak</label>
+                        <div class="input-group">
+                            <select class="form-control">
+                                <option>11:00</option>
+                                <option>11:30</option>
+                                <option>12:00</option>
+                            </select>
+                            <span class="input-group-text">Görüşme Bitti</span>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Burcu Alan</label>
+                        <div class="input-group">
+                            <select class="form-control">
+                                <option>12:30</option>
+                                <option>13:00</option>
+                                <option>13:30</option>
+                            </select>
+                            <span class="input-group-text">Görüşme Bekleniyor</span>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Mehmet Aşkale</label>
+                        <div class="input-group">
+                            <select class="form-control">
+                                <option>13:00</option>
+                                <option>13:30</option>
+                                <option>14:00</option>
+                            </select>
+                            <span class="input-group-text">Görüşme Bekleniyor</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="notes-section">
+                    <h5>NOTLARIM</h5>
+                    <div class="mb-3">
+                        <label class="form-label">Ozan Kaynak</label>
+                        <input type="text" class="form-control" value="Bitirme Projesi ile Görüşüldü">
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Burcu Alan</label>
+                        <input type="text" class="form-control" placeholder="Not giriniz">
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Mehmet Aşkale</label>
+                        <input type="text" class="form-control" placeholder="Not giriniz">
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="message-section">
+                    <h5>ÖĞRENCİLERİNE BİR MESAJ GÖNDER</h5>
+                    <div class="mb-3">
+                        <label class="form-label">Title</label>
+                        <input type="text" class="form-control" placeholder="Value">
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Message</label>
+                        <textarea class="form-control" rows="4" placeholder="Value"></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary w-100">Submit</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Saat butonlarına tıklama işlevselliği ekleme
+        document.querySelectorAll('.schedule-table td button').forEach(button => {
+            button.addEventListener('click', () => {
+                button.classList.toggle('active');
+            });
+        });
+    </script>
+</body>
+</html>

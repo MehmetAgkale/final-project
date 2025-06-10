@@ -1,0 +1,36 @@
+
+
+.custom--tabs{
+    border-color: hsl(var(--base));
+
+    padding: 12px 0px;
+    border-radius: 12px;
+
+     li{
+        margin: 0px 8px 8px 0px;
+        .btn-check:active+.btn, .btn-check:checked+.btn, .btn.active, .btn.show, .btn:active {
+            color: hsl(var(--black)) !important;
+            background: hsl(var(--base)) !important;
+            border-color: transparent !important;
+        }
+        .btn--base.outline-2:hover, .btn--base.outline-2:focus {
+            background-color: hsl(var(--base)/0.5);
+            color: hsl(var(--black));
+        }
+       
+        .btn-check:active+.btn, .btn-check:checked+.btn, .btn.active, .btn.show, .btn:active:hover {
+            color: hsl(var(--black)) !important;
+            background: hsl(var(--base)) !important;
+        }
+
+        .btn:hover{
+            color: hsl(var(--black));
+            background-color: hsl(var(--base));
+        }
+     }
+ }
+
+ .nav-tabs {
+    border-bottom: 1px solid transparent !important;
+}
+

@@ -1,0 +1,37 @@
+// count card
+.count-card {
+  display: flex;
+  justify-content: start;
+  align-items: start;
+  flex-direction: column;
+  background-color: hsl(var(--white)/0.1);
+  position: relative;
+  overflow: hidden;
+
+
+
+  .count-number-wraper {
+    display: flex;
+    align-items: baseline;
+    .number {
+      font-size: 72px;
+      font-weight: 800;
+      line-height: 0.86;
+     
+    }
+    .amount {
+      font-size: 47px;
+      font-weight: 800;
+      line-height: 1.021;
+      margin: 0px;
+     
+    }
+  }
+
+  .subtitle {
+    font-size: 20px;
+    font-weight: 500;
+    color: hsl(var(--black)/0.5);
+    text-transform: capitalize;
+  }
+}

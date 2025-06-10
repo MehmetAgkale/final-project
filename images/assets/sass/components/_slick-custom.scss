@@ -1,0 +1,364 @@
+// Slick Arrow & Dots css Start 
+
+.slick-initialized.slick-slider {
+  margin: 0;
+
+  .slick-track {
+    display: flex;
+    gap: 12px;
+  }
+
+  .slick-slide {
+    height: auto;
+    padding: 0px 0px 0px 0px;
+  }
+
+}
+
+.slick-arrow {
+  position: absolute;
+  z-index: 1;
+  top: 50%;
+  transform: translateY(-50%);
+  border: none;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
+  transition: .2s linear;
+  background-color: hsl(var(--base));
+  color: hsl(var(--white));
+  font-size: 16px;
+  margin: 0px;
+
+
+  @include md-screen {
+    width: 50px;
+    height: 50px;
+    font-size: 16px;
+  }
+
+  @include msm-screen {
+    width: 45px;
+    height: 45px;
+  }
+
+  &:hover {
+    border-color: hsl(var(--base));
+    background-color: hsl(var(--base));
+    color: hsl(var(--white));
+  }
+}
+
+// .slick-next {
+//   right: -50px;
+
+//   @include md-screen {
+//     right: -10px;
+//   }
+
+//   @include msm-screen {
+//     right: 10px;
+//   }
+// }
+
+// .slick-prev {
+//   left: -45px;
+
+//   @include md-screen {
+//     left: -10px;
+//   }
+
+//   @include msm-screen {
+//     left: 10px;
+//   }
+// }
+
+.slick-slide img {
+  display: inline-block;
+}
+
+
+// slick  Dots
+.slick-dots {
+  text-align: center;
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  bottom: -60px;
+
+  li {
+    display: inline-block;
+
+    button {
+      border: 1px solid hsl(var(--black));
+      background-color: hsl(var(--white)/0.5);
+      color: hsl(var(--white));
+      margin: 0 6px;
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      text-indent: -9999px;
+
+    }
+
+    &.slick-active button {
+      background-color: hsl(var(--base));
+      width: 10px;
+      height: 10px;
+    }
+  }
+}
+
+
+.special-monent--slider{
+  .slick-arrow {
+    position: absolute;
+    z-index: 1;
+    top: 80%;
+    right: 0%;
+    transform: translateY(-50%);
+    border: none;
+    width: 44px;
+    height: 44px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+    transition: .2s linear;
+    background-color: transparent;
+    color: hsl(var(--black));
+    border: 1px solid hsl(var(--black));
+    font-size: 16px;
+    margin: 0px;
+  
+  
+    @include md-screen {
+      width: 50px;
+      height: 50px;
+      font-size: 16px;
+    }
+  
+    @include msm-screen {
+      width: 45px;
+      height: 45px;
+    }
+  
+    &:hover {
+      border-color: hsl(var(--base));
+      background-color: hsl(var(--base));
+      color: hsl(var(--white));
+    }
+  }
+  
+  .slick-next {
+    right: -150px !important;
+  
+    @include md-screen {
+      right: -10px;
+    }
+  
+    @include msm-screen {
+      right: 10px;
+    }
+  }
+  
+  .slick-prev {
+    right: -60px !important;
+  
+    @include md-screen {
+      left: -10px;
+    }
+  
+    @include msm-screen {
+      left: 10px;
+    }
+  }
+
+
+}
+
+
+.special-monent-slider--two{
+  .slick-arrow {
+    position: absolute;
+    z-index: 1;
+    top: 93%;
+    right: 0%;
+    transform: translateY(-50%);
+    border: none;
+    width: 44px;
+    height: 44px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+    transition: .2s linear;
+    background-color: transparent;
+    color: hsl(var(--black));
+    border: 1px solid hsl(var(--black));
+    font-size: 16px;
+    margin: 0px;
+  
+  
+    @include md-screen {
+      width: 50px;
+      height: 50px;
+      font-size: 16px;
+    }
+  
+    @include msm-screen {
+      width: 45px;
+      height: 45px;
+    }
+  
+    &:hover {
+      border-color: hsl(var(--base));
+      background-color: hsl(var(--base));
+      color: hsl(var(--white));
+    }
+  }
+  
+  .slick-next {
+    right: 47% !important;
+  
+    @include md-screen {
+      right: -10px;
+    }
+  
+    @include msm-screen {
+      right: 10px;
+    }
+  }
+  
+  .slick-prev {
+    right: 54% !important;
+  
+    @include md-screen {
+      left: -10px;
+    }
+  
+    @include msm-screen {
+      left: 10px;
+    }
+  }
+
+
+}
+
+
+.testimonial-slider{
+  .slick-arrow {
+    position: absolute;
+    z-index: 1;
+    top: 50%;
+    transform: translateY(-50%);
+    border: none;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+    transition: .2s linear;
+    background-color: hsl(var(--white));
+    color: hsl(var(--black));
+    font-size: 16px;
+    margin: 0px;
+  
+  
+    @include md-screen {
+      width: 50px;
+      height: 50px;
+      font-size: 16px;
+    }
+  
+    @include msm-screen {
+      width: 45px;
+      height: 45px;
+    }
+  
+    &:hover {
+      border-color: hsl(var(--base));
+      background-color: hsl(var(--base));
+      color: hsl(var(--white));
+    }
+  }
+  
+  .slick-next {
+    right: -50px;
+  
+    @include md-screen {
+      right: -10px;
+    }
+  
+    @include msm-screen {
+      right: 10px;
+    }
+  }
+  
+  .slick-prev {
+    left: -45px;
+  
+    @include md-screen {
+      left: -10px;
+    }
+  
+    @include msm-screen {
+      left: 10px;
+    }
+  }
+}
+
+
+
+
+
+
+.slick-dots {
+  text-align: center;
+  position: relative;
+  left: 50%;
+  transform: translateX(-50%);
+  bottom: 0px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 24px;
+
+  li {
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+    overflow: hidden;
+    opacity: 0.4;
+    display: inline-block;
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+  }
+    button {
+      border: none;
+      background-color: hsl(var(--white)/.5);
+      color: hsl(var(--white));
+      margin: 0 6px;
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      text-indent: -9999px;
+      transform: rotate(45deg);
+    }
+
+    &.slick-active {
+      width: 90px;
+      height: 90px;
+      border-radius: 50%;
+      border: 3px solid hsl(var(--black));
+      overflow: hidden;
+      opacity: 1;
+    }
+  }
+}

@@ -1,0 +1,27 @@
+// base modal design
+
+.modal--base {
+    .modal-dialog {
+        .modal-content {
+            border-radius: 8px !important;
+            border: 0;
+            padding: 24px;
+        }
+        .modal-header {
+            border: 0;
+            justify-content: space-between;
+            padding: 0px;
+            margin-bottom: 36px;
+
+            .btn--close {
+                width: 30px;
+                height: 30px;
+                border-radius: 8px;
+                background-color: hsl(var(--black)/0.06) !important;
+            }
+        }
+        .modal-body{
+            padding: 0px;
+        }
+    }
+}

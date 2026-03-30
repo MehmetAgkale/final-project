@@ -1,183 +1,110 @@
 <?php
-session_start();
-include "db.php";
+require_once __DIR__ . '/app_bootstrap.php';
 
-if (!isset($_SESSION['ogretmen_id'])) {
-    header("Location: login.php");
-    exit;
-}
+$teacherId = requireTeacher();
+$success = null;
 
-$ogretmen_id = $_SESSION['ogretmen_id'];
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $reservationId = (int) ($_POST['reservation_id'] ?? 0);
+    $action = $_POST['action'] ?? '';
+    $note = trim($_POST['note'] ?? '');
 
-// Get teacher info
-$ogretmen = $db->prepare("SELECT * FROM ogretmenler WHERE id = ?");
-$ogretmen->execute([$ogretmen_id]);
-$ogretmen_data = $ogretmen->fetch(PDO::FETCH_ASSOC);
-
-if (!$ogretmen_data) {
-    die("Öğretmen bulunamadı.");
-}
-
-// Handle reservation status updates
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['rez_id']) && isset($_POST['yeni_durum'])) {
-    $rez_id = $_POST['rez_id'];
-    $yeni_durum = $_POST['yeni_durum'];
-    $not = $_POST['not'] ?? '';
-
-    // If rejected, set katildi_mi to NULL
-    if ($yeni_durum === 'Reddedildi') {
-        $update = $db->prepare("UPDATE rezervasyonlar SET durum = ?, ogretmen_notu = ?, katildi_mi = NULL WHERE id = ? AND ogretmen_id = ?");
-    } else {
-        $update = $db->prepare("UPDATE rezervasyonlar SET durum = ?, ogretmen_notu = ? WHERE id = ? AND ogretmen_id = ?");
+    if ($reservationId > 0 && in_array($action, ['Onaylandı', 'Reddedildi'], true)) {
+        $updateStmt = $db->prepare("
+            UPDATE rezervasyonlar
+            SET durum = ?, ogretmen_notu = ?, katildi_mi = CASE WHEN ? = 'Reddedildi' THEN NULL ELSE katildi_mi END
+            WHERE id = ? AND ogretmen_id = ?
+        ");
+        $updateStmt->execute([$action, $note, $action, $reservationId, $teacherId]);
+        $success = 'Rezervasyon durumu güncellendi.';
     }
-    $update->execute([$yeni_durum, $not, $rez_id, $ogretmen_id]);
 }
 
-// Handle katildi_mi toggle
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['toggle_katildi'])) {
-    $rez_id = $_POST['rez_id'];
-    $current_status = $_POST['current_status'];
-    $new_status = $current_status ? 0 : 1;
-    
-    $update = $db->prepare("UPDATE rezervasyonlar SET katildi_mi = ? WHERE id = ? AND ogretmen_id = ?");
-    $update->execute([$new_status, $rez_id, $ogretmen_id]);
-    
-    // Redirect to prevent form resubmission
-    header("Location: " . $_SERVER['PHP_SELF']);
-    exit;
-}
-
-// Get all reservations for this teacher
-$rezervasyonlar = $db->prepare("
-    SELECT r.*, k.ad as ogrenci_ad 
-    FROM rezervasyonlar r 
-    JOIN kullanicilar k ON r.ogrenci_id = k.id 
-    WHERE r.ogretmen_id = ? 
-    ORDER BY r.created_at DESC
+$reservationsStmt = $db->prepare("
+    SELECT r.*, k.ad, k.email
+    FROM rezervasyonlar r
+    JOIN kullanicilar k ON k.id = r.ogrenci_id
+    WHERE r.ogretmen_id = ?
+    ORDER BY
+        CASE r.durum
+            WHEN 'Beklemede' THEN 0
+            WHEN 'Onaylandı' THEN 1
+            ELSE 2
+        END,
+        r.tarih ASC,
+        r.saat ASC
 ");
-$rezervasyonlar->execute([$ogretmen_id]);
-$rezervasyonlar_listesi = $rezervasyonlar->fetchAll(PDO::FETCH_ASSOC);
+$reservationsStmt->execute([$teacherId]);
+$reservations = $reservationsStmt->fetchAll(PDO::FETCH_ASSOC);
 ?>
-
 <!DOCTYPE html>
 <html lang="tr">
 <head>
     <meta charset="UTF-8">
-    <title>Rezervasyon Talepleri - <?= htmlspecialchars($ogretmen_data['ad_soyad']) ?></title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rezervasyon Talepleri</title>
     <link href="assets/css/bootstrap.min.css" rel="stylesheet">
-    <link href="assets/css/main.css" rel="stylesheet">
     <style>
-        body {
-            background: #f8f9fa;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        }
-        .navbar {
-            background-color: #fff;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-        }
-        .navbar .logo img {
-            height: 45px;
-        }
-        .card {
-            border: none;
-            border-left: 4px solid #3498db;
-            transition: box-shadow 0.3s;
-        }
-        .card:hover {
-            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-        }
-        .btn {
-            transition: all 0.3s ease;
-        }
-        .status-badge {
-            font-size: 0.9em;
-            padding: 0.5em 1em;
-        }
+        body { background: #f5f7fb; }
+        .page-card { border: 0; border-radius: 18px; box-shadow: 0 14px 34px rgba(16, 57, 92, 0.08); }
     </style>
 </head>
 <body>
-<header class="navbar navbar-expand-lg p-3">
-    <div class="container-fluid d-flex justify-content-between align-items-center">
-        <div class="logo">
-            <a href="panel.php"><img src="assets/images/logo/logo.png" alt="ALKÜ Logo"></a>
+<div class="container py-4 py-lg-5">
+    <div class="d-flex flex-column flex-lg-row justify-content-between align-items-lg-center gap-3 mb-4">
+        <div>
+            <p class="text-muted mb-1">Akademisyen Rezervasyon Yönetimi</p>
+            <h1 class="h3 mb-0">Bitirme Projesi Talepleri</h1>
         </div>
-        <div class="d-flex align-items-center gap-3">
-            <span class="fw-semibold text-dark">👨‍🏫 <?= htmlspecialchars($ogretmen_data['ad_soyad']) ?></span>
-            <a href="logout.php" class="btn btn-outline-secondary btn-sm">Çıkış Yap</a>
+        <div class="d-flex gap-2">
+            <a href="panel.php" class="btn btn-outline-secondary">Panele Dön</a>
+            <a href="ogretmen_mesajlar.php" class="btn btn-outline-primary">Mesajlar</a>
         </div>
     </div>
-</header>
 
-<div class="container py-5">
-    <div class="d-flex justify-content-between align-items-center mb-4">
-        <h2>📋 Rezervasyon Talepleri</h2>
-        <a href="panel.php" class="btn btn-secondary">Panele Dön</a>
-    </div>
-
-    <?php if (empty($rezervasyonlar_listesi)): ?>
-        <div class="alert alert-info">
-            Henüz rezervasyon talebi bulunmuyor.
-        </div>
-    <?php else: ?>
-        <?php foreach ($rezervasyonlar_listesi as $rez): ?>
-            <div class="card mb-4">
-                <div class="card-body">
-                    <div class="d-flex justify-content-between align-items-start">
-                        <div>
-                            <h5 class="mb-2">📌 <?= htmlspecialchars($rez['baslik']) ?></h5>
-                            <p class="mb-1"><strong>👤 Öğrenci:</strong> <?= htmlspecialchars($rez['ogrenci_ad']) ?></p>
-                            <p class="mb-1">
-                                <strong>📅 Tarih:</strong> <?= date('d.m.Y', strtotime($rez['tarih'])) ?> | 
-                                <strong>⏰ Saat:</strong> <?= date('H:i', strtotime($rez['saat'])) ?>
-                            </p>
-                            <p class="mb-2">
-                                <strong>✉️ Mesaj:</strong><br>
-                                <?= nl2br(htmlspecialchars($rez['mesaj'])) ?>
-                            </p>
-                        </div>
-                        <div class="text-end">
-                            <span class="badge bg-<?= $rez['durum'] === 'Beklemede' ? 'warning text-dark' : ($rez['durum'] === 'Onaylandı' ? 'success' : 'danger') ?> status-badge">
-                                <?= $rez['durum'] ?>
-                            </span>
-                        </div>
-                    </div>
-
-                    <?php if ($rez['durum'] === 'Beklemede'): ?>
-                        <form method="POST" class="mt-3">
-                            <input type="hidden" name="rez_id" value="<?= $rez['id'] ?>">
-                            <div class="mb-2">
-                                <label class="form-label">Açıklama (isteğe bağlı)</label>
-                                <textarea name="not" class="form-control" rows="2"></textarea>
+    <div class="card page-card">
+        <div class="card-body p-4">
+            <?php if ($success): ?><div class="alert alert-success"><?php echo h($success); ?></div><?php endif; ?>
+            <?php if (!$reservations): ?>
+                <p class="text-muted mb-0">Henüz öğrenci talebi bulunmuyor.</p>
+            <?php else: ?>
+                <?php foreach ($reservations as $reservation): ?>
+                    <div class="border rounded-4 p-3 mb-3">
+                        <div class="d-flex justify-content-between gap-3 flex-wrap mb-2">
+                            <div>
+                                <strong><?php echo h($reservation['baslik']); ?></strong>
+                                <div class="text-muted small"><?php echo h($reservation['ad']); ?> · <?php echo h($reservation['email']); ?></div>
                             </div>
-                            <div class="d-flex gap-2">
-                                <button name="yeni_durum" value="Onaylandı" class="btn btn-success">Onayla</button>
-                                <button name="yeni_durum" value="Reddedildi" class="btn btn-danger">Reddet</button>
-                            </div>
-                        </form>
-                     <?php elseif (!empty($rez['ogretmen_notu']) && $rez['durum'] === 'Onaylandı'): ?>
-                        <div class="mt-3">
-                            <p><strong>Öğretmen Notu:</strong> <?= nl2br(htmlspecialchars($rez['ogretmen_notu'])) ?></p>
-                            <form method="POST" class="d-inline">
-                                <input type="hidden" name="rez_id" value="<?= $rez['id'] ?>">
-                                <input type="hidden" name="current_status" value="<?= $rez['katildi_mi'] ?>">
-                                <button type="submit" name="toggle_katildi" class="btn btn-sm <?= $rez['katildi_mi'] ? 'btn-success' : 'btn-outline-success' ?>">
-                                    <?= $rez['katildi_mi'] ? '✅ Katıldı' : '❌ Katılmadı' ?>
-                                </button>
+                            <span class="badge text-bg-light"><?php echo h($reservation['durum']); ?></span>
+                        </div>
+                        <div class="small text-muted mb-2">
+                            <?php echo formatDateOnly($reservation['tarih']); ?> · <?php echo h(substr($reservation['saat'], 0, 5)); ?>
+                        </div>
+                        <p class="mb-2"><?php echo nl2br(h($reservation['mesaj'])); ?></p>
+
+                        <?php if ($reservation['durum'] === 'Beklemede'): ?>
+                            <form method="POST" class="mt-3">
+                                <input type="hidden" name="reservation_id" value="<?php echo (int) $reservation['id']; ?>">
+                                <div class="mb-3">
+                                    <label class="form-label">Akademisyen Notu</label>
+                                    <textarea name="note" class="form-control" rows="3" placeholder="Onay veya red açıklaması ekleyebilirsiniz."></textarea>
+                                </div>
+                                <div class="d-flex gap-2">
+                                    <button type="submit" name="action" value="Onaylandı" class="btn btn-success">Onayla</button>
+                                    <button type="submit" name="action" value="Reddedildi" class="btn btn-outline-danger">Reddet</button>
+                                </div>
                             </form>
-                        </div>
-                    <?php elseif (!empty($rez['ogretmen_notu'])): ?>
-                        <div class="mt-3">
-                            <p><strong>Öğretmen Notu:</strong> <?= nl2br(htmlspecialchars($rez['ogretmen_notu'])) ?></p>
-                        </div>
-                    <?php endif; ?>
-                </div>
-            </div>
-        <?php endforeach; ?>
-    <?php endif; ?>
+                        <?php elseif (!empty($reservation['ogretmen_notu'])): ?>
+                            <div class="alert alert-info mb-0">
+                                <strong>Not:</strong><br>
+                                <?php echo nl2br(h($reservation['ogretmen_notu'])); ?>
+                            </div>
+                        <?php endif; ?>
+                    </div>
+                <?php endforeach; ?>
+            <?php endif; ?>
+        </div>
+    </div>
 </div>
-
-<footer class="footer text-center bg-light py-3 mt-5">
-    <p>&copy; <?= date('Y') ?> Alkü Randevu Sistemi</p>
-</footer>
 </body>
-</html> 
+</html>

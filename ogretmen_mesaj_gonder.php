@@ -1,298 +1,109 @@
 <?php
-session_start();
-include "db.php";
+require_once __DIR__ . '/app_bootstrap.php';
 
-if (!isset($_SESSION['ogretmen_id'])) {
-    header("Location: login.php");
-    exit;
-}
+$teacherId = requireTeacher();
+$success = null;
+$error = null;
 
-$ogretmen_id = $_SESSION['ogretmen_id'];
+$studentsStmt = $db->prepare("
+    SELECT id, ad, email
+    FROM kullanicilar
+    WHERE danisman_id = ?
+    ORDER BY ad ASC
+");
+$studentsStmt->execute([$teacherId]);
+$students = $studentsStmt->fetchAll(PDO::FETCH_ASSOC);
 
-// Get teacher info
-$teacher = $db->prepare("SELECT * FROM ogretmenler WHERE id = ?");
-$teacher->execute([$ogretmen_id]);
-$teacher_data = $teacher->fetch(PDO::FETCH_ASSOC);
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $studentIds = array_map('intval', $_POST['student_ids'] ?? []);
+    $title = trim($_POST['baslik'] ?? '');
+    $message = trim($_POST['mesaj'] ?? '');
 
-if (!$teacher_data) {
-    die("Öğretmen bulunamadı.");
-}
+    [$filePath, $fileName, $uploadError] = storeUploadedMessageFile($_FILES['dosya'] ?? []);
 
-// Get all students
-$students = $db->query("SELECT id, ad, email FROM kullanicilar")->fetchAll(PDO::FETCH_ASSOC);
-
-// Get students where this teacher is their advisor
-$advisees = $db->prepare("SELECT id, ad, email FROM kullanicilar WHERE danisman_id = ?");
-$advisees->execute([$ogretmen_id]);
-$advisee_list = $advisees->fetchAll(PDO::FETCH_ASSOC);
-
-// Pass data to JavaScript for debugging
-echo "<script>
-    console.log('Teacher ID:', " . json_encode($ogretmen_id) . ");
-    console.log('Number of advisees:', " . json_encode(count($advisee_list)) . ");
-    console.log('Advisees data:', " . json_encode($advisee_list) . ");
-</script>";
-
-// Handle form submission
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $baslik = trim($_POST['baslik'] ?? "");
-    $mesaj = trim($_POST['mesaj'] ?? "");
-    $hedef_ogrenciler = $_POST['hedef_ogrenciler'] ?? [];
-
-    // Pass form data to JavaScript for debugging
-    echo "<script>
-        console.log('Form submitted with data:');
-        console.log('Baslik:', " . json_encode($baslik) . ");
-        console.log('Mesaj:', " . json_encode($mesaj) . ");
-        console.log('Selected students:', " . json_encode($hedef_ogrenciler) . ");
-    </script>";
-
-    if (!$baslik || !$mesaj || empty($hedef_ogrenciler)) {
-        $error = "Lütfen tüm alanları doldurun ve en az bir öğrenci seçin.";
+    if ($uploadError) {
+        $error = $uploadError;
+    } elseif (!$studentIds || $title === '' || $message === '') {
+        $error = 'En az bir öğrenci seçin ve başlık ile mesaj alanlarını doldurun.';
     } else {
-        try {
-            if (in_array("all", $hedef_ogrenciler)) {
-                // Send to all students
-                echo "<script>console.log('Sending to all students');</script>";
-                $stmt = $db->prepare("INSERT INTO mesajlar (ogretmen_id, ogrenci_id, baslik, mesaj, tarih, durum, created_at) VALUES (?, ?, ?, ?, NOW(), 'akademisyen', NOW())");
-                foreach ($students as $ogrenci) {
-                    $stmt->execute([$ogretmen_id, $ogrenci['id'], $baslik, $mesaj]);
-                }
-            } elseif (in_array("advisees", $hedef_ogrenciler)) {
-                // Send to advisees only
-                echo "<script>
-                    console.log('Sending to advisees only');
-                    console.log('Number of advisees to receive message:', " . json_encode(count($advisee_list)) . ");
-                </script>";
-                
-                if (empty($advisee_list)) {
-                    $error = "Danışmanı olduğunuz öğrenci bulunmamaktadır.";
-                } else {
-                    $stmt = $db->prepare("INSERT INTO mesajlar (ogretmen_id, ogrenci_id, baslik, mesaj, tarih, durum, created_at) VALUES (?, ?, ?, ?, NOW(), 'akademisyen', NOW())");
-                    
-                    // Get selected student IDs from the form
-                    $selected_student_ids = array_filter($hedef_ogrenciler, function($id) {
-                        return $id !== 'advisees' && $id !== 'all';
-                    });
-                    
-                    // Only send to advisees that are also selected
-                    foreach ($advisee_list as $ogrenci) {
-                        if (in_array($ogrenci['id'], $selected_student_ids)) {
-                            echo "<script>console.log('Sending message to selected advisee:', " . json_encode($ogrenci['ad']) . ", '(ID:', " . json_encode($ogrenci['id']) . "))</script>";
-                            $stmt->execute([$ogretmen_id, $ogrenci['id'], $baslik, $mesaj]);
-                        }
-                    }
-                    $success = "Mesaj(lar) seçili danışmanlık öğrencilerine başarıyla gönderildi.";
-                }
-            } else {
-                // Send to selected students
-                echo "<script>console.log('Sending to selected students');</script>";
-                $stmt = $db->prepare("INSERT INTO mesajlar (ogretmen_id, ogrenci_id, baslik, mesaj, tarih, durum, created_at) VALUES (?, ?, ?, ?, NOW(), 'akademisyen', NOW())");
-                foreach ($hedef_ogrenciler as $ogrenci_id) {
-                    $stmt->execute([$ogretmen_id, $ogrenci_id, $baslik, $mesaj]);
-                }
-                $success = "Mesaj(lar) başarıyla gönderildi.";
-            }
-        } catch (PDOException $e) {
-            echo "<script>console.error('Database error:', " . json_encode($e->getMessage()) . ");</script>";
-            $error = "Mesaj gönderilirken bir hata oluştu: " . $e->getMessage();
+        $insertStmt = $db->prepare("
+            INSERT INTO mesajlar (ogrenci_id, ogretmen_id, baslik, mesaj, tarih, durum, created_at, gonderen_tipi, dosya_yolu, dosya_adi)
+            VALUES (?, ?, ?, ?, CURDATE(), 'akademisyen', NOW(), 'ogretmen', ?, ?)
+        ");
+
+        foreach ($studentIds as $studentId) {
+            $insertStmt->execute([$studentId, $teacherId, $title, $message, $filePath, $fileName]);
         }
+
+        $success = 'Mesaj gönderildi.';
     }
 }
 ?>
-
 <!DOCTYPE html>
 <html lang="tr">
 <head>
     <meta charset="UTF-8">
-    <title>Mesaj Gönder</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Öğrenciye Mesaj Gönder</title>
     <link href="assets/css/bootstrap.min.css" rel="stylesheet">
     <style>
-        body {
-            padding: 20px;
-            background-color: #f8f9fa;
-        }
-        .container {
-            max-width: 800px;
-            margin: 0 auto;
-        }
-        .form-group {
-            margin-bottom: 20px;
-        }
-        .student-list {
-            max-height: 300px;
-            overflow-y: auto;
-            border: 1px solid #ddd;
-            padding: 10px;
-            border-radius: 5px;
-            background: white;
-        }
-        .student-item {
-            padding: 5px 0;
-            border-bottom: 1px solid #eee;
-        }
-        .student-item:last-child {
-            border-bottom: none;
-        }
-        .btn-primary {
-            background-color: #007bff;
-            border-color: #007bff;
-        }
-        .btn-primary:hover {
-            background-color: #0056b3;
-            border-color: #0056b3;
-        }
+        body { background: #f5f7fb; }
+        .page-card { border: 0; border-radius: 18px; box-shadow: 0 14px 34px rgba(16, 57, 92, 0.08); }
     </style>
 </head>
 <body>
-    <div class="container">
-    <div class="d-flex justify-content-between align-items-center mb-4">
-            <h2>📤 Öğrencilere Mesaj Gönder</h2>
-            <div>
-                <a href="panel.php" class="btn btn-primary">Anasayfa</a>
-            </div>
+<div class="container py-4 py-lg-5">
+    <div class="d-flex flex-column flex-lg-row justify-content-between align-items-lg-center gap-3 mb-4">
+        <div>
+            <p class="text-muted mb-1">Akademisyen Mesaj Gönderimi</p>
+            <h1 class="h3 mb-0">Danışan Öğrencilere Mesaj Yaz</h1>
         </div>
-
-        <?php if (isset($error)): ?>
-            <div class="alert alert-danger"><?php echo $error; ?></div>
-        <?php endif; ?>
-
-        <?php if (isset($success)): ?>
-            <div class="alert alert-success"><?php echo $success; ?></div>
-        <?php endif; ?>
-
-        <form method="POST">
-            <div class="form-group">
-                <label>Öğrenci(ler)</label>
-                <div class="mb-2">
-                    <input type="text" class="form-control" id="studentSearch" placeholder="Öğrenci ara...">
-                </div>
-                <div class="student-list">
-                    <div class="student-item">
-                        <div class="form-check">
-                            <input type="checkbox" class="form-check-input" id="all" name="hedef_ogrenciler[]" value="all">
-                            <label class="form-check-label" for="all">Tüm Öğrenciler</label>
-                        </div>
-                    </div>
-                    <div class="student-item">
-                        <div class="form-check">
-                            <input type="checkbox" class="form-check-input" id="advisees" name="hedef_ogrenciler[]" value="advisees">
-                            <label class="form-check-label" for="advisees">Danışmanı Olduğum Öğrenciler</label>
-                        </div>
-                    </div>
-                    <?php foreach ($students as $student): ?>
-                        <div class="student-item" data-name="<?php echo strtolower(htmlspecialchars($student['ad'])); ?>" data-email="<?php echo strtolower(htmlspecialchars($student['email'])); ?>">
-                            <div class="form-check">
-                                <input type="checkbox" class="form-check-input" id="ogrenci_<?php echo $student['id']; ?>" 
-                                       name="hedef_ogrenciler[]" value="<?php echo $student['id']; ?>">
-                                <label class="form-check-label" for="ogrenci_<?php echo $student['id']; ?>">
-                                    <?php echo htmlspecialchars($student['ad']); ?>
-                                    <small class="text-muted">(<?php echo htmlspecialchars($student['email']); ?>)</small>
-                                </label>
-                            </div>
-                        </div>
-                    <?php endforeach; ?>
-                </div>
-            </div>
-
-            <div class="form-group">
-                <label for="baslik">Başlık</label>
-                <input type="text" class="form-control" id="baslik" name="baslik" required>
-            </div>
-
-            <div class="form-group">
-                <label for="mesaj">Mesaj</label>
-                <textarea class="form-control" id="mesaj" name="mesaj" rows="5" required></textarea>
-            </div>
-
-            <button type="submit" class="btn btn-primary">Mesajı Gönder</button>
-            <a href="ogretmen_mesajlar.php" class="btn btn-secondary">Mesajlara Dön</a>
-        </form>
+        <div class="d-flex gap-2">
+            <a href="ogretmen_mesajlar.php" class="btn btn-outline-secondary">Mesajlara Dön</a>
+            <a href="panel.php" class="btn btn-outline-primary">Panele Dön</a>
+        </div>
     </div>
 
-    <script src="assets/js/bootstrap.bundle.min.js"></script>
-    <script>
-        // Get advisee IDs from PHP
-        const adviseeIds = <?php echo json_encode(array_column($advisee_list, 'id')); ?>;
-        console.log('Advisee IDs:', adviseeIds);
+    <div class="card page-card">
+        <div class="card-body p-4">
+            <?php if ($success): ?><div class="alert alert-success"><?php echo h($success); ?></div><?php endif; ?>
+            <?php if ($error): ?><div class="alert alert-danger"><?php echo h($error); ?></div><?php endif; ?>
 
-        // Handle "Select All" checkbox
-        document.getElementById('all').addEventListener('change', function() {
-            console.log('All students checkbox changed:', this.checked);
-            const checkboxes = document.querySelectorAll('input[name="hedef_ogrenciler[]"]:not(#all):not(#advisees)');
-            checkboxes.forEach(checkbox => {
-                checkbox.checked = this.checked;
-            });
-            // Uncheck advisees if "All" is checked
-            if (this.checked) {
-                document.getElementById('advisees').checked = false;
-            }
-        });
-
-        // Handle advisees checkbox
-        document.getElementById('advisees').addEventListener('change', function() {
-            console.log('Advisees checkbox changed:', this.checked);
-            // Uncheck "All" if advisees is checked
-            if (this.checked) {
-                document.getElementById('all').checked = false;
-                // Check only advisee checkboxes
-                const individualCheckboxes = document.querySelectorAll('input[name="hedef_ogrenciler[]"]:not(#all):not(#advisees)');
-                individualCheckboxes.forEach(checkbox => {
-                    const studentId = parseInt(checkbox.value);
-                    checkbox.checked = adviseeIds.includes(studentId);
-                });
-            } else {
-                // Uncheck all individual checkboxes
-                const individualCheckboxes = document.querySelectorAll('input[name="hedef_ogrenciler[]"]:not(#all):not(#advisees)');
-                individualCheckboxes.forEach(checkbox => {
-                    checkbox.checked = false;
-                });
-            }
-        });
-
-        // Handle individual checkboxes
-        const individualCheckboxes = document.querySelectorAll('input[name="hedef_ogrenciler[]"]:not(#all):not(#advisees)');
-        individualCheckboxes.forEach(checkbox => {
-            checkbox.addEventListener('change', function() {
-                console.log('Individual checkbox changed:', this.id, this.checked);
-                // Uncheck "All" and "Advisees" if any individual checkbox is checked
-                if (this.checked) {
-                    document.getElementById('all').checked = false;
-                    document.getElementById('advisees').checked = false;
-                }
-                const allChecked = Array.from(individualCheckboxes).every(cb => cb.checked);
-                document.getElementById('all').checked = allChecked;
-            });
-        });
-
-        // Handle form submission
-        document.querySelector('form').addEventListener('submit', function(e) {
-            const selectedStudents = Array.from(document.querySelectorAll('input[name="hedef_ogrenciler[]"]:checked')).map(cb => cb.value);
-            console.log('Form submitted with selected students:', selectedStudents);
-            
-            if (selectedStudents.includes('advisees')) {
-                console.log('Sending to advisees only');
-            } else if (selectedStudents.includes('all')) {
-                console.log('Sending to all students');
-            } else {
-                console.log('Sending to selected individual students');
-            }
-        });
-
-        // Handle search filtering
-        document.getElementById('studentSearch').addEventListener('input', function(e) {
-            const searchTerm = e.target.value.toLowerCase();
-            console.log('Searching for:', searchTerm);
-            const studentItems = document.querySelectorAll('.student-item:not(:first-child):not(:nth-child(2))');
-            
-            studentItems.forEach(item => {
-                const name = item.dataset.name;
-                const email = item.dataset.email;
-                const matches = name.includes(searchTerm) || email.includes(searchTerm);
-                item.style.display = matches ? '' : 'none';
-                console.log('Student item:', name, email, 'matches:', matches);
-            });
-        });
-    </script>
+            <?php if (!$students): ?>
+                <p class="text-muted mb-0">Size atanmış öğrenci bulunmuyor.</p>
+            <?php else: ?>
+                <form method="POST" enctype="multipart/form-data">
+                    <div class="mb-3">
+                        <label class="form-label">Öğrenciler</label>
+                        <div class="border rounded-4 p-3" style="max-height: 260px; overflow:auto;">
+                            <?php foreach ($students as $student): ?>
+                                <div class="form-check mb-2">
+                                    <input class="form-check-input" type="checkbox" name="student_ids[]" value="<?php echo (int) $student['id']; ?>" id="student_<?php echo (int) $student['id']; ?>">
+                                    <label class="form-check-label" for="student_<?php echo (int) $student['id']; ?>">
+                                        <?php echo h($student['ad']); ?> <span class="text-muted">· <?php echo h($student['email']); ?></span>
+                                    </label>
+                                </div>
+                            <?php endforeach; ?>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Başlık</label>
+                        <input type="text" name="baslik" class="form-control" maxlength="255" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Mesaj</label>
+                        <textarea name="mesaj" class="form-control" rows="6" placeholder="Toplantı hazırlığı, teslim tarihleri veya geri bildirim notlarını paylaşabilirsiniz." required></textarea>
+                    </div>
+                    <div class="mb-4">
+                        <label class="form-label">Ek Dosya</label>
+                        <input type="file" name="dosya" class="form-control">
+                        <div class="form-text">PDF, DOCX, görsel, ZIP ve TXT dosyaları yüklenebilir. En fazla 10 MB.</div>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Mesajı Gönder</button>
+                </form>
+            <?php endif; ?>
+        </div>
+    </div>
+</div>
 </body>
-</html> 
+</html>

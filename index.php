@@ -1,242 +1,231 @@
 <?php
-session_start();
+require_once __DIR__ . '/app_bootstrap.php';
+
+$studentId = currentStudentId();
+$teacherId = currentTeacherId();
+
+if ($studentId === null && $teacherId === null) {
+    header('Location: login.php');
+    exit;
+}
+
+$role = $studentId !== null ? 'student' : 'teacher';
+$displayName = '';
+$summaryCards = [];
+$recentAnnouncements = [];
+
+if ($role === 'student') {
+    $studentQuery = $db->prepare("
+        SELECT k.ad, o.unvan, o.ad_soyad
+        FROM kullanicilar k
+        LEFT JOIN ogretmenler o ON o.id = k.danisman_id
+        WHERE k.id = ?
+    ");
+    $studentQuery->execute([$studentId]);
+    $student = $studentQuery->fetch(PDO::FETCH_ASSOC);
+
+    $displayName = $student['ad'] ?? 'Öğrenci';
+
+    $counts = $db->prepare("
+        SELECT
+            SUM(CASE WHEN durum = 'Beklemede' THEN 1 ELSE 0 END) AS bekleyen,
+            SUM(CASE WHEN durum = 'Onaylandı' THEN 1 ELSE 0 END) AS onayli,
+            COUNT(*) AS toplam
+        FROM rezervasyonlar
+        WHERE ogrenci_id = ?
+    ");
+    $counts->execute([$studentId]);
+    $countData = $counts->fetch(PDO::FETCH_ASSOC) ?: [];
+
+    $messageCount = $db->prepare("SELECT COUNT(*) FROM mesajlar WHERE ogrenci_id = ?");
+    $messageCount->execute([$studentId]);
+
+    $summaryCards = [
+        ['label' => 'Danışman', 'value' => trim(($student['unvan'] ?? '') . ' ' . ($student['ad_soyad'] ?? 'Atanmadı'))],
+        ['label' => 'Toplam Talep', 'value' => (string) ($countData['toplam'] ?? 0)],
+        ['label' => 'Bekleyen Talep', 'value' => (string) ($countData['bekleyen'] ?? 0)],
+        ['label' => 'Mesaj', 'value' => (string) $messageCount->fetchColumn()],
+    ];
+} else {
+    $teacherQuery = $db->prepare("SELECT ad_soyad FROM ogretmenler WHERE id = ?");
+    $teacherQuery->execute([$teacherId]);
+    $teacher = $teacherQuery->fetch(PDO::FETCH_ASSOC);
+    $displayName = $teacher['ad_soyad'] ?? 'Akademisyen';
+
+    $counts = $db->prepare("
+        SELECT
+            SUM(CASE WHEN durum = 'Beklemede' THEN 1 ELSE 0 END) AS bekleyen,
+            SUM(CASE WHEN durum = 'Onaylandı' THEN 1 ELSE 0 END) AS onayli,
+            COUNT(*) AS toplam
+        FROM rezervasyonlar
+        WHERE ogretmen_id = ?
+    ");
+    $counts->execute([$teacherId]);
+    $countData = $counts->fetch(PDO::FETCH_ASSOC) ?: [];
+
+    $studentCount = $db->prepare("SELECT COUNT(*) FROM kullanicilar WHERE danisman_id = ?");
+    $studentCount->execute([$teacherId]);
+
+    $messageCount = $db->prepare("SELECT COUNT(*) FROM mesajlar WHERE ogretmen_id = ?");
+    $messageCount->execute([$teacherId]);
+
+    $summaryCards = [
+        ['label' => 'Danışan Öğrenci', 'value' => (string) $studentCount->fetchColumn()],
+        ['label' => 'Toplam Talep', 'value' => (string) ($countData['toplam'] ?? 0)],
+        ['label' => 'Bekleyen Onay', 'value' => (string) ($countData['bekleyen'] ?? 0)],
+        ['label' => 'Mesaj', 'value' => (string) $messageCount->fetchColumn()],
+    ];
+}
+
+$announcementStmt = $db->query("
+    SELECT d.baslik, d.icerik, d.tarih, o.ad_soyad
+    FROM duyurular d
+    JOIN ogretmenler o ON o.id = d.ogretmen_id
+    WHERE d.durum = 'aktif'
+    ORDER BY d.tarih DESC
+    LIMIT 3
+");
+$recentAnnouncements = $announcementStmt->fetchAll(PDO::FETCH_ASSOC);
 ?>
 <!DOCTYPE html>
-<html lang="en">
+<html lang="tr">
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ALKÜ REZERVASYON</title>
-    <link rel="shortcut icon" href="assets/images/logo/fav.png">
-    <link rel="apple-touch-icon" href="assets/images/logo/fav.png">
-    <link rel="stylesheet" href="assets/css/line-awesome.min.css">
-    <link rel="stylesheet" href="assets/css/bootstrap.min.css">
-    <link rel="stylesheet" href="assets/css/fontawesome-all.min.css">
-    <link rel="stylesheet" href="assets/css/slick.css">
-    <link rel="stylesheet" href="assets/css/animate.min.css">
-    <link rel="stylesheet" href="assets/css/odometer.css">
-    <link rel="stylesheet" href="assets/css/splitting.css">
-    <link rel="stylesheet" href="assets/css/magnific-popup.css">
-    <link rel="stylesheet" href="assets/css/main.css">
+    <title>Bitirme Projesi Portalı</title>
+    <link href="assets/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body { background: #f4f7fb; color: #1f2937; }
+        .hero { background: linear-gradient(135deg, #0f4c81, #1ea7a1); color: #fff; border-radius: 24px; }
+        .nav-card, .content-card { border: 0; border-radius: 18px; box-shadow: 0 12px 32px rgba(15, 76, 129, 0.08); }
+        .summary-number { font-size: 2rem; font-weight: 700; color: #0f4c81; }
+        .quick-link { text-decoration: none; color: inherit; }
+        .quick-link .card:hover { transform: translateY(-2px); }
+    </style>
 </head>
 <body>
-    <div id="loading">
-        <div id="loading-center">
-            <div id="loading-center-absolute">
-                <span class="loader"></span>
-            </div>
-        </div>
-    </div>
-    <div class="sidebar-overlay"></div>
-    <div class="header-main-area--three">
-        <div class="header--two" id="header">
-            <div class="container">
-                <div class="header-wrapper d-flex justify-content-between align-items-center flex-row">
-                    <i class="fa-sharp fa-solid fa-bars-staggered ham__menu" data-bs-toggle="offcanvas" data-bs-target="#offcanvasExample" aria-controls="offcanvasExample"></i>
-                    <div class="header-menu-wrapper align-items-center d-flex">
-                        <div class="logo-wrapper">
-                            <a href="index.php" class="normal-logo" id="normal-logo"><img src="assets/images/logo/logo.png" alt="..."></a>
-                        </div>
-                    </div>
-                    <div class="menu-list-wrapper">
-                        <ul class="main-menu">
-                            <li class="links--wrap"><a class='link text--black active' href="index3.html">Anasayfa</a></li>
-                            <li class="links--wrap"><a class="link text--black" href="gorusme_ayarla.php">REZERVASYON</a></li>
-                            <li class="links--wrap"><a class="link text--black" href="akademik_personeller.html">AKADEMİSYENLER </a></li>
-                            <li class="links--wrap"><a class="link text--black" href="duyurular.php">DUYURULAR</a></li>
-                            <!-- <li><a class="link text--black" href="#">İLETİŞİM<Main></Main></a></li> -->
-                            <?php if (isset($_SESSION['ogretmen_id'])): ?>
-                                <li><a class="link text--black" href="ogretmen_mesajlar.php">MESAJLARIM</a></li>
-                            <?php elseif (isset($_SESSION['user_id'])): ?>
-                                <li><a class="link text--black" href="ogrenci_mesajlar.php">MESAJLARIM</a></li>
-                            <?php endif; ?>
-                        </ul>
-                    </div>
-                    <ul class="login-lng d-flex align-items-center gap-3">
-                        <?php if (isset($_SESSION['user_name'])): ?>
-                            <li><a href="ogrenci_profilim.php"><span class="btn btn-outline--dark text--black border--black"><?php echo $_SESSION['user_name']; ?></span></a></li>
-                        <?php else: ?>
-                            <li><a class="btn btn-outline--dark text--black border--black" href="login.php">Giriş Yap</a></li>
-                            <li><a class="btn btn-outline--dark text--black border--black" href="signin.php">Kayıt Ol</a></li>
-                        <?php endif; ?>
-                    </ul>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="offcanvas offcanvas-start text-bg-light" tabindex="-1" id="offcanvasExample">
-        <div class="offcanvas-header">
-            <div class="logo">
-                <div class="align-items-center d-flex">
-                    <div class="logo-wrapper">
-                        <a href="index.php" class="normal-logo" id="offcanvas-logo-normal">
-                            <img src="assets/images/logo/logo.png" alt="">
-                        </a>
-                    </div>
-                </div>
-            </div>
-            <button type="button" class="btn-close btn-close-black" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-        </div>
-        <div class="offcanvas-body">
-            <div class="user-info">
-                <div class="user-thumb">
-
-                </div>
-
-            </div>
-            <div class="sidebar-menu position-relative">
-                <ul class="sidebar-menu-list">
-                    <li class="sidebar-menu-list__item"><a href="index.php" class="sidebar-menu-list__link active"><span class="icon"><i class="fa-solid"></i></span><span class="text">Anasayfa</span></a></li>
-                    <li class="sidebar-menu-list__item"><a href="gorusme_ayarla.php" class="sidebar-menu-list__link"><span class="icon"><i class="fa-regular"></i></span><span class="text">Rezervasyon</span></a></li>
-                    <li class="sidebar-menu-list__item"><a href="duyurular.php" class="sidebar-menu-list__link"><span class="icon"><i class="fa-solid fa-bell"></i></span><span class="text">Duyurular</span></a></li>
-                    <li class="sidebar-menu-list__item has-dropdown"><a href="contact.html" class="sidebar-menu-list__link"><span class="icon"><i class="fa-regular"></i></span><span class="text">İletişim</span></a></li>
-                    <?php if (isset($_SESSION['ogretmen_id'])): ?>
-                        <li class="sidebar-menu-list__item"><a href="ogretmen_mesajlar.php" class="sidebar-menu-list__link"><span class="icon"><i class="fa-solid"></i></span><span class="text">Mesajlar</span></a></li>
-                    <?php elseif (isset($_SESSION['user_id'])): ?>
-                        <li class="sidebar-menu-list__item"><a href="ogrenci_mesajlar.php" class="sidebar-menu-list__link"><span class="icon"><i class="fa-solid"></i></span><span class="text">Mesajlar</span></a></li>
+<div class="container py-4 py-lg-5">
+    <div class="hero p-4 p-lg-5 mb-4">
+        <div class="d-flex flex-column flex-lg-row justify-content-between gap-3">
+            <div>
+                <p class="mb-2 text-white-50"><?php echo $role === 'student' ? 'Öğrenci Paneli' : 'Akademisyen Paneli'; ?></p>
+                <h1 class="h2 mb-3"><?php echo h($displayName); ?></h1>
+                <p class="mb-0">
+                    <?php if ($role === 'student'): ?>
+                        Bitirme projesi görüşmelerinizi planlayın, danışman duyurularını takip edin ve dosya ekli mesajlaşın.
+                    <?php else: ?>
+                        Öğrenci taleplerini yönetin, duyuru paylaşın ve dosya ekli mesajlarla süreci tek yerden yürütün.
                     <?php endif; ?>
-                </ul>
+                </p>
+            </div>
+            <div class="d-flex align-items-start align-items-lg-center">
+                <a href="logout.php" class="btn btn-light">Çıkış Yap</a>
             </div>
         </div>
     </div>
-    <section class="hero--three bg--img position-relative" style="background-image: url(assets/images/hero/hero-bgg3.png);">
-        <div class="container position-relative">
-            <div class="row justify-content-center">
-                <div class="col-lg-10 col-md-12 d-flex justify-content-center align-items-center">
-                    <div class="hero-content--wrap d-flex flex-column gap--20 justify-content-center align-items-center">
-                        <h1 class="text-center hero--title fw--400 wow animate__animated animate__fadeInUp splite-text" data-splitting data-wow-delay="0.2s"> Akademisyenlerinizle Daha Kolay Görüşme Ayarlayın.</h1>
-                        <p class="text-center hero--subtitle fs--18 wow animate__animated animate__fadeInUp" data-wow-delay="0.3s">Online rezervasyon sistemi sayesinde akademisyenlerinizle randevu almak çok daha kolay! Takvim kontrolüyle vakit kaybetmeden uygun saatleri görüntüleyin ve tıkla randevunuzu oluşturun.</p>
-                        <div class="btn--wrap wow animate__animated animate__fadeInUp" data-wow-delay="0.4s">
-                            <button class="btn btn--base"><a href="gorusme_ayarla.php" </a><i class="fs--20 fa-solid fa-book-open"></i>Şimdi Rezervasyon Yap</a></button>
-                        </div>
-                    </div>
-                </div> 
-            </div>
-        </div>
-    </section>
-    <!-- <section class="video--two  position-relative wow animate__animated animate__fadeInUp" data-wow-delay="0.5s">
-        <div class="container bg--img h-100" style="background-image: url(assets/images/common/video-bg3.png);">
-            <div class="popup-video-wrap">
-                <div class="waves-block position-relative">
-                    <div class="waves wave-1"></div>
-                    <div class="waves wave-2"></div>
-                    <div class="waves wave-3"></div>
-                </div>
-                <a class="play-video popup_video" data-fancybox="" href="https://www.youtube.com/watch?v=OEP6f6jRuT4" tabindex="0">
-                    <i class="fa fa-play"></i>
-                </a>
-            </div>
-        </div>
-    </section> -->
-    <section class="about--three py-100 @@bgClass">
-        <div class="container">
-            <div class="row gy-4">
-                <div class="col-lg-6 d-flex align-items-center d-none d-lg-flex align-items-center">
-                    <div class="about-left-content">
-                        <div class="about-thumb1">
-                            <img src="assets/images/common/about-bg3.png" alt="...">
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-6 d-flex flex-column justify-content-center">
-                    <div class="row">
-                        <div class="col-xl-10 col-lg-12">
-                            <div class="section-content-3">
-                                <p class="subtitle wow animate__animated animate__fadeInUp" data-wow-delay="0.2s">ALKÜ HAKKINDA</p>
-                                <h6 class="title wow animate__animated animate__fadeInUp splite-text" data-splitting data-wow-delay="0.3s">Alanya Alaaddin Keykubat Üniversitesi (ALKÜ) Hakkında</h6>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-lg-12">
-                            <div class="about-content--wrap">
-                                <div class="about--content mb-5">
-                                    <p class="mb-2">2015 yılında kurulan Alanya Alaaddin Keykubat Üniversitesi (ALKÜ), Akdeniz'in eşsiz güzellikleriyle çevrili Alanya'da yer alan dinamik ve yenilikçi bir devlet üniversitesidir. Geniş akademik yelpazesi, araştırma odaklı yaklaşımı ve modern kampüsü ile öğrencilere kaliteli bir eğitim sunmayı amaçlamaktadır.</p>
-                                </div>
-                            </div>
-                        </div>
+
+    <div class="row g-3 mb-4">
+        <?php foreach ($summaryCards as $card): ?>
+            <div class="col-6 col-lg-3">
+                <div class="card nav-card h-100">
+                    <div class="card-body">
+                        <div class="text-muted small mb-2"><?php echo h($card['label']); ?></div>
+                        <div class="summary-number"><?php echo h($card['value']); ?></div>
                     </div>
                 </div>
             </div>
-        </div>
-    </section>
-    <footer class="footer-area bg--black overflow--hidden bg--img" style="background-image: url(assets/images/common/footer-bgg.png);">
-        <div class="footer-top">
-            <div class="container">
-                <div class="pt-100">
-                    <div class="row gy-4 justify-content-center">
-                        <div class="col-xl-4 col-sm-6">
-                            <div class="footer-item">
-                                <div class="footer-item--logo"><a href="index.php" class="footer-logo-normal"><img src="assets/images/logo/logo.png" alt=""></a></div>
-                                <p class="footer-item--desc">© 2025 Alanya Alaaddin Keykubat Üniversitesi | Tüm Hakları Saklıdır. Eğitimde kalite, bilimde yenilik, gelecekte başarı!</p>
-                                <ul class="social-list z--9 position-relative">
-                                    <li class="social-list--item"><a href="https://www.facebook.com" class="social-list__link icon-wrapper"><div class="icon"><i class="fab fa-facebook-f"></i></div></a></li>
-                                    <li class="social-list--item"><a href="https://www.twitter.com" class="social-list__link icon-wrapper active"><div class="icon"><i class="fa-brands fa-x-twitter"></i></div></a></li>
-                                    <li class="social-list--item"><a href="https://www.linkedin.com" class="social-list__link icon-wrapper"><div class="icon"><i class="fab fa-linkedin-in"></i></div></a></li>
-                                    <li class="social-list--item"><a href="https://www.pinterest.com" class="social-list__link icon-wrapper"><div class="icon"><i class="fab fa-instagram"></i></div></a></li>
-                                </ul>
-                            </div>
-                        </div>
-                        <div class="col-xl-2 col-sm-6">
-                            
-                        </div>
-                        <div class="col-xl-4 col-sm-6">
-                            <div class="footer-item">
-                                <h5 class="footer-item--title">İletişim</h5>
-                                <div class="footer-contact-info mb-3 d-flex justify-content-start align-items-baseline gap-3">
-                                    <div class="d-flex justify-content-start align-items-center">
-                                        <i class="text--base fa-regular fa-envelope"></i>
-                                    </div>
-                                    <div class="d-flex align-items-center flex-wrap gap-2">
-                                        <p class="fw--400">Eposta Adresi</p>
-                                        <p><a href="mailto:alku@alanya.edu.tr">alku@alanya.edu.tr</a></p>
-                                    </div>
-                                </div>
-                                <div class="footer-contact-info mb-3 d-flex justify-content-start align-items-baseline gap-3">
-                                    <div class="d-flex justify-content-start align-items-center">
-                                        <i class="fa-solid fa-location-dot"></i>
-                                    </div>
-                                    <div class="d-flex align-items-center flex-wrap gap-2">
-                                        <p class="fw--400">Konum</p>
-                                        <p>Kestel , Alanya/Antalya</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="bottom-footer pt-4 pb-5">
-            <div class="container">
-                <div class="row text-center gy-2">
-                    <div class="col-lg-12">
-                        <div class="bottom-footer-text"> &copy; 2025 Alanya Alaaddin Keykubat Üniversitesi </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </footer>
-    <div class="scroll-top show">
-        <svg class="progress-circle svg-content" width="100%" height="100%" viewBox="-1 -1 102 102">
-            <path d="M50,1 a49,49 0 0,1 0,98 a49,49 0 0,1 0,-98" style="transition: stroke-dashoffset 10ms linear 0s; stroke-dasharray: 307.919, 307.919; stroke-dashoffset: 197.514;"></path>
-        </svg>
+        <?php endforeach; ?>
     </div>
-    <script src="assets/js/jquery-3.7.1.min.js"></script>
-    <script src="assets/js/bootstrap.bundle.min.js"></script>
-    <script src="assets/js/slick.min.js"></script>
-    <script src="assets/js/odometer.min.js"></script>
-    <script src="assets/js/jquery.appear.min.js"></script>
-    <script src="assets/js/wow.min.js"></script>
-    <script src="assets/js/splitting.min.js"></script>
-    <script src="assets/js/jquery.magnific-popup.min.js"></script>
-    <script src="assets/js/main.js"></script>
-    <script>
-        window.addEventListener("load", function () {
-            document.getElementById("loading").style.display = "none";
-        });
-    </script>
+
+    <div class="row g-4">
+        <div class="col-lg-8">
+            <div class="row g-3 mb-4">
+                <div class="col-md-6 col-xl-3">
+                    <a class="quick-link" href="gorusme_ayarla.php">
+                        <div class="card content-card h-100">
+                            <div class="card-body">
+                                <h2 class="h6">Rezervasyon</h2>
+                                <p class="mb-0 text-muted">Bitirme projesi görüşmeleri oluşturun veya yönetin.</p>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                <div class="col-md-6 col-xl-3">
+                    <a class="quick-link" href="duyurular.php">
+                        <div class="card content-card h-100">
+                            <div class="card-body">
+                                <h2 class="h6">Duyurular</h2>
+                                <p class="mb-0 text-muted">Akademisyen duyurularını görüntüleyin.</p>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                <div class="col-md-6 col-xl-3">
+                    <a class="quick-link" href="<?php echo $role === 'student' ? 'ogrenci_mesajlar.php' : 'ogretmen_mesajlar.php'; ?>">
+                        <div class="card content-card h-100">
+                            <div class="card-body">
+                                <h2 class="h6">Mesajlarım</h2>
+                                <p class="mb-0 text-muted">Dosya ekli mesajlaşma ekranına gidin.</p>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                <div class="col-md-6 col-xl-3">
+                    <a class="quick-link" href="<?php echo $role === 'student' ? 'ogrenci_profilim.php' : 'panel.php'; ?>">
+                        <div class="card content-card h-100">
+                            <div class="card-body">
+                                <h2 class="h6"><?php echo $role === 'student' ? 'Profilim' : 'Yönetim'; ?></h2>
+                                <p class="mb-0 text-muted"><?php echo $role === 'student' ? 'Bilgilerinizi görüntüleyin.' : 'Akademisyen yönetim ekranını açın.'; ?></p>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            </div>
+
+            <div class="card content-card">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <h2 class="h5 mb-0">Güncel Duyurular</h2>
+                        <a href="duyurular.php" class="btn btn-sm btn-outline-primary">Tümünü Gör</a>
+                    </div>
+                    <?php if (!$recentAnnouncements): ?>
+                        <p class="text-muted mb-0">Henüz duyuru paylaşılmadı.</p>
+                    <?php else: ?>
+                        <?php foreach ($recentAnnouncements as $announcement): ?>
+                            <div class="border rounded-4 p-3 mb-3">
+                                <div class="d-flex justify-content-between gap-3 flex-wrap">
+                                    <strong><?php echo h($announcement['baslik']); ?></strong>
+                                    <span class="text-muted small"><?php echo h($announcement['ad_soyad']); ?> · <?php echo formatDateTime($announcement['tarih']); ?></span>
+                                </div>
+                                <p class="mb-0 mt-2 text-muted"><?php echo nl2br(h(mb_strimwidth($announcement['icerik'], 0, 220, '...'))); ?></p>
+                            </div>
+                        <?php endforeach; ?>
+                    <?php endif; ?>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-4">
+            <div class="card content-card h-100">
+                <div class="card-body">
+                    <h2 class="h5 mb-3">Hızlı Erişim</h2>
+                    <div class="d-grid gap-2">
+                        <a href="<?php echo $role === 'student' ? 'gorusme_ayarla.php' : 'ogretmen_rezervasyon_onay.php'; ?>" class="btn btn-primary">
+                            <?php echo $role === 'student' ? 'Yeni Randevu Talebi Oluştur' : 'Rezervasyon Taleplerini Aç'; ?>
+                        </a>
+                        <?php if ($role === 'teacher'): ?>
+                            <a href="duyuru_yap.php" class="btn btn-outline-primary">Yeni Duyuru Yayınla</a>
+                        <?php endif; ?>
+                        <a href="<?php echo $role === 'student' ? 'ogrenci_mesaj_gonder.php' : 'ogretmen_mesaj_gonder.php'; ?>" class="btn btn-outline-secondary">Yeni Mesaj Yaz</a>
+                    </div>
+                    <hr>
+                    <p class="small text-muted mb-0">
+                        Menüler artık doğrudan çalışan sayfalara bağlı. Bu ekran ana gezinme noktası olarak kullanılabilir.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 </body>
 </html>
-

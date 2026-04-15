@@ -43,19 +43,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Öğrenci Profili</title>
     <link href="assets/css/bootstrap.min.css" rel="stylesheet">
-    <style>
-        body { background: #f5f7fb; }
-        .page-card { border: 0; border-radius: 18px; box-shadow: 0 14px 34px rgba(16, 57, 92, 0.08); }
-    </style>
+    <link href="assets/css/portal-theme.css" rel="stylesheet">
 </head>
 <body>
-<div class="container py-4 py-lg-5">
-    <div class="d-flex flex-column flex-lg-row justify-content-between align-items-lg-center gap-3 mb-4">
-        <div>
-            <p class="text-muted mb-1">Öğrenci Profili</p>
-            <h1 class="h3 mb-0"><?php echo h($student['ad'] ?? 'Öğrenci'); ?></h1>
-        </div>
-        <div class="d-flex gap-2">
+<div class="container portal-shell py-4 py-lg-5">
+    <div class="portal-topbar">
+        <a class="portal-brand" href="index.php">
+            <div class="portal-brand-mark">PR</div>
+            <div class="portal-brand-text">
+                <span>Öğrenci hesabı</span>
+                <strong>Profilim</strong>
+            </div>
+        </a>
+        <div class="d-flex gap-2 flex-wrap">
             <a href="index.php" class="btn btn-outline-secondary">Ana Sayfa</a>
             <a href="gorusme_ayarla.php" class="btn btn-outline-primary">Rezervasyonlar</a>
         </div>
@@ -63,37 +63,42 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     <div class="row g-4">
         <div class="col-lg-4">
-            <div class="card page-card">
-                <div class="card-body p-4">
-                    <h2 class="h5 mb-3">Hesap Bilgileri</h2>
-                    <p class="mb-2"><strong>Ad Soyad:</strong> <?php echo h($student['ad'] ?? ''); ?></p>
-                    <p class="mb-2"><strong>E-posta:</strong> <?php echo h($student['email'] ?? ''); ?></p>
-                    <p class="mb-0"><strong>Danışman:</strong> <?php echo h(trim(($student['unvan'] ?? '') . ' ' . ($student['ad_soyad'] ?? 'Atanmadı'))); ?></p>
+            <div class="portal-card p-4 h-100">
+                <div class="portal-section-title">Hesap bilgileri</div>
+                <h1 class="h3 mb-3"><?php echo h($student['ad'] ?? 'Öğrenci'); ?></h1>
+                <div class="portal-stack">
+                    <div class="portal-list-item">
+                        <strong>E-posta</strong>
+                        <div class="portal-meta mt-1"><?php echo h($student['email'] ?? ''); ?></div>
+                    </div>
+                    <div class="portal-list-item">
+                        <strong>Danışman</strong>
+                        <div class="portal-meta mt-1"><?php echo h(trim(($student['unvan'] ?? '') . ' ' . ($student['ad_soyad'] ?? 'Atanmadı'))); ?></div>
+                    </div>
                 </div>
             </div>
         </div>
         <div class="col-lg-8">
-            <div class="card page-card">
-                <div class="card-body p-4">
-                    <h2 class="h5 mb-3">Şifre Güncelle</h2>
-                    <?php if ($success): ?><div class="alert alert-success"><?php echo h($success); ?></div><?php endif; ?>
-                    <?php if ($error): ?><div class="alert alert-danger"><?php echo h($error); ?></div><?php endif; ?>
-                    <form method="POST">
-                        <div class="mb-3">
-                            <label class="form-label">Mevcut Şifre</label>
-                            <input type="password" name="current_password" class="form-control" required>
-                        </div>
-                        <div class="mb-3">
-                            <label class="form-label">Yeni Şifre</label>
-                            <input type="password" name="new_password" class="form-control" required>
-                        </div>
-                        <div class="mb-3">
-                            <label class="form-label">Yeni Şifre Tekrar</label>
-                            <input type="password" name="confirm_password" class="form-control" required>
-                        </div>
-                        <button type="submit" class="btn btn-primary">Şifreyi Güncelle</button>
-                    </form>
-                </div>
+            <div class="portal-card p-4">
+                <div class="portal-section-title">Güvenlik</div>
+                <h2 class="h3 mb-3">Şifre Güncelle</h2>
+                <?php if ($success): ?><div class="alert alert-success"><?php echo h($success); ?></div><?php endif; ?>
+                <?php if ($error): ?><div class="alert alert-danger"><?php echo h($error); ?></div><?php endif; ?>
+                <form method="POST" class="portal-form">
+                    <div class="mb-3">
+                        <label class="form-label">Mevcut Şifre</label>
+                        <input type="password" name="current_password" class="form-control" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Yeni Şifre</label>
+                        <input type="password" name="new_password" class="form-control" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Yeni Şifre Tekrar</label>
+                        <input type="password" name="confirm_password" class="form-control" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Şifreyi Güncelle</button>
+                </form>
             </div>
         </div>
     </div>

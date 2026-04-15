@@ -12,7 +12,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $sifre = $_POST["sifre"];
     $sifre_tekrar = $_POST["sifre_tekrar"];
 
-    // Validation
     if (empty($unvan) || empty($ad_soyad) || empty($email) || empty($sifre)) {
         $error = "Tüm alanları doldurunuz.";
     } elseif ($sifre !== $sifre_tekrar) {
@@ -25,20 +24,17 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $error = "E-posta adresi @alanya.edu.tr ile bitmelidir.";
     } else {
         try {
-            // Check if email already exists
             $stmt = $db->prepare("SELECT id FROM ogretmenler WHERE email = ?");
             $stmt->execute([$email]);
-            
+
             if ($stmt->rowCount() > 0) {
                 $error = "Bu e-posta adresi zaten kayıtlı.";
             } else {
-                // Insert new teacher
                 $hashed_password = password_hash($sifre, PASSWORD_DEFAULT);
                 $stmt = $db->prepare("INSERT INTO ogretmenler (unvan, ad_soyad, email, sifre) VALUES (?, ?, ?, ?)");
-                
+
                 if ($stmt->execute([$unvan, $ad_soyad, $email, $hashed_password])) {
                     $success = "Kayıt başarıyla tamamlandı. Giriş yapabilirsiniz.";
-                    // Clear form data
                     $_POST = array();
                 } else {
                     $error = "Kayıt sırasında bir hata oluştu.";
@@ -54,75 +50,101 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 <html lang="tr">
 <head>
     <meta charset="UTF-8">
-    <title>Akademisyen Kayıt - ALKÜ</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Akademisyen Kaydı</title>
     <link href="assets/css/bootstrap.min.css" rel="stylesheet">
-    <link href="assets/css/main.css" rel="stylesheet">
+    <link href="assets/css/portal-theme.css" rel="stylesheet">
 </head>
 <body>
-    <div class="container mt-5">
-        <div class="row justify-content-center">
-            <div class="col-md-6">
-                <div class="card shadow">
-                    <div class="card-body p-4">
-                        <h3 class="text-center mb-4">Akademisyen Kayıt</h3>
-                        
-                        <?php if ($error): ?>
-                            <div class="alert alert-danger"><?php echo $error; ?></div>
-                        <?php endif; ?>
-                        
-                        <?php if ($success): ?>
-                            <div class="alert alert-success"><?php echo $success; ?></div>
-                        <?php endif; ?>
-
-                        <form method="POST" action="">
-                            <div class="mb-3">
-                                <label class="form-label">Unvan</label>
-                                <select name="unvan" class="form-select" required>
-                                    <option value="">Seçiniz</option>
-                                    <option value="Prof. Dr.">Prof. Dr.</option>
-                                    <option value="Doç. Dr.">Doç. Dr.</option>
-                                    <option value="Dr. Öğr. Üyesi">Dr. Öğr. Üyesi</option>
-                                    <option value="Öğr. Gör. Dr.">Öğr. Gör. Dr.</option>
-                                    <option value="Öğr. Gör.">Öğr. Gör.</option>
-                                    <option value="Arş. Gör. Dr.">Arş. Gör. Dr.</option>
-                                    <option value="Arş. Gör.">Arş. Gör.</option>
-                                </select>
-                            </div>
-
-                            <div class="mb-3">
-                                <label class="form-label">Ad Soyad</label>
-                                <input type="text" name="ad_soyad" class="form-control" required value="<?php echo isset($_POST['ad_soyad']) ? htmlspecialchars($_POST['ad_soyad']) : ''; ?>">
-                            </div>
-
-                            <div class="mb-3">
-                                <label class="form-label">E-posta</label>
-                                <input type="email" name="email" class="form-control" required value="<?php echo isset($_POST['email']) ? htmlspecialchars($_POST['email']) : ''; ?>">
-                                <small class="text-muted">@alanya.edu.tr uzantılı e-posta adresinizi kullanın</small>
-                            </div>
-
-                            <div class="mb-3">
-                                <label class="form-label">Şifre</label>
-                                <input type="password" name="sifre" class="form-control" required>
-                                <small class="text-muted">En az 6 karakter</small>
-                            </div>
-
-                            <div class="mb-3">
-                                <label class="form-label">Şifre Tekrar</label>
-                                <input type="password" name="sifre_tekrar" class="form-control" required>
-                            </div>
-
-                            <button type="submit" class="btn btn-primary w-100">Kayıt Ol</button>
-                        </form>
-
-                        <div class="text-center mt-3">
-                            <p>Zaten hesabınız var mı? <a href="admin_panel_login.php">Giriş Yap</a></p>
-                        </div>
+<div class="auth-shell">
+    <aside class="auth-side">
+        <div class="auth-panel p-4 p-xl-5 w-100">
+            <div class="auth-side-copy">
+                <div class="portal-badge mb-3">Akademisyen kaydı</div>
+                <h1 class="display-5 mb-3">Danışmanlık panelinizi birkaç adımda aktif hale getirin.</h1>
+                <p class="lead mb-0 text-white-50">Kayıt sonrası rezervasyon, duyuru ve belge akışlarını tek panelden yönetebilirsiniz.</p>
+                <div class="auth-bullets">
+                    <div class="auth-bullet">
+                        <strong>Kurumsal erişim</strong>
+                        <div class="small text-white-50 mt-1">Üniversite e-posta adresinizle güvenli kayıt oluşturun.</div>
+                    </div>
+                    <div class="auth-bullet">
+                        <strong>Öğrenci yönetimi</strong>
+                        <div class="small text-white-50 mt-1">Randevu taleplerini ve mesajları tek arayüzde toplayın.</div>
+                    </div>
+                    <div class="auth-bullet">
+                        <strong>Şeffaf süreç</strong>
+                        <div class="small text-white-50 mt-1">Duyuru ve geri bildirimlerle öğrencileri daha net yönlendirin.</div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
+    </aside>
 
-    <script src="assets/js/bootstrap.bundle.min.js"></script>
+    <main class="auth-main">
+        <div class="portal-card auth-card">
+            <div class="portal-brand mb-4">
+                <div class="portal-brand-mark">AK</div>
+                <div class="portal-brand-text">
+                    <span>Akademisyen Kaydı</span>
+                    <strong>Yeni Danışman Hesabı</strong>
+                </div>
+            </div>
+
+            <?php if ($error): ?>
+                <div class="alert alert-danger"><?php echo $error; ?></div>
+            <?php endif; ?>
+
+            <?php if ($success): ?>
+                <div class="alert alert-success"><?php echo $success; ?></div>
+            <?php endif; ?>
+
+            <form method="POST" action="" class="portal-form">
+                <div class="mb-3">
+                    <label class="form-label">Unvan</label>
+                    <select name="unvan" class="form-select" required>
+                        <option value="">Seçiniz</option>
+                        <option value="Prof. Dr.">Prof. Dr.</option>
+                        <option value="Doç. Dr.">Doç. Dr.</option>
+                        <option value="Dr. Öğr. Üyesi">Dr. Öğr. Üyesi</option>
+                        <option value="Öğr. Gör. Dr.">Öğr. Gör. Dr.</option>
+                        <option value="Öğr. Gör.">Öğr. Gör.</option>
+                        <option value="Arş. Gör. Dr.">Arş. Gör. Dr.</option>
+                        <option value="Arş. Gör.">Arş. Gör.</option>
+                    </select>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">Ad Soyad</label>
+                    <input type="text" name="ad_soyad" class="form-control" required value="<?php echo isset($_POST['ad_soyad']) ? htmlspecialchars($_POST['ad_soyad']) : ''; ?>">
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">E-posta</label>
+                    <input type="email" name="email" class="form-control" required value="<?php echo isset($_POST['email']) ? htmlspecialchars($_POST['email']) : ''; ?>">
+                    <div class="form-text">@alanya.edu.tr uzantılı kurumsal e-posta kullanın.</div>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">Şifre</label>
+                    <input type="password" name="sifre" class="form-control" required>
+                    <div class="form-text">En az 6 karakter.</div>
+                </div>
+
+                <div class="mb-4">
+                    <label class="form-label">Şifre Tekrar</label>
+                    <input type="password" name="sifre_tekrar" class="form-control" required>
+                </div>
+
+                <button type="submit" class="btn btn-primary w-100">Kaydı Tamamla</button>
+            </form>
+
+            <div class="d-grid gap-2 mt-3">
+                <a href="admin_panel_login.php" class="btn btn-outline-primary">Akademisyen Girişine Dön</a>
+                <a href="login.php" class="btn btn-outline-secondary">Öğrenci Girişi</a>
+            </div>
+        </div>
+    </main>
+</div>
 </body>
-</html> 
+</html>

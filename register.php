@@ -1,6 +1,8 @@
 <?php
 include "db.php";
 
+header('Content-Type: application/json; charset=utf-8');
+
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $firstname = trim($_POST["firstname"]);
     $lastname = trim($_POST["lastname"]);

@@ -41,73 +41,96 @@ $upcomingReservations = $upcomingStmt->fetchAll(PDO::FETCH_ASSOC);
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Akademisyen Paneli</title>
     <link href="assets/css/bootstrap.min.css" rel="stylesheet">
-    <style>
-        body { background: #f5f7fb; }
-        .panel-shell { max-width: 1180px; }
-        .stat-card, .panel-card { border: 0; border-radius: 18px; box-shadow: 0 14px 34px rgba(16, 57, 92, 0.08); }
-    </style>
+    <link href="assets/css/portal-theme.css" rel="stylesheet">
 </head>
 <body>
 <div class="container panel-shell py-4 py-lg-5">
-    <div class="d-flex flex-column flex-lg-row justify-content-between align-items-lg-center gap-3 mb-4">
-        <div>
-            <p class="text-muted mb-1">Akademisyen Yönetimi</p>
-            <h1 class="h3 mb-1"><?php echo h(trim(($teacher['unvan'] ?? '') . ' ' . ($teacher['ad_soyad'] ?? ''))); ?></h1>
-            <p class="text-muted mb-0"><?php echo h($teacher['email'] ?? ''); ?></p>
-        </div>
-        <div class="d-flex gap-2">
+    <div class="portal-topbar">
+        <a class="portal-brand" href="panel.php">
+            <div class="portal-brand-mark">AK</div>
+            <div class="portal-brand-text">
+                <span>Akademisyen Yönetimi</span>
+                <strong><?php echo h(trim(($teacher['unvan'] ?? '') . ' ' . ($teacher['ad_soyad'] ?? ''))); ?></strong>
+            </div>
+        </a>
+        <div class="d-flex gap-2 flex-wrap">
             <a href="index.php" class="btn btn-outline-secondary">Ana Panel</a>
             <a href="logout.php" class="btn btn-dark">Çıkış Yap</a>
         </div>
     </div>
 
-    <div class="row g-3 mb-4">
-        <div class="col-6 col-lg-3"><div class="card stat-card"><div class="card-body"><div class="text-muted small">Danışan Öğrenci</div><div class="display-6"><?php echo $studentCount; ?></div></div></div></div>
-        <div class="col-6 col-lg-3"><div class="card stat-card"><div class="card-body"><div class="text-muted small">Bekleyen Talep</div><div class="display-6"><?php echo $pendingCount; ?></div></div></div></div>
-        <div class="col-6 col-lg-3"><div class="card stat-card"><div class="card-body"><div class="text-muted small">Aktif Duyuru</div><div class="display-6"><?php echo $announcementCount; ?></div></div></div></div>
-        <div class="col-6 col-lg-3"><div class="card stat-card"><div class="card-body"><div class="text-muted small">Toplam Mesaj</div><div class="display-6"><?php echo $messageCount; ?></div></div></div></div>
-    </div>
-
-    <div class="row g-4">
-        <div class="col-lg-4">
-            <div class="card panel-card h-100">
-                <div class="card-body">
-                    <h2 class="h5 mb-3">İşlemler</h2>
-                    <div class="d-grid gap-2">
-                        <a href="ogretmen_rezervasyon_onay.php" class="btn btn-primary">Rezervasyon Talepleri</a>
-                        <a href="duyuru_yap.php" class="btn btn-outline-primary">Duyuru Yönetimi</a>
-                        <a href="ogretmen_mesajlar.php" class="btn btn-outline-secondary">Mesaj Kutusu</a>
-                        <a href="ogretmen_mesaj_gonder.php" class="btn btn-outline-secondary">Yeni Mesaj</a>
+    <section class="portal-hero p-4 p-lg-5 mb-4">
+        <div class="row g-4 align-items-center">
+            <div class="col-lg-8">
+                <div class="portal-badge mb-3">Akademisyen görünümü</div>
+                <h1 class="display-5 mb-3">Danışmanlık sürecini daha net yönetin.</h1>
+                <p class="lead mb-0 text-white-50">Görüşme talepleri, duyurular ve öğrenci mesajları aynı arayüzde daha okunabilir bir düzenle sunuluyor.</p>
+            </div>
+            <div class="col-lg-4">
+                <div class="portal-card portal-card-muted p-4">
+                    <div class="portal-section-title">Bugünün odakları</div>
+                    <div class="portal-stack">
+                        <div class="portal-list-item">
+                            <strong>Bekleyen talepleri gözden geçirin</strong>
+                            <div class="portal-meta mt-1"><?php echo $pendingCount; ?> görüşme talebi karar bekliyor.</div>
+                        </div>
+                        <div class="portal-list-item">
+                            <strong>Duyuruları güncelleyin</strong>
+                            <div class="portal-meta mt-1">Teslim tarihleri ve toplantı değişikliklerini tek noktadan paylaşın.</div>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
+    </section>
+
+    <div class="row g-3 mb-4">
+        <div class="col-6 col-xl-3"><div class="portal-card portal-stat h-100 p-4"><div class="portal-stat-label">Danışan</div><div class="portal-stat-value"><?php echo $studentCount; ?></div><div class="portal-meta mt-2">Atanmış öğrenci</div></div></div>
+        <div class="col-6 col-xl-3"><div class="portal-card portal-stat h-100 p-4"><div class="portal-stat-label">Bekleyen</div><div class="portal-stat-value"><?php echo $pendingCount; ?></div><div class="portal-meta mt-2">Karar bekleyen talep</div></div></div>
+        <div class="col-6 col-xl-3"><div class="portal-card portal-stat h-100 p-4"><div class="portal-stat-label">Duyuru</div><div class="portal-stat-value"><?php echo $announcementCount; ?></div><div class="portal-meta mt-2">Aktif paylaşım</div></div></div>
+        <div class="col-6 col-xl-3"><div class="portal-card portal-stat h-100 p-4"><div class="portal-stat-label">Mesaj</div><div class="portal-stat-value"><?php echo $messageCount; ?></div><div class="portal-meta mt-2">Toplam yazışma</div></div></div>
+    </div>
+
+    <div class="row g-4">
+        <div class="col-lg-4">
+            <div class="portal-card p-4 h-100">
+                <div class="portal-section-title">İşlemler</div>
+                <h2 class="h4 mb-3">Hızlı yönetim</h2>
+                <div class="d-grid gap-2">
+                    <a href="ogretmen_rezervasyon_onay.php" class="btn btn-primary">Rezervasyon Talepleri</a>
+                    <a href="duyuru_yap.php" class="btn btn-outline-primary">Duyuru Yönetimi</a>
+                    <a href="ogretmen_mesajlar.php" class="btn btn-outline-secondary">Mesaj Kutusu</a>
+                    <a href="ogretmen_mesaj_gonder.php" class="btn btn-outline-secondary">Yeni Mesaj</a>
+                </div>
+            </div>
+        </div>
         <div class="col-lg-8">
-            <div class="card panel-card">
-                <div class="card-body">
-                    <div class="d-flex justify-content-between align-items-center mb-3">
-                        <h2 class="h5 mb-0">Yaklaşan Görüşmeler</h2>
-                        <a href="ogretmen_rezervasyon_onay.php" class="btn btn-sm btn-outline-primary">Tüm Talepler</a>
+            <div class="portal-card p-4">
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <div>
+                        <div class="portal-section-title">Yaklaşan görüşmeler</div>
+                        <h2 class="h4 mb-0">Takvim görünümü</h2>
                     </div>
-                    <?php if (!$upcomingReservations): ?>
-                        <p class="text-muted mb-0">Henüz görüşme kaydı bulunmuyor.</p>
-                    <?php else: ?>
-                        <?php foreach ($upcomingReservations as $reservation): ?>
-                            <div class="border rounded-4 p-3 mb-3">
-                                <div class="d-flex justify-content-between gap-3 flex-wrap">
-                                    <div>
-                                        <strong><?php echo h($reservation['baslik']); ?></strong>
-                                        <div class="text-muted small"><?php echo h($reservation['ad']); ?></div>
-                                    </div>
-                                    <div class="text-end">
-                                        <div><?php echo formatDateOnly($reservation['tarih']); ?> <?php echo h(substr($reservation['saat'], 0, 5)); ?></div>
-                                        <span class="badge text-bg-light"><?php echo h($reservation['durum']); ?></span>
-                                    </div>
+                    <a href="ogretmen_rezervasyon_onay.php" class="btn btn-sm btn-outline-primary">Tüm Talepler</a>
+                </div>
+                <?php if (!$upcomingReservations): ?>
+                    <p class="portal-meta mb-0">Henüz görüşme kaydı bulunmuyor.</p>
+                <?php else: ?>
+                    <?php foreach ($upcomingReservations as $reservation): ?>
+                        <div class="portal-list-item">
+                            <div class="d-flex justify-content-between gap-3 flex-wrap">
+                                <div>
+                                    <strong><?php echo h($reservation['baslik']); ?></strong>
+                                    <div class="portal-meta mt-1"><?php echo h($reservation['ad']); ?></div>
+                                </div>
+                                <div class="text-end">
+                                    <div><?php echo formatDateOnly($reservation['tarih']); ?> <?php echo h(substr($reservation['saat'], 0, 5)); ?></div>
+                                    <span class="portal-chip mt-2"><?php echo h($reservation['durum']); ?></span>
                                 </div>
                             </div>
-                        <?php endforeach; ?>
-                    <?php endif; ?>
-                </div>
+                        </div>
+                    <?php endforeach; ?>
+                <?php endif; ?>
             </div>
         </div>
     </div>
